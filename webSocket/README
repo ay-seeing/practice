@@ -1,1 +1,4 @@
 打开html或php页面时，不要用localhost:8080等端口号，直接双击页面打开，就可以了。否则效果会不正确。
+
+
+http://www.oschina.net/question/12_54009
