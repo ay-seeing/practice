@@ -19,7 +19,7 @@ function talkSocket(){
         return false;
     }
     // 与服务器建立链接
-    var connection = new Websocket("ws://localhost:4564");
+    var connection = new Websocket("ws://localhost:4562");
 
     // 链接成功会触发 open 事件
     connection.onopen = function(){
@@ -43,6 +43,7 @@ function talkSocket(){
         }
     }
 }
+talkSocket();
 </script>
 </body>
 </html>
