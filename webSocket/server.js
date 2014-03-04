@@ -8,35 +8,13 @@ var server = http.createServer(function(req, res) {
 }).listen(4564, function() {
     console.log('Listening at: http://localhost:4564');
 });
- 
+
+//on函数接受字符串"connection"作为客户端发起连接的事件，当连接成功后，调用回调函数
 socketio.listen(server).on('connection', function (socket) {
+    // 接受 message 事件
     socket.on('message', function (msg) {
         console.log('Message Received: ', msg);
+        // 提交（发出）message 事件
         socket.broadcast.emit('message', msg);
     });
 });
-
-/*
-// 启动服务器
-var WebSocketServer = require("socket.io").server;
-var wsServer = new WebSocketServer({
-  httpServer:server
-});
-
-var connection;
-wsServer.on('request', function(req){
-    connection = req.accept('echo-protocol', req.origin);
-});
-
-wsServer.on('request', function(r){
-    connection = req.accept('echo-protocol', req.origin);
-
-    connection.on('message', function(message) {
-        var msgString = message.utf8Data;
-        connection.sendUTF(msgString);
-    });
-});
-
-connection.on('close', function(reasonCode, description) {
-    console.log(connection.remoteAddress + ' disconnected.');
-});*/
