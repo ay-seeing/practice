@@ -4,7 +4,7 @@ var fs = require('fs'),
  
 var server = http.createServer(function(req, res) {
     res.writeHead(200, { 'Content-type': 'text/html'});
-    res.end(fs.readFileSync(__dirname + '/talk.html'));
+    res.end(fs.readFileSync(__dirname + '/index.html'));
 }).listen(4562, function() {
     console.log('Listening at: http://localhost:4562');
 });

@@ -13,37 +13,44 @@
     <input type="button" id="sendTalk" value="发送">
 </div>
 <script>
-var oList = document.querySelector(".talk_m");
-function talkSocket(){
-    if(!window.WebSocket){
-        return false;
-    }
-    // 与服务器建立链接
-    var connection = new Websocket("ws://localhost:4562");
+var oList = document.querySelector(".talk_m"),
+    oTxt = document.querySelector("#talkTxt"),
+    oBtn = document.querySelector("#sendTalk");
 
-    // 链接成功会触发 open 事件
-    connection.onopen = function(){
-        console.log("服务器链接成功");
-    }
+// 与服务器建立链接
+var connection = io.connect("http://localhost:4564");
 
-    // 关闭 WebSocket链接会触发 close 事件
-    connection.onclose = function(){
-        console.log("服务器链接断开");
-    }
+// 链接成功会触发 open 事件
+connection.on("connect",function(){
+    var o = createE("li","服务器链接成功");
+    oList.appendChild(o);
 
-    var oTxt = document.querySelector("talkTxt"),
-        oBtn = document.querySelector("sendTalk");
-    oBtn.onclick = function(){
-        // 客户端像服务器发送数据用send方法
-        connection.send(oTxt.value);
+    connection.on("message",function(message){
+        var o = createE("li",message);
+        oList.appendChild(o);
+    });
+});
 
-        // 客户端接收到服务器返回的数据会触发 message 事件，函数的参数为事件对象event，该对象的data属性包含了服务器返回的数据
-        connection.onmessage = function(event){
-            oList.innerHTML += event.data;
-        }
-    }
+
+
+oBtn.onclick = function(){
+    var data = oTxt.value;
+    // 客户端像服务器发送数据用send方法
+    connection.send(data);
+    var o = createE("li",data);
+    oList.appendChild(o);
+    oTxt.value = "";
+    // 客户端接收到服务器返回的数据会触发 message 事件，函数的参数为事件对象event，该对象的data属性包含了服务器返回的数据
+    /*connection.onmessage = function(event){
+        oList.innerHTML += event.data;
+    }*/
 }
-talkSocket();
+
+function createE(tagN,data){
+    var oTag = document.createElement(tagN);
+    oTag.innerHTML = data;
+    return oTag;
+}
 </script>
 </body>
 </html>

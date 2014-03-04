@@ -1,42 +1,43 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">  
-<html>  
-<head>  
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
-<title>Insert title here</title>  
-<script type="text/javascript" src="jquery-1.8.3.min.js"></script>  
-<!-- 这里要引用secket.io客户端文件 -->  
-<script type="text/javascript" src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script> 
-</head>  
-<body>  
-    <div>  
-        Incoming Chat:&nbsp;<ul id="incomingChatMessages"></ul>  
-        <br/>  
-        <input type="text" id="outgoingChatMessage">  
-        <button id="openConnect">Send Message</button>  
-    </div>  
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+    <!-- 这里要引用secket.io客户端文件 -->
+    <script type="text/javascript" src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
+</head>
+<body>
+    <div>
+        Incoming Chat:&nbsp;
+        <ul id="incomingChatMessages"></ul>
+        <br/>
+        <input type="text" id="outgoingChatMessage">
+        <button id="openConnect">Send Message</button>
+    </div>
     <script>
-$(document).ready(function(){  
-    var iosocket = io.connect("http://localhost:4562");  
-    iosocket.on('connect', function () {  
-        $('#incomingChatMessages').append($('<li>链接成功</li>'));  
-  
-        iosocket.on('message', function(message) {  
-            $('#incomingChatMessages').append($('<li></li>').text(message));  
-        });  
-        iosocket.on('disconnect', function() {  
-            $('#incomingChatMessages').append('<li>断开链接</li>');  
-        });  
-    });  
-    $("#openConnect").click(function(event){  
-        openConnect(iosocket);  
-    });  
-});  
-  
-function openConnect(iosocket){  
-    iosocket.send($('#outgoingChatMessage').val());  
-    $('#incomingChatMessages').append($('<li></li>').text($('#outgoingChatMessage').val()));  
-    $('#outgoingChatMessage').val('');  
-}  
+$(document).ready(function(){
+    var iosocket = io.connect("http://localhost:4562");
+    iosocket.on('connect', function () {
+        $('#incomingChatMessages').append($('<li>链接成功</li>'));
+
+        iosocket.on('message', function(message) {
+            $('#incomingChatMessages').append($('<li></li>').text(message));
+        });
+        iosocket.on('disconnect', function() {
+            $('#incomingChatMessages').append('<li>断开链接</li>');
+        });
+    });
+    $("#openConnect").click(function(event){
+        openConnect(iosocket);
+    });
+});
+
+function openConnect(iosocket){
+    iosocket.send($('#outgoingChatMessage').val());
+    $('#incomingChatMessages').append($('<li></li>').text($('#outgoingChatMessage').val()));
+    $('#outgoingChatMessage').val('');
+}
     </script>
-</body>  
-</html>  
+</body>
+</html>
