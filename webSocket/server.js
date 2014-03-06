@@ -2,7 +2,7 @@ var fs = require('fs'),
   http = require('http'),
   socketio = require('socket.io');
  
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function(req, res) {   //request, response
     res.writeHead(200, { 'Content-type': 'text/html'});
     res.end(fs.readFileSync(__dirname + '/talk.html'));
 }).listen(4564, function() {

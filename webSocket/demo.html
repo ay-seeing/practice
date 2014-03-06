@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>交谈测试</title>
+  <script type="text/javascript" src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script> 
+<style>
+*{margin:0;padding:0;}
+body{font:14px/1.5 "microsoft yahei";color:#666;}
+ul{list-style:none;}
+.wrap{width:600px;margin:10px auto;}
+.talkList li{padding:10px;border-top:1px dashed #f0f0f0;}
+.talkList strong{margin-right:10px;}
+</style>
+</head>
+<body>
+  <div class="wrap">
+      <div><input type="button" value="开始对话" id="talkStart"><input type="button" value="结束对话" id="talkEnd"></div>
+      <ul class="talkList" id="talkList">
+      </ul>
+      <form action="demo.html" methed="post">
+        用户名：<input type="text" class="talkUser" id="talkUser"><br />
+        <textarea name="" cols="30" rows="10" class="talkTxt" id="talkTxt"></textarea><br /><input type="button" value="发送" class="talkBtn" id="talkBtn">
+      </form>
+  </div>
+
+<script>
+/*var oList = document.querySelector(".talkList"),
+  oTxt = document.querySelector(".talkTxt"),
+  oUser = document.querySelector(".talkUser"),
+  oBtn = document.querySelector(".talkBtn");*/
+var oList = document.getElementById("talkList"),
+  oTxt = document.getElementById("talkTxt"),
+  oUser = document.getElementById("talkUser"),
+  oBtn = document.getElementById("talkBtn");
+  oStart = document.getElementById("talkStart"),
+  oEnd = document.getElementById("talkEnd");
+
+var connection;
+function connectFn(){
+  // 与服务器建立链接
+  connection = io.connect("http://localhost:7896");
+  // 或 connection = io.connect("http://localhost").listen(7896);
+
+  // 链接建立成功会触发 connect 事件
+  connection.on("connect",function(){
+    // 可以进行一些相关操作
+    var oNew = createTag("p","链接成功");
+    oList.parentNode.insertBefore(oNew,oList);
+  });
+
+  // 如果有通信会触发 message 事件
+  connection.on("kmessage",function(data){
+    console.log(data);
+    // 通信时触发一些操作
+    var oNew = createTag("li",data);
+    oList.appendChild(oNew);
+  });
+
+  // 断开链接时触发 disconnect 事件
+  connection.on("disconnect",function(){
+    var oNew = createTag("p","断开链接");
+    oList.parentNode.appendChild(oNew);
+  });
+}
+
+oBtn.onclick = function(){
+  var data = {};
+  data.user = oUser.value;
+  data.txt = oTxt.value;
+  oUser.value = oTxt.value = "";
+  var oNew = createTag("li",data);
+  oList.appendChild(oNew);
+  //connection.send(data);
+  connection.emit("message",data);
+}
+
+function createTag(tagN,data){
+  //if(arguments.length==1)
+  if(data instanceof Object){
+    var o = document.createElement(tagN),
+      oT = document.createElement("p"),
+      oM = document.createElement("div");
+      // oUser = doucment.createTextNode(data[0]),
+      //oM = doucment.createTextNode(data[1]);
+    oT.innerHTML = data.user;
+    oM.innerHTML = "<strong>说：</strong>"+data.txt;
+    o.appendChild(oT);
+    o.appendChild(oM);
+  }else{
+    var o = document.createElement(tagN);
+    o.innerHTML = data;
+  }
+  return o;
+}
+function disconnectFn() {
+  connection.disconnect();
+}
+oStart.onclick = function(){
+  // 链接服务器
+  connectFn();
+}
+oEnd.onclick = function(){
+  // 断开服务器
+  disconnectFn();
+}
+</script>
+</body>
+</html>
