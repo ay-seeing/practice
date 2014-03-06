@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>特殊字符查询</title>
+	<style>
+*{margin:0;padding:0;}
+body{font-size:14px;line-height:2;font-family:helvetica , Tahoma , Arial , ' Hiragino Sans GB' , STXihei , 'microsoft yahei' , 'sans-serif';color:#555;}
+header{display:block;background:#2577E3;color:white;margin-bottom:20px;}
+header h1{font-weight:normal;}
+.wrap{width:60%;margin:0 auto;}
+.wrap:after{content:"";display:block;height:0;overflow:hidden;clear:both;}
+.hint{color:red;}
+.input_show{float:left;width:49.8%;}
+h3,.t{height:35px;line-height:35px;}
+textarea{width:90%;border:1px solid #ccc;padding:9px;line-height:1.5;outline:none;resize:none;border-radius:3px;color:#555;}
+input[type=button]{height:30px;padding:0 30px;cursor:pointer;margin-right:10px;}
+input,textarea{font-family:helvetica , Tahoma , Arial , ' Hiragino Sans GB' , STXihei , 'microsoft yahei' , 'sans-serif';}
+.codeShow{background:#f0f0f0;width:90%;padding:10px;border-radius:5px;margin:10px 0 30px;min-height:120px;word-wrap:break-word;break-word:break-all;}
+.special_code{float:left;width:49.8%;}
+.special_code ul{overflow:hidden;}
+.special_code li{list-style:none;float:left;width:30px;height:30px;line-height:30px;text-align:center;cursor:pointer;border:1px solid #ccc;}
+@media screen and (min-width:1024px) and (max-width:1280px){
+	.wrap{width:80%;}
+}
+@media screen and (max-width:1024px){
+		.wrap{width:95%;}
+		.input_show,.special_code{width:100%;float:none;}
+	}
+	</style>
+</head>
+<body>
+<script>
+var codeList = {
+	"\"":"&quot",
+	"\'":"&apos",
+	"&":"&amp",
+	"<":"&lt",
+	">":"&gt",
+	" ":"&nbsp",
+	"×":"&times",
+	"©":"&copy",
+	"¥":"&yen",
+	"￥":"&yen",
+	"®":"&reg",
+	"÷":"&divide",
+	"√":"&radic",
+	"π":"&pi",
+	"…":"&hellip",
+	"—":"&mdash",
+	"#":"&#35",
+	"@":"&#64",
+	"$":"&#36",
+	"∞":"&infin",
+	"¡":"&iexcl",
+	"¢":"&cent",
+	"£":"&pound",
+	"¤":"&curren",
+	"¦":"&brvbar",
+	"§":"&sect",
+	"¨":"&uml",
+	"ª":"&ordf",
+	"«":"&laquo",
+	"¬":"&not",
+	"¯":"&macr",
+	"°":"&deg",
+	"±":"&plusmn",
+	"²":"&sup2",
+	"³":"&sup3",
+	"´":"&acute",
+	"µ":"&micro",
+	"¶":"&para",
+	"·":"&middot",
+	"¸":"&cedil",
+	"¹":"&sup1",
+	"º":"&ordm",
+	"»":"&raquo",
+	"¼":"&frac14",
+	"½":"&frac12",
+	"¾":"&frac34",
+	"¿":"&iquest",
+	"À":"&Agrave",
+	"Á":"&Aacute",
+	"Â":"&Acirc",
+	"Ã":"&Atilde",
+	"Ä":"&Auml",
+	"Å":"&Aring",
+	"Æ":"&AElig",
+	"Ç":"&Ccedil",
+	"È":"&Egrave",
+	"É":"&Eacute",
+	"Ê":"&Ecirc",
+	"Ë":"&Euml",
+	"Ì":"&Igrave",
+	"Í":"&Iacute",
+	"Î":"&Icirc",
+	"Ï":"&Iuml",
+	"Ð":"&ETH",
+	"Ñ":"&Ntilde",
+	"Ò":"&Ograve",
+	"Ó":"&Oacute",
+	"Ô":"&Ocirc",
+	"Õ":"&Otilde",
+	"Ö":"&Ouml",
+	"Ø":"&Oslash",
+	"Ù":"&Ugrave",
+	"Ú":"&Uacute",
+	"Û":"&Ucirc",
+	"Ü":"&Uuml",
+	"Ý":"&Yacute",
+	"Þ":"&THORN",
+	"ß":"&szlig",
+	"à":"&agrave",
+	"á":"&aacute",
+	"â":"&acirc",
+	"ã":"&atilde",
+	"ä":"&auml",
+	"å":"&aring",
+	"ç":"&ccedil",
+	"è":"&egrave",
+	"é":"&eacute",
+	"ê":"&ecirc",
+	"ë":"&euml",
+	"ì":"&igrave",
+	"í":"&iacute",
+	"î":"&icirc",
+	"ï":"&iuml",
+	"ð":"&eth",
+	"ñ":"&ntilde",
+	"ò":"&ograve",
+	"ó":"&oacute",
+	"ô":"&ocirc",
+	"õ":"&otilde",
+	"ö":"&ouml",
+	"ø":"&oslash",
+	"ù":"&ugrave",
+	"ú":"&uacute",
+	"û":"&ucirc",
+	"ü":"&uuml",
+	"ý":"&yacute",
+	"ÿ":"&yuml",
+	"þ":"&thorn",
+	"∀":"&forall",
+	"∂":"&part",
+	"∃":"&exist",
+	"∅":"&empty",
+	"∇":"&nabla",
+	"∈":"&isin",
+	"∉":"&notin",
+	"∋":"&ni",
+	"∏":"&prod",
+	"∑":"&sum",
+	"−":"&minus",
+	"∗":"&lowast",
+	"∝":"&prop",
+	"∠":"&ang",
+	"∧":"&and",
+	"∨":"&or",
+	"∩":"&cap",
+	"∪":"&cup",
+	"∫":"&int",
+	"∴":"&there4",
+	"∼":"&sim",
+	"≅":"&cong",
+	"≈":"&asymp",
+	"≠":"&ne",
+	"≡":"&equiv",
+	"≤":"&le",
+	"≥":"&ge",
+	"⊂":"&sub",
+	"⊃":"&sup",
+	"⊄":"&nsub",
+	"⊆":"&sube",
+	"⊇":"&supe",
+	"⊕":"&oplus",
+	"⊗":"&otimes",
+	"⊥":"&perp",
+	"⋅":"&sdot",
+	"Α":"&Alpha",
+	"Β":"&Beta",
+	"Γ":"&Gamma",
+	"Δ":"&Delta",
+	"Ε":"&Epsilon",
+	"Ζ":"&Zeta",
+	"Η":"&Eta",
+	"Θ":"&Theta",
+	"Ι":"&Iota",
+	"Κ":"&Kappa",
+	"Λ":"&Lambda",
+	"Μ":"&Mu",
+	"Ν":"&Nu",
+	"Ξ":"&Xi",
+	"Ο":"&Omicron",
+	"Π":"&Pi",
+	"Ρ":"&Rho",
+	"Σ":"&Sigma",
+	"Τ":"&Tau",
+	"Υ":"&Upsilon",
+	"Φ":"&Phi",
+	"Χ":"&Chi",
+	"Ψ":"&Psi",
+	"Ω":"&Omega",
+	"α":"&alpha",
+	"β":"&beta",
+	"γ":"&gamma",
+	"δ":"&delta",
+	"ε":"&epsilon",
+	"ζ":"&zeta",
+	"η":"&eta",
+	"θ":"&theta",
+	"ι":"&iota",
+	"κ":"&kappa",
+	"λ":"&lambda",
+	"μ":"&mu",
+	"ν":"&nu",
+	"ξ":"&xi",
+	"ο":"&omicron",
+	"ρ":"&rho",
+	"ς":"&sigmaf",
+	"σ":"&sigma",
+	"τ":"&tau",
+	"υ":"&upsilon",
+	"φ":"&phi",
+	"χ":"&chi",
+	"ψ":"&psi",
+	"ω":"&omega",
+	"ϑ":"&thetasym",
+	"ϒ":"&upsih",
+	"ϖ":"&piv",
+	"Œ":"&OElig",
+	"œ":"&oelig",
+	"Š":"&Scaron",
+	"š":"&scaron",
+	"Ÿ":"&Yuml",
+	"ƒ":"&fnof",
+	"ˆ":"&circ",
+	"˜":"&tilde",
+	"–":"&ndash",
+	"‘":"&lsquo",
+	"’":"&rsquo",
+	"‚":"&sbquo",
+	"“":"&ldquo",
+	"”":"&rdquo",
+	"„":"&bdquo",
+	"†":"&dagger",
+	"‡":"&Dagger",
+	"•":"&bull",
+	"‰":"&permil",
+	"′":"&prime",
+	"″":"&Prime",
+	"‹":"&lsaquo",
+	"›":"&rsaquo",
+	"‾":"&oline",
+	"€":"&euro",
+	"™":"&trade",
+	"←":"&larr",
+	"↑":"&uarr",
+	"→":"&rarr",
+	"↓":"&darr",
+	"↔":"&harr",
+	"↵":"&crarr",
+	"⌈":"&lceil",
+	"⌉":"&rceil",
+	"⌊":"&lfloor",
+	"⌋":"&rfloor",
+	"◊":"&loz",
+	"♠":"&spades",
+	"♣":"&clubs",
+	"♥":"&hearts",
+	"♦":"&diams",
+	"!":"&#33",
+	"%":"&#37",
+	"(":"&#40",
+	")":"&#41",
+	"+":"&#43",
+	"/":"&#47",
+	"\\":"&#92",
+	":":"&#58",
+	";":"&#59",
+	"=":"&#61",
+	"?":"&#63",
+	"[":"&#91",
+	"]":"&#93",
+	"^":"&#94",
+	"`":"&#96",
+	"{":"&#123",
+	"|":"&#124",
+	"}":"&#125",
+	"ℜ":"&real",
+	"℘":"&weierp",
+	"⇑":"&uArr",
+	"⇐":"&lArr",
+	"⇒":"&rArr",
+	"⇓":"&dArr",
+	"⇔":"&hArr",
+	"ℵ":"&alefsym"
+}
+</script>
+<header><h1 class="wrap">特殊字符编码转换</h1></header>
+<div class="wrap">
+	<div class="input_show">
+		<p class="t">不能转义或因输入不正确的字符会<span class="hint">标红</span>提示</p>
+		<textarea rows="5" cols="60" id="inputCode" placeholder="输入特殊字符 或 在特殊字符列表选择"></textarea><br />
+		<input type="button" value="转代码" id="btnEscape"><input type="button" value="转字符" id="btnUnEscape">
+		<div class="codeShow" id="codeShow"></div>
+	</div>
+	<div class="special_code">
+		<h3>特殊字符列表</h3>
+		<div id="specialCodeList">
+		</div>
+	</div>
+	<script>
+	var oInput = document.getElementById("inputCode"),
+		oShow = document.getElementById("codeShow"),
+		oShowList = document.getElementById("specialCodeList");
+
+	//列举特殊字符
+	(function(p,s){
+		var oUl = document.createElement("ul");
+		var oLi;
+		for(var attr in codeList){
+			oLi = document.createElement("li");
+			//oLi.innerHTML = codeList[attr]+";";
+			oLi.innerHTML = attr;
+			oUl.appendChild(oLi);
+		}
+		p.appendChild(oUl);
+		p.onclick = function(ev){
+			var oEvent = ev || window.event;
+			var oTarget;
+			if(window.srcElement){
+				oTarget = oEvent.srcElement;
+			}else{
+				oTarget = oEvent.target;
+			}
+			if(oTarget.nodeName.toLowerCase() == "li"){
+				var str = oTarget.innerHTML;
+				// 针对三个特殊字符进行处理
+				switch(str){
+					case "&lt;":
+						str = "<";
+						break;
+					case "&gt;":
+						str = ">";
+						break;
+					case "&amp;":
+						str = "&";
+						break;
+				}
+				conversion(str,s);
+			}
+		}
+	})(oShowList,[oInput,oShow]);
+
+	// 转换成html实体
+	function conversion(str,o){
+		var resultCode = [],
+			resultChar = [],
+			arr = str.split("");
+		for(var v in arr){
+			var off = true;
+			for(var attr in codeList){
+				if(arr[v] == attr){
+					resultChar.push(attr);
+					resultCode.push(codeList[attr].replace("&","&amp;")+";");
+					off = false;
+				}
+			}
+			if(off){
+				resultCode.push("<span class='hint'>" + arr[v] + "</span>");
+			}
+		}
+		if(o instanceof Array){
+			for(var i in o){
+				var tag = o[i].nodeName.toLowerCase();
+				if(tag == "textarea" || tag == "input"){
+					o[i].value = resultChar.join("");
+				}else{
+					o[i].innerHTML = resultCode.join("");
+				}
+			}
+		}else{
+			o.innerHTML = resultCode.join("");
+		}
+	}
+
+	// 反转义
+	function unConversion(str,o){
+		var resultCode = [],
+			resultChar = [],
+			arr = str.split(";");
+			//arr = str.split(/[&;]/);
+		for(var v in arr){
+			if(arr[v] == "&yen"){
+				resultChar.push("¥");
+				resultCode.push("&amp;yen;");
+				continue;
+			}
+			var off = true;
+			for(var attr in codeList){
+				if(arr[v] == codeList[attr]){
+				//if(arr[v] == codeList[attr].substring(1,codeList[attr].length)){
+					resultChar.push(attr);
+					resultCode.push(codeList[attr].replace("&","&amp;") +";");
+					off = false;
+				}
+			}
+			if(off){
+				resultChar.push("<span class='hint'>" + arr[v] + "</span>");
+			}
+		}
+		if(o instanceof Array){
+			for(var i in o){
+				var tag = o[i].nodeName.toLowerCase();
+				if(tag == "textarea" || tag == "input"){
+					o[i].value = resultCode.join("");
+				}else{
+					o[i].innerHTML = resultChar.join("");
+				}
+			}
+		}else{
+			o.innerHTML = resultChar.join("");
+		}
+	}
+
+
+	var oBtnEscape = document.getElementById("btnEscape"),
+		oBtnUnEscape = document.getElementById("btnUnEscape");
+	oBtnEscape.onclick = function(){
+		conversion(oInput.value,oShow);
+	}
+	btnUnEscape.onclick = function(){
+		unConversion(oInput.value,oShow);
+	}
+	</script>
+</div>
+<div style="color:white;">http://www.w3schools.com/tags/ref_entities.asp<br />http://www.jb51.net/onlineread/htmlchar.htm</div>
+</body>
+</html>
