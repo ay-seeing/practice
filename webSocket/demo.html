@@ -8,18 +8,24 @@
 *{margin:0;padding:0;}
 body{font:14px/1.5 "microsoft yahei";color:#666;}
 ul{list-style:none;}
+.talkList{margin:10px 0;border:1px solid #ccc;}
+.talkList li{padding:10px;border-top:1px dashed #ccc;}
 .wrap{width:600px;margin:10px auto;}
-.talkList li{padding:10px;border-top:1px dashed #f0f0f0;}
 .talkList strong{margin-right:10px;}
+.switch_btns{margin:10px 0;}
+.switch_btns input[type="button"]{padding:3px 10px;cursor:pointer;margin-right:10px;}
+.talkUser{vertical-align:middle;margin-bottom:5px;height:20px;line-height:20px;padding:5px;}
+.talkTxt{width:400px;height:160px;line-height:20px;}
+.talkBtn{padding:5px 20px;font-size:16px;cursor:pointer;}
 </style>
 </head>
 <body>
   <div class="wrap">
-      <div><input type="button" value="开始对话" id="talkStart"><input type="button" value="结束对话" id="talkEnd"></div>
+      <div class="switch_btns"><input type="button" value="开始对话" id="talkStart"><input type="button" value="结束对话" id="talkEnd"></div>
       <ul class="talkList" id="talkList">
       </ul>
       <form action="demo.html" methed="post">
-        用户名：<input type="text" class="talkUser" id="talkUser"><br />
+        用户名：<input type="text" size="30" class="talkUser" id="talkUser"><br />
         <textarea name="" cols="30" rows="10" class="talkTxt" id="talkTxt"></textarea><br /><input type="button" value="发送" class="talkBtn" id="talkBtn">
       </form>
   </div>
@@ -66,8 +72,10 @@ function connectFn(){
 
 oBtn.onclick = function(){
   var data = {};
-  data.user = oUser.value;
+  data.user = oUser.value || "匿名";
   data.txt = oTxt.value;
+  // 判断如果没有输入内容，则不让发送信息
+  if(!data.txt){return false;}
   oUser.value = oTxt.value = "";
   var oNew = createTag("li",data);
   oList.appendChild(oNew);
