@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+<script>
+if(navigator.geolocation){
+  navigator.geolocation.getCurrentPosition(succes,errfn);
+}else{
+  console.log("浏览器不支持 geolocation");
+}
+
+function succes(position){
+  console.log("经度："+position.coords.latitude+"；维度："+position.coords.longitude);
+}
+function errfn(err){
+  console.log( err.code + "\n" + err.message);
+}
+</script>
+</body>
+</html>
