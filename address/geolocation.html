@@ -13,6 +13,13 @@ if(navigator.geolocation){
 }
 
 function succes(position){
+  // 成功后回调获取用户位置数据position，它包含两个属性：coords、timestamp。
+//   coords属性有7个值，包含上面用到的纬度、经度。
+// 1、accuracy 准确角
+// 2、altitude 海拔高度
+// 3、altitudeAcuracy 海拔高度的精确度
+// 4、heading 行进方向
+// 5、speed 地面的速度
   console.log("经度："+position.coords.latitude+"；维度："+position.coords.longitude);
 }
 function errfn(err){
