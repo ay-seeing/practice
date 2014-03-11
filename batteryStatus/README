@@ -1,0 +1,1 @@
+battery.js是一个设备电池状态的检测库，其主要是运用 html5 的battery api来实现的。
