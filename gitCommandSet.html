@@ -1,0 +1,55 @@
+git 
+
+git 配置
+/etc/gitconfig文件：系统中对所有用户都普遍适用的配置。若使用git config 时用--system 选项，读写的就是这个文件。
+~/.gitconfig文件：用户目录下的配置文件只适用于该用户。若使用git config 时用--global 选项，读写的就是这个文件。
+当前项目的git 目录中的配置文件（也就是工作目录中的.git/config 文件）：这里的配置仅仅针对当前项目有效。每一个级别的配置都会覆盖上层的相同配置，所以.git/config 里的配置会覆盖/etc/gitconfig 中的同名变量。
+
+配置用户名
+// 对3个等级的配置文件进行配置
+git condig --system user.name "author"
+git config --global user.name "author"
+git config user.name "author"
+
+配置邮箱
+// 配置邮箱和配置用户名类似，也有3个等级，如：
+git config --system user.email "you@you.com"
+git config --global user.email "you@you.com"
+git config user.email "you@you.com"
+
+
+配置文本编辑器
+// 配置邮箱和配置用户名类似，也有3个等级
+git config --global core.editer vim
+
+查看配置信息
+// 查看所有配置信息
+git config --list
+
+// 查看配置用户信息
+git config user.name
+
+// 查看配置email信息
+git config user.email
+
+
+获取帮助
+// 获取帮助有3种方式，如：
+git help config
+git config --help
+man git-config
+
+初始化仓库
+git init
+
+跟踪文件
+// 跟踪当前仓库所有更改的文件
+git add .
+// 跟踪当前仓库后缀名为 .txt 且修改的文件
+git add *.txt
+// 跟踪当前仓库以 _ 下划线结尾的且修改的文件
+
+
+克隆现有仓库
+git 支持许多数据传输协议，如 git:// 协议,http(s):// 协议或者user@server:/path.git
+git clone url
