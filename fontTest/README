@@ -1,0 +1,3 @@
+fongTest是一款测试字体效果的小工具，注意是针对设计和前端开发人员快速预览不同字体下字符串的显示效果。
+
+IE下使用 parent.document.all(dlgHelperId).fonts.count 来获取系统字体，而非IE浏览器则需要使用flash来获取系统字体。
