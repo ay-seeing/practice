@@ -144,7 +144,7 @@ git  rm log/\*.log
 
 
 移动文件
-// 文件改名或移动
+// 文件重命名或移动
 git mv oldFile newFile
 // 以上命令就相当于一下3条命令
 mv oldFile newFile
@@ -210,6 +210,8 @@ git checkout -- fileName
 git filter-branch --tree-filter 'em -f password.txt' HEAD
 // 删除所有不小心提交上去的备份文件
 git filter-branch --tree-filter 'rm -f'
+// 撤销提交操作
+git reset --hard commitId
 
 
 
