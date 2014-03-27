@@ -1,3 +1,4 @@
 node_modules/
 qrcode.png
 sass_compass/img/icon-*.png
+node/readfile.txt
