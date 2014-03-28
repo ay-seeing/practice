@@ -49,3 +49,22 @@ console.log("File read finish.");
 */
 
 
+/*
+// 事件
+var event_emitter = require("events").EventEmitter;
+var event = new event_emitter();
+// 自定义事件
+event.on("some_event",function(){
+  console.log("some event occured.");
+});
+setTimeout(function(){
+  // 触发事件
+  event.emit("some_event");
+},3000);
+*/
+
+
+// 调用自定义 self_package.js 包
+var self = require("./self_package");
+self.setName("yiyang");
+self.sayName();
