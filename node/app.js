@@ -64,7 +64,97 @@ setTimeout(function(){
 */
 
 
+/*
 // 调用自定义 self_package.js 包
 var self = require("./self_package");
 self.setName("yiyang");
 self.sayName();
+*/
+
+
+/*
+// http.Server 服务器对象
+var http = require("http");
+var server = new http.createServer(function(req,res){
+  res.writeHead(200,{"Content-Type":"text/html"});
+  
+  var str = "";
+  for(vara in req){
+    str += vara + "<br />";
+  }
+  res.write(str);
+  res.write(req.url);
+  res.end();
+}).listen(3000);
+console.log("listening port 3000");
+*/
+
+
+/*
+var http = require('http');
+var server = new http.createServer(function(req,res){
+  var str = "";
+  req.on("data",function(chunk){
+    str += chunk;
+  });
+  req.on("end",function(){
+    res.writeHead(200,{"Content-Type":"text/html"});
+    res.write("input out");
+    res.write(str);
+    res.end();
+  });
+});
+server.listen(3000);
+console.log("listening port 3000");
+*/
+
+
+/*var http = require("http");
+var server = new http.Server();
+server.on("request",function(req,res){
+  var str = "";
+  req.on("data",function(chunk){
+    str += typeof chunk;
+  });
+  req.on("end",function(){
+    res.writeHead(200,{"Content-Type":"text/html"});
+    res.write(str+"input out");
+    res.end();
+  });
+});
+server.listen(3000);
+console.log("listening port 3000");*/
+
+
+
+
+
+var   http = require('http');
+var   url=require('url');
+  
+http.createServer(function(req,res){
+     console.log(req.method,req.url);
+     var _url=url.parse(req.url);
+     var _host=req.headers.host.split(":");
+      
+     var option={'host':_host[0],
+                  'port':Number(_host[1]||'80'),
+                  'path':_url['pathname']+(_url['search']||""),
+                  'method':req.method,
+                  'headers':req.headers
+                  };
+      
+     var clientReq=http.request(option);
+     req.on('data',function(c){ clientReq.write(c);});
+     req.on('end',function(){ clientReq.end();});
+ 
+     clientReq.on('response', function (response) {
+                 res.writeHeader(response.statusCode,response.headers);
+         response.on('data',function(chunk){  res.write(chunk); });
+         response.on('end',function(){ res.end(); });
+     });
+     clientReq.on('error',function(e){
+         console.log(e);
+     });
+ }).listen(5000);
+
