@@ -126,10 +126,16 @@ server.listen(3000);
 console.log("listening port 3000");*/
 
 
+var express = require('express');
+var app = express.createServer();
+app.use(express.bodyParser());
+app.all('/', function(req, res) {
+res.send(req.body.title + req.body.text);
+});
+app.listen(3000);
 
 
-
-var   http = require('http');
+/*var   http = require('http');
 var   url=require('url');
   
 http.createServer(function(req,res){
@@ -156,5 +162,5 @@ http.createServer(function(req,res){
      clientReq.on('error',function(e){
          console.log(e);
      });
- }).listen(5000);
+ }).listen(5000);*/
 
