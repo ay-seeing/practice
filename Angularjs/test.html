@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>angularjs测试</title>
+  <script src="js/angular.js"></script>
+</head>
+<body ng-app>
+  <div ng-controller="models1">
+    <input type="text" ng-model="aaa" placeholder="请输入">
+    <p>hello:{{aaa||"请输入。。。"}}</p>
+  </div>
+  <div ng-controller="models2">
+    <input type="text" ng-model="price" placeholder="请输入价格">
+    <input type="number" ng-model="num" placeholder="1">
+    <p>hello:{{(price||120)*(num||1)|currency}}</p>
+  </div>
+  <div ng-controller="models3">
+    <input type="text" ng-model="price" placeholder="请输入价格">
+    <input type="number" ng-model="num" placeholder="1">
+    <p>hello:{{price*num|currency}}</p>
+  </div>
+<script>
+function models1($scope){
+  $scope.aaa="111";
+}
+function models2($scope){
+  //
+}
+function models3($scope){
+  $scope.price=150;
+  $scope.num=1;
+}
+</script>
+</body>
+</html>
