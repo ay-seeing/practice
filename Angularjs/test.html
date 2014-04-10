@@ -20,6 +20,16 @@
     <input type="number" ng-model="num" placeholder="1">
     <p>hello:{{price*num|currency}}</p>
   </div>
+  <!-- 指令 -->
+  <div ng-controller="bindsss">
+    <input type="text" ng-model="my"><br />
+    <span ng-bind="my">12</span>
+  </div>
+
+  <!-- 循环 -->
+  <ul ng-controller="loop">
+    <li ng-repeat=""></li>
+  </ul>
 <script>
 function models1($scope){
   $scope.aaa="111";
@@ -30,6 +40,10 @@ function models2($scope){
 function models3($scope){
   $scope.price=150;
   $scope.num=1;
+}
+
+function bindsss($scope){
+  $scope.my="test bind";
 }
 </script>
 </body>
