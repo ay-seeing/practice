@@ -27,9 +27,18 @@
   </div>
 
   <!-- 循环 -->
-  <ul ng-controller="loop">
-    <li ng-repeat=""></li>
+  <ul ng-controller="loopModel" ng-init="loops = [{text:'learn angular',done:'true'},{text:'learn angular2',done:'true'}]">
+    <li ng-repeat="loop in loops">{{loop.text}}</li>
   </ul>
+  
+  <div ng-controller="checkout">
+    <input type="checkbox" ng-model="defaut_choose">
+    <p>{{defaut_choose}}</p>
+    <input type="checkbox" ng-model="choose" ng-true-value="yes" ng-false-value="no!">
+    <p>{{choose}}</p>
+    <input type="checkbox" ng-model="choose2" ng-change="backfns()">
+    <p>{{choose2}}</p>
+  </div>
 <script>
 function models1($scope){
   $scope.aaa="111";
@@ -45,6 +54,43 @@ function models3($scope){
 function bindsss($scope){
   $scope.my="test bind";
 }
+
+function loopModel($scope){
+  //$scope.loops = [{text:'learn angular',done:'true'},{text:'learn angular2',done:'true'}];
+}
+function checkout($scope){
+  $scope.defaut_choose = false;
+  $scope.choose = "yes";
+  $scope.backfns=function(){
+    console.log(456);
+  }
+}
 </script>
+
+<div ng-controller="forms">
+  <form action="">
+    name: <input type="text" ng-model="user.name" required><br />
+    email: <input type="text" ng-model="user.email"><br />
+    height: <input type="text" ng-model="user.height" disabled="disabled"><br />
+    sex: 男<input type="radio" name="sex" ng-model="user.choose" value="男"> 女<input type="radio" name="sex" ng-model="user.choose" value="女"><br />
+    <input type="button" value="提交" ng-click="checkfn(user);">
+    <input type="button" value="重置" ng-click="reset();">
+  </form>
+  <p>{{user | json}}</p>
+  <p>{{master | json}}</p>
+</div>
+<script>
+function forms($scope){
+  $scope.master={};
+  $scope.checkfn = function(user){
+    $scope.master=angular.copy(user);
+  }
+  $scope.reset = function(){
+    $scope.user = angular.copy($scope.master);
+  }
+  $scope.reset();
+}
+</script>
+<input type="text">
 </body>
 </html>
