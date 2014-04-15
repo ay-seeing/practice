@@ -27,8 +27,8 @@
   </div>
 
   <!-- 循环 -->
-  <ul ng-controller="loopModel" ng-init="loops = [{text:'learn angular',done:'true'},{text:'learn angular2',done:'true'}]">
-    <li ng-repeat="loop in loops">{{loop.text}}</li>
+  <ul ng-controller="loopModel" ng-init="loops = ['hellow','world','你','我']">
+    <li ng-repeat="loop in loops" ng-class-even="'even'" ng-class-odd="'odd'">{{loop}}</li>
   </ul>
   
   <div ng-controller="checkout">
@@ -68,7 +68,7 @@ function checkout($scope){
 </script>
 
 <div ng-controller="forms">
-  <form action="">
+  <form action="" novalidate>
     name: <input type="text" ng-model="user.name" required><br />
     email: <input type="text" ng-model="user.email"><br />
     height: <input type="text" ng-model="user.height" disabled="disabled"><br />
@@ -91,6 +91,73 @@ function forms($scope){
   $scope.reset();
 }
 </script>
-<input type="text">
+
+
+<form action="" name="testemail" novalidate ng-controller="testemail">
+  <input type="email" name="email" ng-model="us.email" required> <input type="button" value="打印" ng-click="printemail()">
+</form>
+<script>
+function testemail($scope){
+  $scope.printemail = function(){
+    console.log($scope.testemail.email.$error);
+  }
+}
+</script>
+
+<form action="" name="testnum" novalidate ng-controller="testnum">
+  <input type="number" name="num" ng-model="us.num" required> <input type="button" value="打印" ng-click="printnum()">
+</form>
+<script>
+function testnum($scope){
+  $scope.printnum = function(){
+    console.log($scope.testnum.num.$error);
+  }
+}
+</script>
+
+
+<div ng-controller="Controller">
+  <form name="form" class="css-form" novalidate>
+    Name:
+      <input type="text" ng-model="user.name" name="uName" required /><br />
+    E-mail:
+      <input type="email" ng-model="user.email" name="uEmail" required/><br />
+    <div ng-show="form.uEmail.$dirty && form.uEmail.$invalid">Invalid:
+      <span ng-show="form.uEmail.$error.required">Tell us your email.</span>
+      <span ng-show="form.uEmail.$error.email">This is not a valid email.</span>
+    </div>
+
+    Gender: <input type="radio" ng-model="user.gender" value="male" />male
+    <input type="radio" ng-model="user.gender" value="female" />female<br />
+
+    <input type="checkbox" ng-model="user.agree" name="userAgree" required />
+    I agree: <input ng-show="user.agree" type="text" ng-model="user.agreeSign"
+              required /><br />
+    <div ng-show="!user.agree || !user.agreeSign">Please agree and sign.</div>
+
+    <button ng-click="reset()" ng-disabled="isUnchanged(user)">RESET</button>
+    <button ng-click="update(user)"
+            ng-disabled="form.$invalid || isUnchanged(user)">SAVE</button>
+  </form>
+</div>
+<script>
+function Controller($scope) {
+  $scope.master= {};
+
+  $scope.update = function(user) {
+    $scope.master= angular.copy(user);
+  };
+
+  $scope.reset = function() {
+    $scope.user = angular.copy($scope.master);
+  };
+
+  $scope.isUnchanged = function(user) {
+    return angular.equals(user, $scope.master);
+  };
+
+  $scope.reset();
+}
+</script>
 </body>
 </html>
