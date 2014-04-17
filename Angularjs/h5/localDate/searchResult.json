@@ -1,4 +1,4 @@
-var reachDates={
+{
   "value": {
     "head": {
       "auth": null,
@@ -13,7 +13,8 @@ var reachDates={
       "aaname": "虹桥",
       "airlineCode": "HO",
       "aname": "吉祥",
-      "cabins": [{
+      "cabins": [
+      {
         "activityBM": 0,
         "class": 0,
         "classForDisp": 6,
@@ -112,7 +113,8 @@ var reachDates={
         "qty": 4,
         "rebateAmt": 20,
         "subClass": "F"
-      }],
+      }
+      ],
       "ctinfo": {
         "ckind": "M",
         "ctname": "空中客车 A320",
