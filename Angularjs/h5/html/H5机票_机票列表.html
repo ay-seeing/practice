@@ -10,78 +10,84 @@
 <link href="../style/flight.css" rel="stylesheet" />
 </head>
 
-<body ng-app>
+<body ng-app="testApp" ng-controller="body">
 <header class="flight-header"> <i id="c-ui-header-return" class="returnico i_bef"></i>
 	<h1 class="twotitle"><span id="title">北京-上海</span>
 		<p class="result">共<span id="flightTotal">19</span>条</p>
 	</h1>
-	<a href="/html5/" class="js_home icon_home i_bef" id="js_home"></a> <a href="tel:4000086666" class="icon_phone i_bef __hreftel__" id="js_phone"></a> </header>
-<!--S 筛选菜单-->
-<div class="flight-menubar">
-	<ul class="flight-listdate">
-		<li class="yesterday">
-			<div>前一天</div>
-			<div class="price"><dfn>&yen;</dfn>515</div>
-		</li>
-		<li class="today">
-			<div class="date">03-29</div>
-			<div class="price"><dfn>&yen;</dfn>436</div>
-		</li>
-		<li class="tomorrow">
-			<div>后一天</div>
-			<div class="price"><dfn>&yen;</dfn>389</div>
-		</li>
-		<li class="cheap-calendar">
-			<div class="calendar">低价日历</div>
-		</li>
-	</ul>
-	<ul class="tab_by">
-		<li data-type="time" class="bytime hover">时间<em>↑</em><!--向下箭头就用我哦<em>↓</em>--></li>
-		<li data-type="filter" class="">筛选</li>
-		<li data-type="price" class="byprice">价格<em>↑</em></li>
-	</ul>
-</div>
-<!--E 筛选菜单--> 
-<!--S 机票列表-->
-<section class="f_list pb85" ng-controller="results">
-	<div ng-repeat="item in fltList">
-		<ul class="f_list_tab js_flight_item" data-key="0">
-			<!-- <input type="checkbox" ng-model="" ng-true-class="" ng-false-class=""> -->
-			<span class="flight-icon-formobile"></span>
-			<li class="f_info">
-				<p><i><strong>06:50</strong>-09:05</i> {{item.daname}}<span>-</span>{{item.aaname}}</p>
-				<p>{{item.aname}} {{item.flightNo}} {{item.planeType}}{{item.ckind}}</p>
+	<a href="/html5/" class="js_home icon_home i_bef" id="js_home"></a> <a href="tel:4000086666" class="icon_phone i_bef __hreftel__" id="js_phone"></a> 
+</header>
+
+<div class="page2" ng-controller="results">
+	<!--S 筛选菜单-->
+	<div class="flight-menubar">
+		<ul class="flight-listdate">
+			<li class="yesterday">
+				<div>前一天</div>
+				<div class="price"><dfn>&yen;</dfn>515</div>
 			</li>
-			<li class="f_price">
-				<p class="hot_ico">{{item.cabins[0].discount}}折 <dfn>¥</dfn><strong>{{item.cabins[0].price}}</strong></p>
-				<p> {{classForDisp[item.cabins[0].classForDisp-1]}} <em class="f_num"> &gt;9张 </em></p>
+			<li class="today">
+				<div class="date">03-29</div>
+				<div class="price"><dfn>&yen;</dfn>436</div>
 			</li>
-			<p class="flight-listfold js_subswitch flight-packdown"></p>
+			<li class="tomorrow">
+				<div>后一天</div>
+				<div class="price"><dfn>&yen;</dfn>389</div>
+			</li>
+			<li class="cheap-calendar">
+				<div class="calendar">低价日历</div>
+			</li>
 		</ul>
-		<!--展开详情-->
-		<ul class="f_detail js_sublist" style="display: block;">
-			<li class="arr_r js_flight_seat" ng-repeat="subi in item.cabins" ng-show="!$first"> <span class="xq_info f_ico"> {{classForDisp[subi.classForDisp-1]}}{{subi.value}} <em>&gt;{{subi.flag}}张</em> <em>{{subi.discount}}折</em> </span> <span class="xq_price"> <dfn>¥</dfn> <strong>{{subi.price}}</strong> </span> </li>
+		<ul class="tab_by">
+			<li data-type="time" class="bytime" ng-click="sort_result('dTime',$event);">时间<em>{{sort_time}}</em><!--向下箭头就用我哦<em>↓</em>--></li>
+			<li data-type="filter" class="">筛选</li>
+			<li data-type="price" class="byprice" ng-click="sort_result('cabins[0].price',$event)">价格<em>{{sort_price}}</em></li>
 		</ul>
 	</div>
-	<!-- <ul class="f_list_tab js_flight_item" data-key="0">
-		<li class="f_info">
-			<p><i><strong>06:50</strong>-09:05</i> 首都<span class="flight-icon-stopin"><em>经停</em></span>虹桥</p>
-			<p>吉祥 HO1252 320中</p>
-		</li>
-		<li class="f_price">
-			<p class="hot_ico">9.7折 <dfn>¥</dfn><strong>1100</strong></p>
-			<p> <span class="clr-ff9a14">高端经济舱</span> <span class="flight-icon-return">返<dfn>&yen;</dfn>25</span> <em class="f_num"> &gt;9张 </em></p>
-		</li>
-		<p class="flight-listfold js_subswitch flight-packup"></p>
-	</ul>
-	<ul class="f_detail js_sublist" style="display: none;">
-		<li class="arr_r js_flight_seat" data-flightno="HO1252" data-classfordisp="6" data-parent-key="0" data-key="0" data-class="c0"> <span class="xq_info f_ico"> 经济舱 <em>&gt;9张</em> <em>9.7折</em> </span> <span class="xq_price"> <dfn>¥</dfn> <strong>1100</strong> </span> </li>
-		<li class="arr_r js_flight_seat" data-flightno="HO1252" data-classfordisp="6" data-parent-key="0" data-key="1" data-class="c0"> <span class="xq_info f_ico"> 经济舱 <em>&gt;9张</em> <em>原价</em> </span> <span class="xq_price"> <dfn>¥</dfn> <strong>1130</strong> </span> </li>
-		<li class="arr_r js_flight_seat" data-flightno="HO1252" data-classfordisp="5" data-parent-key="0" data-key="2" data-class="c3"> <span class="xq_info f_ico"> 头等舱 <em> 8张 </em> <em>原价</em> </span> <span class="xq_price"> <dfn>¥</dfn> <strong>3050</strong> </span> </li>
-	</ul> -->
-</section>
-<!--E 机票列表-->
+	<!--E 筛选菜单--> 
+	<!--S 机票列表-->
+	<section class="f_list pb85">
+		<div ng-repeat="item in fltList | orderBy:predicate:reverse">
+			<ul class="f_list_tab js_flight_item" on-finish-render="fntest()" data-key="{{$index}}">
+				<!-- <input type="checkbox" ng-model="" ng-true-class="" ng-false-class=""> -->
+				<span class="flight-icon-formobile"></span>
+				<li class="f_info">
+					<p><i><strong>{{item.dTime}}</strong>-{{item.aTime}}</i> {{item.daname}}<span>-</span>{{item.aaname}}</p>
+					<p>{{item.aname}} {{item.flightNo}} {{item.planeType}}{{item.ckind}}</p>
+				</li>
+				<li class="f_price">
+					<p class="hot_ico">{{item.cabins[0].discount}}折 <dfn>&yen;</dfn><strong>{{item.cabins[0].price}}</strong></p>
+					<p> {{classForDisp[item.cabins[0].classForDisp-1]}} <em class="f_num"> &gt;9张 </em></p>
+				</li>
+				<p class="flight-listfold js_subswitch flight-packdown"></p>
+			</ul>
+			<!--展开详情-->
+			<ul class="f_detail js_sublist">
+				<li class="arr_r js_flight_seat" ng-repeat="subi in item.cabins" ng-show="!$first"> <span class="xq_info f_ico"> {{classForDisp[subi.classForDisp-1]}}{{subi.value}} <em>&gt;{{subi.flag}}张</em> <em>{{subi.discount}}折</em> </span> <span class="xq_price"> <dfn>&yen;</dfn> <strong>{{subi.price}}</strong> </span> </li>
+			</ul>
+		</div>
+		<!-- <ul class="f_list_tab js_flight_item" data-key="0">
+			<li class="f_info">
+				<p><i><strong>06:50</strong>-09:05</i> 首都<span class="flight-icon-stopin"><em>经停</em></span>虹桥</p>
+				<p>吉祥 HO1252 320中</p>
+			</li>
+			<li class="f_price">
+				<p class="hot_ico">9.7折 <dfn>¥</dfn><strong>1100</strong></p>
+				<p> <span class="clr-ff9a14">高端经济舱</span> <span class="flight-icon-return">返<dfn>&yen;</dfn>25</span> <em class="f_num"> &gt;9张 </em></p>
+			</li>
+			<p class="flight-listfold js_subswitch flight-packup"></p>
+		</ul>
+		<ul class="f_detail js_sublist" style="display: none;">
+			<li class="arr_r js_flight_seat" data-flightno="HO1252" data-classfordisp="6" data-parent-key="0" data-key="0" data-class="c0"> <span class="xq_info f_ico"> 经济舱 <em>&gt;9张</em> <em>9.7折</em> </span> <span class="xq_price"> <dfn>¥</dfn> <strong>1100</strong> </span> </li>
+			<li class="arr_r js_flight_seat" data-flightno="HO1252" data-classfordisp="6" data-parent-key="0" data-key="1" data-class="c0"> <span class="xq_info f_ico"> 经济舱 <em>&gt;9张</em> <em>原价</em> </span> <span class="xq_price"> <dfn>¥</dfn> <strong>1130</strong> </span> </li>
+			<li class="arr_r js_flight_seat" data-flightno="HO1252" data-classfordisp="5" data-parent-key="0" data-key="2" data-class="c3"> <span class="xq_info f_ico"> 头等舱 <em> 8张 </em> <em>原价</em> </span> <span class="xq_price"> <dfn>¥</dfn> <strong>3050</strong> </span> </li>
+		</ul> -->
+	</section>
+	<!--E 机票列表-->
+</div>
 
+<div class="page3"></div>
+<div id="tip" ng-show="showTip">{{tip}} <span class="close">×</span></div>
 <script src="../js/angular.js"></script>
 <!-- <script src="../localDate/searchResult.json"></script> -->
 <script>
@@ -93,15 +99,95 @@ addfile.onload = function(){
 	resultDate = reachDates.value.items;
 }
 //setTimeout(function(){console.log(reachDates)},2000);*/
+var oTip = document.querySelector("#tip"),
+	oCloseTip = oTip.querySelector(".close");
+oCloseTip.onclick = function(){
+	oTip.style.display = "none";
+}
+function body($scope){
+	$scope.tip = "aa";
+	//浮层影藏
+	$scope.showTip = false;
+}
+var module = angular.module('testApp', [])
+    .directive('onFinishRender', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+            if (scope.$last === true) {
+                element.ready(function () {
+                    console.log("calling:"+attr.onFinishRender);
+                    // CALL TEST HERE!
+                });
+            }
+        }
+    }
+});
 function results($scope, $http){
+	function fntest(){
+		alert(12);
+	}
 	$scope.subClass = {"Y":"经济舱","M":"经济舱","N":"经济舱","L":"经济舱","K":"经济舱","H":"经济舱","G":"经济舱","Q":"经济舱","E":"经济舱","B":"经济舱","T":"经济舱","Q":"经济舱","R":"经济舱","X":"经济舱","C":"公务舱","D":"公务舱","F":"头等舱","A":"头等舱","V":"常旅客"};
 	$scope.classForDisp = ["高端经济舱","超值头等舱","超级经济舱","商务舱","头等舱","经济舱"];
 	// 获取json 数据
 	$http.get('../localDate/searchResult.json').success(function(data) {
 		$scope.fltList = data.value.items;
-	})
+		setTimeout(function(){alert(78);
+			var flts = document.querySelectorAll(".js_flight_item"),
+				subflts = document.querySelectorAll(".js_sublist");
+			var len = flts.length;
+			for(var i=0;i<len;i++){
+				flts[i].index = i;
+				flts[i].querySelector(".js_subswitch").onclick = function(){
+					var subList = subflts[this.parentNode.index];
+					if(subList.children.length<=1){
+						// 代码失败
+						$scope.$parent.tip = "没有多余的选择!";
+						// 代码失败
+						//$scope.showTip = true;
+						oTip.style.display="block";
+						//setTimeout(function(){oTip.style.display="none";},1000);
+						return false;
+					}
+					if(this.className.indexOf("flight-packdown")!=-1){
+						this.className = "flight-listfold js_subswitch flight-packup";
+						subList.style.display = "block";
+					}else{
+						this.className = "flight-listfold js_subswitch flight-packdown";
+						subList.style.display = "none";
+					}
+				}
+			}
+		},1000);
+
+
+		//默认排序
+		$scope.sort_time = "↑";
+		$scope.sort_price = "↑";
+
+		// 排序
+		$scope.sort_result = function(n,e){
+			//predicate='dTime';
+			$scope.predicate=n;
+			$scope.reverse = !$scope.reverse;
+			var oTarget = e.target,
+				aSubTag = oTarget.parentNode.querySelectorAll("li");
+				subLenght = aSubTag.length;
+				for(var n=0;n<subLenght;n++){
+					var currentClass = aSubTag[n].className;
+					if(currentClass.indexOf("hover")!=-1){
+						aSubTag[n].className = currentClass.replace()
+					}
+				}
+		}
+	});
 }
 
+
+// ngRepeat finish callback
+// http://www.nodewiz.biz/angular-js-final-callback-after-ng-repeat/
+// http://stackoverflow.com/questions/15207788/calling-a-function-when-ng-repeat-has-finished
+// http://jsfiddle.net/paulocoelho/BsMqq/3/
 </script>
 </body>
 </html>
