@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>derective最简单的用法</title>
+  <script src="../js/angular.js"></script>
+</head>
+<body ng-app="myApp">
+  <ul ng-controller="ctrl">
+    <li ng-repeat="item in items" on-finish-repeat>{{item}}</li>
+  </ul>
+  <script>
+var app = angular.module("myApp",[]);
+app.controller("ctrl",function($scope){
+  $scope.items = [1,5,9,12];
+}).directive("onFinishRepeat",function(){
+  return {
+    restrict:"EA",
+    link:function(scope,element,attr){
+      if(scope.$first){
+        console.log(scope.$index);
+      }
+      /*if(scope.$last){
+        console.log(scope.$index);
+      }*/
+    }
+  }
+});
+  </script>
+</body>
+</html>

@@ -49,7 +49,7 @@
 	<!--S 机票列表-->
 	<section class="f_list pb85">
 		<div ng-repeat="item in fltList | orderBy:predicate:reverse | limitTo:10">
-			<ul class="f_list_tab js_flight_item" on-finish-render data-key="{{$index}}">
+			<ul class="f_list_tab js_flight_item" data-key="{{$index}}">
 				<!-- <input type="checkbox" ng-model="" ng-true-class="" ng-false-class=""> -->
 				<span class="flight-icon-formobile"></span>
 				<li class="f_info">
