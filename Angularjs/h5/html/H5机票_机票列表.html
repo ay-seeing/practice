@@ -11,15 +11,16 @@
 </head>
 
 <body ng-app ng-controller="body">
-<header class="flight-header"> <i id="c-ui-header-return" class="returnico i_bef"></i>
-	<h1 class="twotitle"><span id="title">北京-上海</span>
-		<p class="result">共<span id="flightTotal">19</span>条</p>
-	</h1>
-	<a href="/html5/" class="js_home icon_home i_bef" id="js_home"></a> <a href="tel:4000086666" class="icon_phone i_bef __hreftel__" id="js_phone"></a> 
-</header>
 
 
-<div class="page2" ng-controller="results">
+
+<div class="page page_current" ng-controller="results">
+	<header class="flight-header"> <i id="c-ui-header-return" class="returnico i_bef"></i>
+		<h1 class="twotitle"><span id="title">北京-上海</span>
+			<p class="result">共<span id="flightTotal">19</span>条</p>
+		</h1>
+		<a href="/html5/" class="js_home icon_home i_bef" id="js_home"></a> <a href="tel:4000086666" class="icon_phone i_bef __hreftel__" id="js_phone"></a> 
+	</header>
 	<!--S 筛选菜单-->
 	<div class="flight-menubar">
 		<ul class="flight-listdate">
@@ -40,9 +41,9 @@
 			</li>
 		</ul>
 		<ul class="tab_by">
-			<li data-type="time" class="bytime" ng-click="sort_result('dTime',$event);">时间<em>{{sort_time}}</em><!--向下箭头就用我哦<em>↓</em>--></li>
-			<li data-type="filter" class="">筛选</li>
-			<li data-type="price" class="byprice" ng-click="sort_result('cabins[0].price',$event)">价格<em>{{sort_price}}</em></li>
+			<li data-type="time" class="bytime" ng-click="sort_result('dTime',$event,'sort_time');">时间<em>{{sort_time}}</em><!--向下箭头就用我哦<em>↓</em>--></li>
+			<li data-type="filter" _src="page_filter" class="">筛选</li>
+			<li data-type="price" class="byprice" ng-click="sort_result('cabins[0].price',$event,'sort_price')">价格<em>{{sort_price}}</em></li>
 		</ul>
 	</div>
 	<!--E 筛选菜单--> 
@@ -51,7 +52,7 @@
 		<div ng-repeat="item in fltList | orderBy:predicate:reverse | limitTo:10">
 			<ul class="f_list_tab js_flight_item" data-key="{{$index}}">
 				<!-- <input type="checkbox" ng-model="" ng-true-class="" ng-false-class=""> -->
-				<span class="flight-icon-formobile"></span>
+				<span class="flight-icon-formobile" ng-show="item.cabins[0].activityBM"></span>
 				<li class="f_info">
 					<p><i><strong>{{item.dTime}}</strong>-{{item.aTime}}</i> {{item.daname}}<span>-</span>{{item.aaname}}</p>
 					<p>{{item.aname}} {{item.flightNo}} {{item.planeType}}{{item.ckind}}</p>
@@ -87,9 +88,17 @@
 </div>
 
 
-<div class="page3"></div>
+<div class="page">
+	<header class="flight-header"> <i id="c-ui-header-return" class="returnico i_bef"></i>
+		<h1 class="twotitle"><span id="title">北京-上海</span>
+			<p class="result">共<span id="flightTotal">19</span>条</p>
+		</h1>
+		<a href="/html5/" class="js_home icon_home i_bef" id="js_home"></a> <a href="tel:4000086666" class="icon_phone i_bef __hreftel__" id="js_phone"></a> 
+	</header>
+</div>
 <div id="tip" ng-show="showTip">{{tip}} <span class="close" ng-click="closeTip()">×</span></div>
 <script src="../js/angular.js"></script>
+<script src="../js/jquery-1.11.1.min.js"></script>
 <!-- <script src="../localDate/searchResult.json"></script> -->
 <script>
 /*var JSONP = document.createElement("script");
@@ -217,7 +226,8 @@ function results($scope,$http){
 
 
 	// 排序
-	$scope.sort_result = function(n,e){
+	$scope.sort_result = function(n,e,arrow){
+		$scope[arrow] = $scope[arrow]=="↓"?"↑":"↓";
 		//predicate='dTime';
 		$scope.predicate=n;
 		$scope.reverse = !$scope.reverse;
@@ -245,6 +255,14 @@ function getNextSibling(tagN){
 // http://www.nodewiz.biz/angular-js-final-callback-after-ng-repeat/
 // http://stackoverflow.com/questions/15207788/calling-a-function-when-ng-repeat-has-finished
 // http://jsfiddle.net/paulocoelho/BsMqq/3/
+
+
+
+
+$("[_src]").on("click",function(){
+	var url = window.location.href;
+	console.log(url+$(this).attr("_src"));
+});
 </script>
 </body>
 </html>

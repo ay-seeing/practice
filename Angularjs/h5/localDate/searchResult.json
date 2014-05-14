@@ -15,7 +15,7 @@
       "aname": "吉祥",
       "cabins": [
       {
-        "activityBM": 0,
+        "activityBM": 1,
         "class": 0,
         "classForDisp": 6,
         "discount": 5.6,
@@ -139,7 +139,7 @@
       "airlineCode": "MU",
       "aname": "东航",
       "cabins": [{
-        "activityBM": 0,
+        "activityBM": 1,
         "class": 0,
         "classForDisp": 6,
         "discount": 6.2,

@@ -1,4 +1,15 @@
 ﻿@charset "utf-8";
+.page{display:none;}
+.page_current{display:block;}
+.move.left{
+  left:100%;
+  animation:mymove 2s;
+  -webkit-animation:mymove 2s;
+}
+@-webkit-keyframes mymove{
+  0% {left:100%;}
+  100% {left:0;}
+}
 .intrip .cfbox { background-color: #fff; }
 .intrip .cfbox li { padding: 11px; border-bottom: 2px solid #f5f5f5; color: #333; }
 .intrip .cfbox li strong { font-weight: 600; }
