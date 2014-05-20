@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试插件页面</title>
+  <script>
+var customEvent = document.createEvent('Event');
+customEvent.initEvent('myCustomEvent', true, true);
+
+function fireCustomEvent(data) {
+  hiddenDiv = document.getElementById('myCustomEventDiv');
+  hiddenDiv.innerText = data
+  hiddenDiv.dispatchEvent(customEvent);
+}
+  </script>
+</head>
+<body>
+  <div id="myCustomEventDiv">内容</div>
+</body>
+</html>
