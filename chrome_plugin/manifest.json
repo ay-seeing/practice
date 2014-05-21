@@ -8,18 +8,16 @@
   "description": "我的第一个chrome 插件",
   // 在 chrome://extensions/ 插件设置页面，当前插件里有个 背景页的链接
   "background":{
-   // "page":"background.html",
-   "scripts":["js/background.js"],
-   "persistent": false
-   },
-   // content_scripts的js可访问DOM节点，该js可以与 backgorund.js 通信
-   "content_scripts":[{
-      "matches":["http://*/*"],
+   //"page":"background.html",
+   "scripts":["js/background.js"]
+  },
+  // content_scripts的js可访问DOM节点，该js可以与 backgorund.js 通信
+  /*"content_scripts":[{
       "js":["js/myscript.js"]
-   }],
+   }],*/
   "browser_action": {
+    "name":"",
     "default_icon": "images/icon-19.png",
-    "default_title": "MyFristPlugIn",
     "default_popup": "popup.html"
   }
 }
