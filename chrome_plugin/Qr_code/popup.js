@@ -30,7 +30,9 @@ document.addEventListener('DOMContentLoaded',function(){
       foreground      : "#000000" //前景颜色 */
       width:"200",
       height:"200",
-      text  : toUtf8(tab.url)
+      ecLevel:"H",
+      text  : toUtf8(tab.url),
+      image :"logo.png"
     });
   });
 });
