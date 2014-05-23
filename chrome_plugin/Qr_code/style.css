@@ -1,0 +1,5 @@
+*{margin:0;padding:0;}
+body{padding:10px;font-size:14px;font-family:tahoma,arial,"microsoft yahei",simsun;}
+.inputBar{margin-bottom:10px;overflow:hidden;}
+input[type="text"]{height:22px;line-height:22px;padding:3px;border:1px solid #999;width:150px;}
+input[type="button"]{height:30px;width:42px;text-align:center;padding:0;border:1px solid #999;background:#999;color:white;padding:0 5px;cursor:pointer;}

@@ -1,6 +1,6 @@
 {
-  "name": "Qr code",
-  "description": "二维码生成",
+  "name": "二维码生成",
+  "description": "二维码生成插件，默认生成当前页面路径二维码，弹层中输入任何字符串都可以重新生成二维码",
   "version": "1.0",
   "permissions": [
     "tabs", "http://*/*", "https://*/*"
@@ -9,10 +9,14 @@
    //"page":"background.html",
    "scripts":["jquery-1.10.2.min.js","jquery.qrcode.min.js","bg.js"]
   },*/
-
+  "icons":{
+    "19": "image/icon-19.png",
+    "38": "image/icon-38.png",
+    "128": "image/icon-128.png"
+  },
   "browser_action": {
       "default_title": "获取当前路径二维码",
-      "default_icon": "icon-19.png",
+      "default_icon": "image/icon-19.png",
       "default_popup": "popup.html"
   },
   "manifest_version": 2
