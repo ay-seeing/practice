@@ -1,0 +1,16 @@
+{
+  "name":"nw-demo",
+  "main":"index.html",
+  "description":"node-webkit第一个demo",
+  "version":"0.1.0",
+  "keywords":["node-webkit"],
+  "window":{
+    "icon":"logo.png",
+    "toolbar":true,
+    "width":800,
+    "height":500
+  },
+  "webkit":{
+    "plugin":true
+  }
+}
