@@ -3,8 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <title>hello world</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello World!</h1>
+  <ul class="system_mutual">
+    <li class="minimum" id="minimum">-</li>
+    <li class="maximum" id='maximum'>口</li>
+    <li id="close" class="close"></li>
+  </ul>
+  <div class="wraper">
+    <h1>Hello World!</h1>
+  </div>
+  <script>
+var oClose = document.getElementById("close"),
+  oMin = document.getElementById("minimum"),
+  oMax = document.getElementById("maximum");
+//获取当前窗口
+var gui = require("nw.gui"),
+  win = gui.Window.get();
+
+oMin.addEventListener("click",function(){
+  // 最小化窗口
+  win.minimize();
+});
+
+// 监听最小化事件
+win.on("minimize",function(){
+  console.log("Window is minimized");
+});
+
+oClose.addEventListener("click",function(){
+  // 关闭窗口
+  win.close();
+});
+
+//监听窗口关闭事件
+/*win.on("close",function(){
+  console.log("关闭窗口");
+});*/
+  </script>
 </body>
 </html>

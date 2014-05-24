@@ -6,9 +6,14 @@
   "keywords":["node-webkit"],
   "window":{
     "icon":"logo.png",
-    "toolbar":true,
+    "toolbar":false,
+    "title":false,
     "width":800,
-    "height":500
+    "height":500,
+    "frame":false,
+    "resizable":false,
+    "show_in_taskbar":true,
+    "kiosk":false
   },
   "webkit":{
     "plugin":true
