@@ -6,8 +6,9 @@
   "keywords":["node-webkit"],
   "window":{
     "icon":"logo.png",
+    "position": "mouse",
     "toolbar":false,
-    "title":false,
+    "title":"第一个node webkit",
     "width":800,
     "height":500,
     "frame":false,

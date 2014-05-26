@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="toolbar"></div>
   <ul class="system_mutual">
     <li class="minimum" id="minimum">-</li>
     <li class="maximum" id='maximum'>口</li>
@@ -29,7 +30,16 @@ oMin.addEventListener("click",function(){
 
 // 监听最小化事件
 win.on("minimize",function(){
-  console.log("Window is minimized");
+  // 隐藏window
+  this.hide();
+  // 创建托盘图标
+  tray = new gui.Tray({title:"tray",icon:"logo.png"});
+  // 点击盘图标事件
+  tray.on("click",function(){
+    this.remove();
+    tray = null;
+    win.show();
+  });
 });
 
 oClose.addEventListener("click",function(){
@@ -41,6 +51,8 @@ oClose.addEventListener("click",function(){
 /*win.on("close",function(){
   console.log("关闭窗口");
 });*/
+
+
   </script>
 </body>
 </html>
