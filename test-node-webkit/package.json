@@ -9,6 +9,7 @@
   "window":{
     "icon":"logo.png",
     "position": "center",
+    //"always-on-top":true,
     "toolbar":true,
     "title":"一个node webkit",
     "width":800,

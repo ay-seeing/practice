@@ -8,15 +8,19 @@
 <body onload="/*process.mainModule.exports.callback();*/">
   <div class="toolbar" id="toolbar"></div>
   <ul class="system_mutual">
-    <li class="minimum" id="minimum">-</li>
-    <li class="maximum" id='maximum'>口</li>
-    <li id="close" class="close"></li>
+    <li class="refresh2" title="强制刷新">O</li>
+    <li class="refresh" title="刷新">o</li>
+    <li class="minimum" id="minimum" title="最小化"></li>
+    <li class="maximum" id='maximum' title="最大化">口</li>
+    <li id="close" class="close" title="关闭"></li>
   </ul>
-  <div class="wraper">
-    <h1>Hello World!</h1>
+  <div class="wraper" id="devtools">
+    <h1>Hello World!0</h1>
+    <input type="button" value="截图" onclick = "oMenu.takeSnapshot('images/','aa','png')">
   </div>
   <script>
 var oMenu = {
+  "isMaxScreen":false,
   "getOne":function(p,str){
     return p.querySelector(str);
   },
@@ -31,8 +35,26 @@ var oMenu = {
       this.remove();
       tray = null;
       win.show();
+      win.focus();
       isShowWindow = true;
     });
+  },
+  "maxFn":function(){
+    if(!oMenu.isMaxScreen){
+      win.maximize();
+    }else{
+      win.unmaximize();
+    }
+    oMenu.isMaxScreen = !oMenu.isMaxScreen;
+  },
+  // 截图函数
+  takeSnapshot:function(path,name,type){
+    win.capturePage(function (img) {
+      var base64Data = img.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+      require("fs").writeFile(path+name+"."+type, base64Data, 'base64', function (err) {
+       console.log(err);
+      });
+    }, type);
   }
 }
 
@@ -42,11 +64,47 @@ var gui = require("nw.gui"),
 
 var oMinimum = oMenu.getOne(document,".minimum"),
   oMaximum = oMenu.getOne(document,".maximum"),
-  oClose = oMenu.getOne(document,".close");
+  oClose = oMenu.getOne(document,".close"),
+  oRefreah = oMenu.getOne(document,".refresh"),
+  oRefreah2 = oMenu.getOne(document,".refresh2"),
+  h1 = oMenu.getOne(document,"h1");
+
+// 刷新窗口
+oRefreah.addEventListener("click",function(){
+  win.reload();
+});
+
+// 强刷
+oRefreah2.addEventListener("click",function(){
+  win.reloadIgnoringCache();
+});
+
+//窗口最小化
 oMinimum.addEventListener("click",function(){
   win.minimize();
 });
+// 侦听窗口最小化
 win.on("minimize",oMenu.minFn);
+
+//窗口最大化
+oMaximum.addEventListener("click",oMenu.maxFn);
+
+// 关闭窗口
+oClose.addEventListener("click",function(){
+  win.close();
+});
+
+//创建菜单
+// 创建window菜单
+var menubar = new gui.Menu({ type: 'menubar' });
+win.menu = menubar;
+// 创建content菜单
+
+/*document.addEventListener("contentMenu",function(ev){
+  ev.preventDefault();
+  menu.popup(10,10);
+  return false;
+});*/
   </script>
 </body>
 </html>
