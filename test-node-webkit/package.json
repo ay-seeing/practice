@@ -10,11 +10,11 @@
     "icon":"logo.png",
     "position": "center",
     //"always-on-top":true,
-    "toolbar":true,
+    "toolbar":false,
     "title":"一个node webkit",
     "width":800,
     "height":500,
-    "frame":true,
+    "frame":false,
     "resizable":false,
     "show_in_taskbar":true,
     "kiosk":false

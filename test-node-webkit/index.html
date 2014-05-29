@@ -8,10 +8,10 @@
 <body onload="/*process.mainModule.exports.callback();*/">
   <div class="toolbar" id="toolbar"></div>
   <ul class="system_mutual">
-    <li class="refresh2" title="强制刷新">O</li>
-    <li class="refresh" title="刷新">o</li>
+    <li class="refresh2" title="强制刷新"><i></i></li>
+    <li class="refresh" title="刷新"><i></i></li>
     <li class="minimum" id="minimum" title="最小化"></li>
-    <li class="maximum" id='maximum' title="最大化">口</li>
+    <li class="maximum" id='maximum' title="最大化"></li>
     <li id="close" class="close" title="关闭"></li>
   </ul>
   <div class="wraper" id="devtools">
@@ -96,15 +96,29 @@ oClose.addEventListener("click",function(){
 
 //创建菜单
 // 创建window菜单
-var menubar = new gui.Menu({ type: 'menubar' });
-win.menu = menubar;
+var topMenubar = new gui.Menu({ type: 'menubar' });
+var rightHand = new gui.Menu();
+rightHand.append(new gui.MenuItem({
+  label:"复制",
+  //type:"checkbox",
+  icon:"logo.png",
+  click:function(){
+    alert("逗你呢");
+  }
+}));
+topMenubar.append(new gui.MenuItem({label:"菜单哈",submenu:rightHand}));
+win.menu = topMenubar;
 // 创建content菜单
 
-/*document.addEventListener("contentMenu",function(ev){
+document.addEventListener("contextmenu",function(ev){
   ev.preventDefault();
-  menu.popup(10,10);
+  rightHand.popup(ev.clientX,ev.clientY);
   return false;
-});*/
+});
+
+
+
+
   </script>
 </body>
 </html>
