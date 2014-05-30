@@ -59,6 +59,14 @@ var oMenu = {
        console.log(err);
       });
     }, type);
+  },
+  // 清除非当前项
+  removeNotCurent:function(items,current){
+    var len = items.length;
+    for(var i=0;i<len;i++){
+      items[i].checked = false;
+    }
+    current.checked = true;
   }
 }
 
@@ -146,8 +154,10 @@ trayLength = aTrayMenu.length;
 for(var i=0;i<trayLength;i++){
   trayMenu.append(new gui.MenuItem({
     label:aTrayMenu[i],
+    type:"checkbox",
     click:function(ev){
-      this.enabled;
+      oMenu.removeNotCurent(trayMenu.items,this);
+      this.StaticSelectedStyle="background:red";
       var str = oHost[this.label];
       str = str.replace(/\s*\n\s*/g,"\n");
       // nodejs读取文件
@@ -165,6 +175,7 @@ for(var i=0;i<trayLength;i++){
     }
   }));
 }
+
   </script>
 </body>
 </html>
