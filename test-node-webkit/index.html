@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>hello world</title>
   <link rel="stylesheet" href="style.css">
+  <script src="js/host.json"></script>
 </head>
 <body onload="/*process.mainModule.exports.callback();*/">
   <div class="toolbar" id="toolbar"></div>
@@ -31,6 +32,9 @@ var oMenu = {
     win.hide();
     var tray = new gui.Tray({title:"tray",icon:"logo.png"});
     tray.tooltip = "打开软件";
+    // 设置右键菜单
+    tray.menu = trayMenu;
+    //点击打开软件
     tray.on("click",function(){
       this.remove();
       tray = null;
@@ -58,9 +62,14 @@ var oMenu = {
   }
 }
 
+//引入nw.gui模块
+var gui = require("nw.gui");
+
+// 引入文件系统模块
+var fs = require("fs");
+
 //获取当前窗口
-var gui = require("nw.gui"),
-  win = gui.Window.get();
+var win = gui.Window.get();
 
 var oMinimum = oMenu.getOne(document,".minimum"),
   oMaximum = oMenu.getOne(document,".maximum"),
@@ -94,17 +103,28 @@ oClose.addEventListener("click",function(){
   win.close();
 });
 
+
 //创建菜单
 // 创建window菜单
 var topMenubar = new gui.Menu({ type: 'menubar' });
 var rightHand = new gui.Menu();
 rightHand.append(new gui.MenuItem({
   label:"复制",
-  //type:"checkbox",
-  icon:"logo.png",
+  type:"checkbox"/*,
   click:function(){
     alert("逗你呢");
-  }
+  }*/
+}));
+// 菜单添加分割线
+rightHand.append(new gui.MenuItem({
+  type:"separator"
+}));
+rightHand.append(new gui.MenuItem({
+  label:"图标",
+  icon:"logo.png"
+}));
+rightHand.append(new gui.MenuItem({
+  type:"separator"
 }));
 topMenubar.append(new gui.MenuItem({label:"菜单哈",submenu:rightHand}));
 win.menu = topMenubar;
@@ -112,13 +132,39 @@ win.menu = topMenubar;
 
 document.addEventListener("contextmenu",function(ev){
   ev.preventDefault();
-  rightHand.popup(ev.clientX,ev.clientY);
+  // 设置右键菜单位置
+  rightHand.popup(ev.x,ev.y);
+  // 或者ev.clientX
+  // rightHand.popup(ev.x,ev.y);
   return false;
 });
 
-
-
-
+var host = "C:\\Windows\\System32\\drivers\\etc\\hosts";
+var trayMenu = new gui.Menu();
+var aTrayMenu = ["local","ui","test","pro"];
+trayLength = aTrayMenu.length;
+for(var i=0;i<trayLength;i++){
+  trayMenu.append(new gui.MenuItem({
+    label:aTrayMenu[i],
+    click:function(ev){
+      this.enabled;
+      var str = oHost[this.label];
+      str = str.replace(/\s*\n\s*/g,"\n");
+      // nodejs读取文件
+      fs.readFile(host,'utf8',function(err, data){
+        if(err){
+          return console.log(err);
+        }
+        // nodejs写入文件
+        fs.writeFile(host,str,function(err){
+          if(err){
+            return console.log(err);
+          }
+        });
+      });
+    }
+  }));
+}
   </script>
 </body>
 </html>

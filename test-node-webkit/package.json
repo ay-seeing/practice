@@ -4,7 +4,7 @@
   "description":"node-webkit第一个demo",
   "version":"0.1.0",
   //"keywords":["node-webkit"],
-  //"nodejs":true,
+  "nodejs":true,
   //"node-main":"js/hello.js",
   "window":{
     "icon":"logo.png",
@@ -13,6 +13,7 @@
     "toolbar":false,
     "title":"一个node webkit",
     "width":800,
+    //"as_desktop":true,
     "height":500,
     "frame":false,
     "resizable":false,
