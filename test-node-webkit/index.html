@@ -90,6 +90,9 @@ var gui = require("nw.gui");
 // 引入文件系统模块
 var fs = require("fs");
 
+// 引入路径目录
+var Path = require("path");
+
 //获取当前窗口
 var win = gui.Window.get();
 
@@ -214,10 +217,24 @@ fileMenu.append(new gui.MenuItem({
   label:"用默认方式打开"
 }));
 
-function walk(path){  
+function walk(path){
+  //path = path.search(/^[cdef][\/\\]/i)!=-1?path+"/":path;
+  
+  path = Path.normalize(path);
+  /*var iscz = true;
+  fs.exists(path,function(exists){
+    if(!exists){
+      iscz = false;
+    }
+  });
+  if(!iscz || !fs.statSync(path).isDirectory()){
+    alert("目录不存在")
+    return false;
+  }*/
+
   var dirList = fs.readdirSync(path),fileList = [];
   dirList.forEach(function(item){
-    if(fs.statSync(path + '/' + item).isDirectory()){
+    if(fs.lstatSync(path + '/' + item).isDirectory()){
       //walk(path + '/' + item);
       fileList.push({name:item,path:path + '/' + item,type:"folder"});
     }else{
@@ -271,8 +288,10 @@ function showFolder(path){
     oDirectorys.appendChild(li);
   }
 }
-oDirectorys.addEventListener("click",function(){showFolder("D:/working/_prototype_/code_beta/a_practice/test-node-webkit")});
-
+// 获取当前文件路径的上一级，如果是当前路径则用 “.”  
+var currentPath = fs.realpathSync("..");
+currentPath = currentPath.replace(/\\/g,"/");
+oDirectorys.addEventListener("click",function(){showFolder(currentPath)});
 
 // 返回上一级
 oBack.addEventListener("click",function(){
@@ -281,6 +300,12 @@ oBack.addEventListener("click",function(){
   var str = path.substring(0,last);
   showFolder(str);
 });
+
+oCrumbs.addEventListener("keypress",function(ev){
+  if(ev.keyCode==13){
+    showFolder(this.value);
+  }
+})
 
   </script>
 </body>
