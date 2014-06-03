@@ -1,5 +1,7 @@
 http://www.xuanhun521.com/Blog/Tag/node-webkit
 
+https://medium.com/chinese-language-collection/node-webkit-native-ui-api-e5ae842ee2a9
+
 http://pan.baidu.com/share/link?shareid=3743096074&uk=2754670725&qq-pf-to=pcqq.c2c
 
 
@@ -9,3 +11,12 @@ http://www.lighttable.com/
 
 
 http://damoqiongqiu.iteye.com/blog/2010720
+
+
+
+官方的一些资源：
+demo：https://github.com/zcbenz/nw-sample-apps
+应用：https://github.com/rogerwang/node-webkit/wiki/List-of-apps-and-companies-using-node-webkit
+怎么运行：https://github.com/rogerwang/node-webkit/wiki/How-to-run-apps
+怎么打包发布：https://github.com/rogerwang/node-webkit/wiki/How-to-package-and-distribute-your-apps
+怎么使用Node模块：https://github.com/rogerwang/node-webkit/wiki/Using-Node-modules

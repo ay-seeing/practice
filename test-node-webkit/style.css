@@ -1,8 +1,8 @@
 *{margin:0;padding:0;}
 body{font:14px/1.5em arial,"microsoft yahei",simsun;color:#666;}
 ul,ol,li{list-style:none;}
-.toolbar{-webkit-app-region:drag;height:30px;line-height:30px;background:#f0f0f0;border-bottom:1px solid #ccc;box-shadow:inset 0 -1px 0 #fff;}
-.system_mutual{margin-top:-31px;position:relative;z-index:999;text-align:right;padding:3px;-webkit-user-select:none;font-size:0;letter-spacing:-0.5em;}
+.toolbar{-webkit-app-region:drag;width:100%;height:30px;line-height:30px;background:#f0f0f0;border-bottom:1px solid #ccc;box-shadow:inset 0 -1px 0 #fff;position:fixed;z-index:999;}
+.system_mutual{width:100%;position:fixed;z-index:1000;text-align:right;padding:3px;-webkit-user-select:none;font-size:0;letter-spacing:-0.5em;}
 .system_mutual li{display:inline-block;vertical-align:top;position:relative;margin-right:5px;width:24px;height:24px;font:20px/24px arial;background:#999;color:white;text-align:center;border-radius:30px;cursor:pointer;-webkit-app-region: no-drag;}
 .system_mutual li::before,.system_mutual li::after,.system_mutual li i::before,.system_mutual li i::after{content:"";position:absolute;left:50%;top:50%;overflow:hidden;}
 .system_mutual .minimum::before{margin:-2px 0 0 -5px;width:10px;height:3px;font:0/24px a;background:white;}
@@ -17,3 +17,12 @@ ul,ol,li{list-style:none;}
 .system_mutual .close::before{margin:-12px 0 0 -6px;content:"\00d7";}
 .system_mutual li:hover,.system_mutual .refresh:hover::after,.system_mutual .refresh2:hover::after{background:#333;}
 .wraper{padding:10px;}
+.crumbsbox{border:2px solid #666;padding:3px;position:fixed;top:40px;left:50%;width:98%;margin-left:-49%;-webkit-box-sizing:border-box;}
+#back{position:absolute;left:0;top:0;width:30px;height:30px;text-align:center;background:black;color:white;font:14px/30px arial;cursor:pointer;}
+#crumbs{height:24px;line-height:24px;border:none;width:100%;padding-left:35px;-webkit-box-sizing:border-box;}
+#directorys{padding:10px;margin-top:80px;}
+#directorys li{display:inline-block;vertical-align:top;width:90px;height:86px;margin:10px 0 0 10px;text-align:center;position:relative;}
+#directorys li img{vertical-align:top;}
+#directorys li .item{position:absolute;left:0;top:0;width:100%;height:100%;padding:5px;line-height:18px;background:white;overflow:hidden;word-wrap:break-word;-webkit-box-sizing:border-box;}
+#directorys li:hover{z-index:2;}
+#directorys li:hover .item{height:auto;box-shadow:0 0 3px 1px #ccc;}
