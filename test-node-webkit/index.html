@@ -29,7 +29,7 @@
       <!-- 在文件管理器中显示“file_path”指定的文件 -->
       <div onclick="gui.Shell.showItemInFolder('D:\\working\\_prototype_\\code_beta\\a_practice\\test-node-webkit');">在文件管理器中显示“file_path”指定的文件</div>
     </div>
-    <div class="crumbsbox"><span id="back">&#x2934;</span><input type="text" id="crumbs"></div>
+    <div class="crumbsbar"><div class="crumbsbox"><span id="back">&#x2934;</span><input type="text" id="crumbs"></div></div>
     <ul id="directorys"></ul>
   </div>
   <script>
@@ -43,18 +43,6 @@ var oMenu = {
   },
   "minFn":function(){
     win.hide();
-    var tray = new gui.Tray({title:"tray",icon:"logo.png"});
-    tray.tooltip = "打开软件";
-    // 设置右键菜单
-    tray.menu = trayMenu;
-    //点击打开软件
-    tray.on("click",function(){
-      this.remove();
-      tray = null;
-      win.show();
-      win.focus();
-      isShowWindow = true;
-    });
   },
   "maxFn":function(){
     if(!oMenu.isMaxScreen){
@@ -158,6 +146,21 @@ rightHand.append(new gui.MenuItem({
 topMenubar.append(new gui.MenuItem({label:"菜单哈",submenu:rightHand}));
 win.menu = topMenubar;
 
+setTimeout(function(){
+  var tray = new gui.Tray({title:"tray",icon:"logo.png"});
+  tray.tooltip = "打开软件";
+  // 设置右键菜单
+  tray.menu = trayMenu;
+  //点击打开软件
+  tray.on("click",function(){
+    //this.remove();
+    //tray = null;
+    win.show();
+    win.focus();
+  });
+},0);
+
+
 // 创建content菜单
 document.addEventListener("contextmenu",function(ev){
   // 阻止默认事件
@@ -220,18 +223,21 @@ fileMenu.append(new gui.MenuItem({
 function walk(path){
   //path = path.search(/^[cdef][\/\\]/i)!=-1?path+"/":path;
   
-  path = Path.normalize(path);
-  /*var iscz = true;
-  fs.exists(path,function(exists){
-    if(!exists){
-      iscz = false;
+  //path = Path.normalize(path);   目录路径格式化
+  // 异步判断目录是否存在
+  /*fs.exists("d:\\working\\_prototype_\\code_beta\\a_practice",function(exists){
+    alert(exists);
+    if(exists){
+      iscz = true;
     }
-  });
-  if(!iscz || !fs.statSync(path).isDirectory()){
-    alert("目录不存在")
+  });*/
+  // 同步判断目录是否存在
+  if(!fs.existsSync(path)){
+    alert("目录不存在");
     return false;
-  }*/
-
+  }
+  //清除显示结果里面的内容，以便重新填充
+  oDirectorys.innerHTML = "";
   var dirList = fs.readdirSync(path),fileList = [];
   dirList.forEach(function(item){
     if(fs.lstatSync(path + '/' + item).isDirectory()){
@@ -244,7 +250,7 @@ function walk(path){
   return fileList;
 }
 function showFolder(path){
-  oDirectorys.innerHTML = "";
+  
   oCrumbs.value = path+"/";
   var fils = walk(path);
   for(var i=0;i<fils.length;i++){
