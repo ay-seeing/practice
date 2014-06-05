@@ -9,6 +9,7 @@
 <body onload="/*process.mainModule.exports.callback();*/">
   <div class="toolbar" id="toolbar"></div>
   <ul class="system_mutual">
+    <li class="refresh3" title="调试" id="ts"><i></i></li>
     <li class="refresh2" title="强制刷新"><i></i></li>
     <li class="refresh" title="刷新"><i></i></li>
     <li class="minimum" id="minimum" title="最小化"></li>
@@ -146,20 +147,7 @@ rightHand.append(new gui.MenuItem({
 topMenubar.append(new gui.MenuItem({label:"菜单哈",submenu:rightHand}));
 win.menu = topMenubar;
 
-setTimeout(function(){
-  var tray = new gui.Tray({title:"tray",icon:"logo.png"});
-  tray.tooltip = "打开软件";
-  // 设置右键菜单
-  tray.menu = trayMenu;
-  //点击打开软件
-  tray.on("click",function(){
-    //this.remove();
-    //tray = null;
-    win.show();
-    win.focus();
-  });
-},0);
-
+  
 
 // 创建content菜单
 document.addEventListener("contextmenu",function(ev){
@@ -201,6 +189,19 @@ for(var i=0;i<trayLength;i++){
   }));
 }
 
+// 托盘图标设置
+var tray = new gui.Tray({title:"tray",icon:"logo.png"});
+//var tray = new gui.Tray({title:"tray",icon:"logo.png"});
+tray.tooltip = "打开软件";
+// 设置右键菜单
+tray.menu = trayMenu;
+//点击打开软件
+tray.on("click",function(){
+  //this.remove();
+  //tray = null;
+  win.show();
+  win.focus();
+});
 // 遍历目录
 /*function walk(fileList,path){  
   var dirList = fs.readdirSync(path),fileList = [];
@@ -311,6 +312,19 @@ oCrumbs.addEventListener("keypress",function(ev){
   if(ev.keyCode==13){
     showFolder(this.value);
   }
+})
+
+
+// 使用 manifest 获取 package.json 文件中 json 对象
+var app = gui.App;
+var manifest = app.manifest;
+var defaultPath = manifest["default-Path"];
+alert(defaultPath);
+
+// 开启开发者工具
+var oTs = oMenu.getOne(document,"#ts");
+oTs.addEventListener("click",function(){
+  win.showDevTools('', false);
 })
 
   </script>
