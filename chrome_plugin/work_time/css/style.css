@@ -1,0 +1,5 @@
+body{font:14px/1.5 '微软雅黑';color:#53637d;background-color:#EEE}.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;-webkit-user-select:none;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+
+h1{color:red;}
+.pop_wraper{width:300px;}
