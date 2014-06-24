@@ -23,7 +23,7 @@ function ajax(url,fnResult,fnFailure){
 }
 
 
-
+//chrome.tabs.executeScript(null, {file: "contentScript.js"});
 
 
 function countfn(str){

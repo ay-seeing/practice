@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>获取 UserAgent 信息</title>
+  <style>
+*{margin:0;padding:0;}
+body{font:16px/2em tahoma,arial,"microsoft yahei",simsun;color:#666;}
+.wraper{width:90%;margin:10px auto;}
+#ua{margin-bottom:20px;}
+#ua .m{line-height:1.2em;}
+.t{color:#333;font-weight:bold;}
+  </style>
+</head>
+<body>
+  <div class="wraper">
+    <div id="ua"></div>
+    <div id="view"></div>
+  </div>
+  <script>
+var ua = navigator.userAgent.toLowerCase();
+var system= ["windows","Macintosh","Android","Linux","Mac OS X"];
+var equipment = ["iPad","iphone","ipod","HTC","M040","M356","M351","GT-I9100","GT-I9300","GT-I9500","GT-I9515","SM-G900A","SM-G800F","SM-G906L","SM-G870A","MI-ONE","MI 1s","MI 2","MI 2S","MI 3"];
+var browser = ["chrome","UCBrowser","MSIE","firefox","opera","MQQBrowser","safari"];
+var browserName = {
+  "chrome":"谷歌浏览器",
+  "ucbrowser":"UC 浏览器",
+  "msie":"IE 浏览器",
+  "firefox":"火狐浏览器",
+  "opera":"欧朋浏览器",
+  "mqqbrowser":"QQ浏览器",
+  "safari":"默认浏览器"
+}
+var eqs = {
+  "ipad;":"iPad",
+  "iphone":"iPhone",
+  "ipod":"iPod",
+  "htc":"HTC手机",
+  "m040":"魅族MX2",
+  "m351":"魅族MX3",
+  "m356":"魅族MX3",
+  "gt-i9100":"Samsung GALAXY S2",
+  "gt-i9300":"Samsung GALAXY S3",
+  "gt-i9500":"Samsung GALAXY S4",
+  "gt-i9515":"Samsung GALAXY S4",
+  "sm-g900a":"Samsung GALAXY S5",
+  "sm-g800f":"Samsung GALAXY S5 mini",
+  "sm-g906l":"Galaxy S5 Prime",
+  "sm-g870a":"Galaxy S5 Active",
+  "mi-one":"小米1",
+  "mi 1s":"小米1s",
+  "mi 2s":"小米2s",
+  "mi 2":"小米2",
+  "mi 2a":"小米2A",
+  "mi 3":"小米3"
+}
+
+function isGet(str,bool){
+  if(!bool&&ua.search(str)!=-1){
+    var resultStr = [];
+    resultStr.push(str);
+
+    //var regE = str+"\/(\\S+)[\\s]?";
+    // 判断是否为苹果移动设备
+    if(ua.search("like mac os x")!=-1){
+      var regE = "\\s([\\d\\._]+)\\slike\\smac\\sos\\sx";
+    }else{
+      var regE = str+"[\/\\s]([\\d\\._]+)[\\s]?";
+    }
+    var reg = new RegExp(regE,"i");
+    if(reg.test(ua)){
+      resultStr.push(ua.match(reg)[1]);
+    }
+    return resultStr;
+  }else{
+    //
+  }
+}
+
+function repeat(arr,fn){
+  var num = arr.length;
+  for(var i=0;i<num;i++){
+    var str = isGet(arr[i].toLowerCase());
+    if(str){
+      return str;
+    }
+  }
+  if(typeof fn == "function"){
+    fn();
+  }
+}
+
+// 设备系统查找
+var get_system = repeat(system);
+// 判断是否为移动设备
+if(ua.search("mobile")!=-1){
+  //alert(repeat(equipment).toString());
+  get_system.unshift(eqs[repeat(equipment).toString()]);
+}else{
+  get_system.unshift("PC");
+}
+
+var get_browser = repeat(browser);
+document.querySelector("#ua").innerHTML = "<span class='t'>设备UserAgent：</span><div class='m'>"+navigator.userAgent+"</div>";
+//document.querySelector("#view").innerText = "设备："+get_system.toString()+"\n浏览器："+browserName[get_browser[0][0]];
+if(get_system.length==3){
+  document.querySelector("#view").innerHTML = "<span class='t'>设备：</span>"+get_system[0]+"<br /><span class='t'>系统：</span>"+get_system[1]+"<br /><span class='t'>系统版本：</span>"+get_system[2]+"<br /><span class='t'>浏览器：</span>"+browserName[get_browser[0]]+"<br /><span class='t'>浏览器版本：</span>"+get_browser[1];
+}else{
+  document.querySelector("#view").innerHTML = "<span class='t'>设备：</span>"+get_system[0]+"<br /><span class='t'>系统：</span>"+get_system[1]+"<br /><span class='t'>浏览器：</span>"+browserName[get_browser[0]]+"<br /><span class='t'>浏览器版本：</span>"+get_browser[1];
+}
+  </script>
+</body>
+</html>

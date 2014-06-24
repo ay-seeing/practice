@@ -5,12 +5,17 @@
   <title>获取 UserAgent 信息</title>
     <style>
 *{margin:0;padding:0;}
-body{margin:10px;font-family:"microsoft yahei";}
+body{font:16px/2em tahoma,arial,"microsoft yahei",simsun;color:#666;}
 li{list-style:none;margin-top:20px;line-height:1.3em;}
 strong{display:block;font-size:1.4em;margin-bottom:5px;}
+.wraper{width:90%;margin:10px auto;}
+#ua{margin-bottom:20px;}
+#ua .m{line-height:1.2em;}
+.t{color:#333;font-weight:bold;}
   </style>
 </head>
 <body>
+  <a href="http://www.tera-wurfl.com/explore/search.php">http://www.tera-wurfl.com/explore/search.php</a><br />
   <div class="box">
     <h3>php获取</h3>
     <p><?php echo $_SERVER['HTTP_USER_AGENT']; ?></p>
@@ -30,16 +35,17 @@ oview.innerHTML = navigator.userAgent;
 <ul id="box"></ul>
 <script>
 var ua = navigator.userAgent.toLowerCase();
-var system= ["windows nt","Linux","Macintosh"];
-var equipment = ["Mac","iPad;","iphone;","ipod;","HTC Desire S","M040","SAMSUNG GT-I9502"];
-var browser = ["chrome","UCBrowser","MSIE","firefox"];
+var system= ["windows","Linux","Macintosh","Mobile"];
+var equipment = ["Mac","iPad;","iphone;","ipod;","HTC Desire S","M040","M356","SAMSUNG GT-I9502"];
+var browser = ["chrome","UCBrowser","MSIE","firefox","safari"];
 var eqs = {
   "windows nt":"PC Windows",
   "iPad;":"iPad",
   "iphone":"iPhone",
   "ipod":"iPod",
   "HTC Desire S":"HTC G12",
-  "M040":"魅族MX3"
+  "M040":"魅族MX2",
+  "M356":"魅族MX3"
 }
 var resultStr = "";
 
@@ -61,16 +67,22 @@ function isGet(str,fn){
 function repeat(arr,fn){
   var num = arr.length;
   for(var i=0;i<num;i++){
-    isGet(arr[i]);
+    isGet(arr[i].toLowerCase());
   }
   if(typeof fn == "function"){
     fn();
   }
 }
 
-repeat(system,function(){repeat(browser,function(){repeat(equipment);});});
+// 设备系统查找
+repeat(system);
+console.log("设备系统："+resultStr);
 
-console.log(resultStr);
+/*repeat(system,function(){
+  repeat(browser,function(){repeat(equipment);});
+});
+
+console.log(resultStr);*/
 
 
 
@@ -91,6 +103,7 @@ var json = {
   "HTC G12 UC":"Mozilla/5.0 (Linux; U; Android 4.0.4; zh-CN; HTC Desire S Build/IMM76D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 UCBrowser/9.6.0.378 U3/0.8.0 Mobile Safari/533.1",
   "HTC G12 Chrome":"Mozilla/5.0 (Linux; Android 4.0.4; HTC Desire S Build/IMM76D) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.99 Mobile Safari/537.36",
   "HTC G12 Default":"Mozilla/5.0 (Linux; U; Android 4.0.4; zh-cn; HTC_DesireS_S510e Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
+  "HTC c620e IE":"Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; HTC; c620e)",
   "Mac OS X 10_8_4 Chrome":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36",
   "Mac OS X 10_8_4 Safari":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/536.30.1 (KHTML, like Gecko) Version/6.0.5 Safari/536.30.1",
   "Mac OS X 10_8_4 Firefox":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:26.0) Gecko/20100101 Firefox/26.0",
