@@ -18,7 +18,8 @@ body{font:16px/2em tahoma,arial,"microsoft yahei",simsun;color:#666;}
     <div id="view"></div>
   </div>
   <script>
-var ua = navigator.userAgent.toLowerCase();
+var ua = navigator.userAgent;//.toLowerCase();
+document.getElementById("ua").innerHTML = ua;
 var system= ["windows","Macintosh","Android","Linux","Mac OS X"];
 var equipment = ["iPad","iphone","ipod","HTC","M040","M356","M351","GT-I9100","GT-I9300","GT-I9500","GT-I9515","SM-G900A","SM-G800F","SM-G906L","SM-G870A","MI-ONE","MI 1s","MI 2","MI 2S","MI 3"];
 var browser = ["chrome","UCBrowser","MSIE","firefox","opera","MQQBrowser","safari"];
@@ -55,6 +56,82 @@ var eqs = {
   "mi 3":"小米3"
 }
 
+
+
+
+
+var my = {
+  mobile:Boolean(ua.search("mobile")!=-1),
+  searchBool:function(arr,str){
+    var count = arr.length;
+    for(var i=0;i<count;i++){
+      var reg = new RegExp(arr[i],"i");
+      if(str.search(reg)!=-1){
+        return str.match(reg);
+      }
+    }
+  },
+  getSystem:function(){
+    if(my.mobile){
+      if(ua.search("android")!=-1){
+        var result = ["Android"];
+        var reg = new RegExp("android\\s?([\\d._]+)[\\s;]?","i");
+        result.push(ua.match(reg)[1]);
+        return result;
+      }else if(ua.search("/Windows Phone/i")!=-1){
+        var result = ["Windows Phone"];
+        var reg = new RegExp("Windows Phone\\s?([\\d._]+)[\\s;]?","i");
+        result.push(ua.match(reg)[1]);
+        return result;
+      }else if(ua.search("/Mac OS X/i")!=-1){
+        var result = ["Mac OS X"];
+        var reg = new RegExp("\\s([_\\d]+)\\slike\\sMac\\sOS\\sX","i");
+        result.push(ua.match(reg)[1]);
+        return result;
+      }
+    }else{
+      var result =[];
+      var sSys = my.searchBool(system,ua);
+      result.push(sSys);
+      var reg = new RegExp(sSys+"\\s([a-zA-Z\\s\\d.]+)","i");
+      result.push(ua.match(reg)[1]);
+      return result;
+    }
+  },
+  getEqs:function(){
+    if(!my.mobile){
+      return "PC";
+    }
+    var model = my.searchBool(equipment,ua).toLowerCase();
+    return eqs[model];
+  },
+  getBrowser:function(){
+    if(my.mobile){
+      var browser = my.searchBool(browser,ua);
+    }
+  }
+}
+alert(my.getSystem()+my.getEqs());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 function isGet(str,bool){
   if(!bool&&ua.search(str)!=-1){
     var resultStr = [];
@@ -107,7 +184,7 @@ if(get_system.length==3){
   document.querySelector("#view").innerHTML = "<span class='t'>设备：</span>"+get_system[0]+"<br /><span class='t'>系统：</span>"+get_system[1]+"<br /><span class='t'>系统版本：</span>"+get_system[2]+"<br /><span class='t'>浏览器：</span>"+browserName[get_browser[0]]+"<br /><span class='t'>浏览器版本：</span>"+get_browser[1];
 }else{
   document.querySelector("#view").innerHTML = "<span class='t'>设备：</span>"+get_system[0]+"<br /><span class='t'>系统：</span>"+get_system[1]+"<br /><span class='t'>浏览器：</span>"+browserName[get_browser[0]]+"<br /><span class='t'>浏览器版本：</span>"+get_browser[1];
-}
+}*/
   </script>
 </body>
 </html>
