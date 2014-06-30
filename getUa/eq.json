@@ -2,6 +2,7 @@ eqs = {
   "ipad":"iPad",
   "iphone":"iPhone",
   "ipod":"iPod",
+  "touch":"Touch",
   "htc":"HTC手机",
   "m040":"魅族MX2",
   "m351":"魅族MX3",

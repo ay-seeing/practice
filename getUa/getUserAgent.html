@@ -25,8 +25,8 @@ body{font:16px/2em tahoma,arial,"microsoft yahei",simsun;color:#666;}
 })();
 var ua = navigator.userAgent;//.toLowerCase();
 document.getElementById("ua").innerHTML = "<span class='t'>浏览器UserAgent:</span><div class='m'>" + ua +"</div>";
-var system= ["Windows","Ubuntu","Android","Linux","Mac OS X"];
-var equipment = ["iPad","ipod","iphone","HTC","M040","M356","M351","GT-I9100","GT-I9300","GT-I9500","GT-I9515","SM-G900A","SM-G800F","SM-G906L","SM-G870A","MI-ONE","MI 1s","MI 2","MI 2S","MI 3"];
+var system= ["Windows","Ubuntu","Android","BlackBerry","Linux","Mac OS X"];
+var equipment = ["iPad","ipod","touch","iphone","HTC","M040","M356","M351","GT-I9100","GT-I9300","GT-I9500","GT-I9515","SM-G900A","SM-G800F","SM-G906L","SM-G870A","MI-ONE","MI 1s","MI 2","MI 2S","MI 3"];
 var browser = ["Chrome","UCBrowser","MSIE","Firefox","Opera","MQQBrowser","Safari"];
 
 
@@ -66,8 +66,13 @@ var my = {
       var sSys = my.searchBool(system,ua);
       result.push(sSys);
       // 获取系统版本
-      var reg = new RegExp(sSys+"[\\s\\/]?([a-zA-Z\\s\\d.]+)[\\s;]?","i");
-      result.push(ua.match(reg)[1]);
+      var reg = new RegExp(sSys+"[\\s\\/]?([NT\\s\\d.]+)[\\s;]?","i");
+      var sys_v = ua.match(reg);
+      if(sys_v){
+        result.push(sys_v[1]);
+      }else{
+        result.push("undefined");
+      }
       return result;
     }
   },
@@ -93,7 +98,12 @@ var my = {
       }else if(browserN.toString().toLowerCase()=="safari"){
         var reg = new RegExp("Version[\\s\\/]?([\\s\\d.]+)\\s","i");
       }
-      result.push(ua.match(reg)[1]);
+      var browser_v = ua.match(reg);
+      if(browser_v){
+        result.push(browser_v[1]);
+      }else{
+        result.push("undefined");
+      }
       return result;
     //}
   }
