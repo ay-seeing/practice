@@ -4,22 +4,49 @@
 	<meta charset="UTF-8">
 	<title>angularJs常用指令</title>
 	<script src="../js/angular.min1.2.x.js"></script>
+	<style>
+.first{background:#f0f0f0;}
+	</style>
 </head>
 <body>
 <div ng-controller="myController">{{people.name}}:{{people.height}}</div>
+
+<div ng-controller="peopleRepeat">
+	<h2>常用的 ng-repeat 循环</h2>
+	<ul>
+		<li ng-repeat="item in peoples" fa="aaa" ng-if="$first||$last" ng-class="{even:$even,odd:$odd,first:$first}">{{$index+1}}&nbsp;&nbsp;名字:{{item.name}}&nbsp;&nbsp;性别:{{item.sex}}&nbsp;&nbsp;身高:{{item.height}}&nbsp;fa:{{fa}}</li>
+	</ul>
+
+	<h2>带有起点和终点的 ng-repeat  循环</h2>
+	<div ng-repeat-start="item in peoples" ng-class="{even:$even,odd:$odd,first:$first}">
+		{{$index+1}}&nbsp;&nbsp;名字:{{item.name}}&nbsp;&nbsp;性别:{{item.sex}}&nbsp;&nbsp;身高:{{item.height}}
+	</div>
+	<div class="middle">中间内容</div>
+	<div ng-repeat-end>循环{{$index}}完成</div>
+</div>
 <script>
 // 创建一个模块，并制定依赖模块，如果没有，数组就为空
 var myapp = angular.module("myapp",[]);
 
 //创建一个控制器
-myapp.controller("myController",[$scope,function($scope){
+myapp.controller("myController",function($scope){
 	//console.log($scope);
 	var people = {
 		name:"red",
 		height:"172"
 	}
 	$scope.people = people;
-}]);
+});
+
+// 创建一个循环
+myapp.controller("peopleRepeat",function($scope){
+	var peoples = [
+		{name:"张",height:"172",sex:"男"},
+		{name:"李",height:"173",sex:"男"},
+		{name:"陈",heihgt:"168",sex:"女"}
+	];
+	$scope.peoples = peoples;
+});
 </script>
 </body>
 </html>
