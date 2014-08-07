@@ -5,7 +5,9 @@
 	<title>angularJs常用指令</title>
 	<script src="../js/angular.min1.2.x.js"></script>
 	<style>
+.even{background:#ddd;}
 .first{background:#f0f0f0;}
+.footer{border-bottom:1px solid #ccc;padding-bottom:5px;margin-bottom:10px;}
 	</style>
 </head>
 <body>
@@ -17,36 +19,42 @@
 		<li ng-repeat="item in peoples" fa="aaa" ng-if="$first||$last" ng-class="{even:$even,odd:$odd,first:$first}">{{$index+1}}&nbsp;&nbsp;名字:{{item.name}}&nbsp;&nbsp;性别:{{item.sex}}&nbsp;&nbsp;身高:{{item.height}}&nbsp;fa:{{fa}}</li>
 	</ul>
 
-	<h2>带有起点和终点的 ng-repeat  循环</h2>
+	<h2>带有 key 和 value 的 ng-repeat</h2>
+	<ul>
+		<li ng-repeat="(key,val) in peoples" ng-class-even="'even'" ng-class-odd="'odd'">
+			{{key+1}}&nbsp;&nbsp;名字:{{val.name}}&nbsp;&nbsp;性别:{{val.sex}}&nbsp;&nbsp;身高:{{val.height}}</li>
+	</ul>
+
+	<h2>带有起点(ng-repeat-start)和终点(ng-repeat-end)的 ng-repeat  循环</h2>
 	<div ng-repeat-start="item in peoples" ng-class="{even:$even,odd:$odd,first:$first}">
 		{{$index+1}}&nbsp;&nbsp;名字:{{item.name}}&nbsp;&nbsp;性别:{{item.sex}}&nbsp;&nbsp;身高:{{item.height}}
 	</div>
 	<div class="middle">中间内容</div>
-	<div ng-repeat-end>循环{{$index}}完成</div>
+	<div ng-repeat-end class="footer">循环{{$index}}完成</div>
 </div>
 <script>
 // 创建一个模块，并制定依赖模块，如果没有，数组就为空
 var myapp = angular.module("myapp",[]);
 
 //创建一个控制器
-myapp.controller("myController",function($scope){
+myapp.controller("myController",["$scope",function($scope){
 	//console.log($scope);
 	var people = {
 		name:"red",
 		height:"172"
 	}
 	$scope.people = people;
-});
+}]);
 
 // 创建一个循环
-myapp.controller("peopleRepeat",function($scope){
+myapp.controller("peopleRepeat",["$scope",function($scope){
 	var peoples = [
 		{name:"张",height:"172",sex:"男"},
 		{name:"李",height:"173",sex:"男"},
-		{name:"陈",heihgt:"168",sex:"女"}
+		{name:"陈",height:"168",sex:"女"}
 	];
 	$scope.peoples = peoples;
-});
+}]);
 </script>
 </body>
 </html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="selfapp">
+<head>
+	<meta charset="UTF-8">
+	<title>angularJs节点控制</title>
+	<script src="../js/angular.min1.2.x.js"></script>
+	<style>
+	.testbox{height:50px;background:#ccc;}
+	.w60{background:red;}
+	</style>
+</head>
+<body>
+	<div ng-controller="nodeControl">
+		搜索：<input type="text" ng-model="sea">
+		<ul>
+			<li ng-repeat="item in peoples | filter:sea">姓名:{{item.name}} 性别:{{item.sex}} 身高:{{item.height}}</li>
+		</ul>
+	</div>
+</body>
+<script>
+var myapp = angular.module("selfapp",[]);
+myapp.controller("nodeControl",["$scope",function($scope){
+	var peoples = [
+		{name:"张",height:"172",sex:"男"},
+		{name:"李",height:"173",sex:"男"},
+		{name:"陈",height:"168",sex:"女"},
+		{name:"王",height:"170",sex:"女"}
+	];
+	$scope.peoples = peoples;
+}]);
+</script>
+</html>
