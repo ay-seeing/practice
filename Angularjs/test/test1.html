@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myapp">
+<head>
+	<meta charset="UTF-8">
+	<title>angularJs常用指令</title>
+	<script src="../js/angular.min1.2.x.js"></script>
+</head>
+<body>
+<div ng-controller="myController">{{people.name}}:{{people.height}}</div>
+<script>
+// 创建一个模块，并制定依赖模块，如果没有，数组就为空
+var myapp = angular.module("myapp",[]);
+
+//创建一个控制器
+myapp.controller("myController",[$scope,function($scope){
+	//console.log($scope);
+	var people = {
+		name:"red",
+		height:"172"
+	}
+	$scope.people = people;
+}]);
+</script>
+</body>
+</html>
