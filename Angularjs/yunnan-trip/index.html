@@ -9,7 +9,7 @@
   <script src="js/angular-route.js"></script>
 </head>
 <body ng-app="myApp">
-  <div class="wraper" ng-controller="AppCtrl">
+  <div class="wraper">
     <!--  该段代码开发请无视-start  -->
     <a href="#/" id="demo-back">返回</a>
     <!--  该段代码开发请无视-end  -->
@@ -18,7 +18,13 @@
 </body>
 <script>
 var app = angular.module('myApp', ['ngRoute']);
+/*app.controller('RootCtrl', ['$scope', function($scope){
+    $scope.title = "Home Page";
+}]);
 
+app.controller('CatsCtrl', ['$scope', function($scope){
+    $scope.title = "Cats Page";
+}]);*/
 app.config(['$routeProvider', function($routeProvider){
   $routeProvider
     .when('/', {
@@ -69,15 +75,7 @@ app.controller("RootCtrl",["$scope",function($scope){
     }*/
 }]);
 app.controller("showBack",["$scope",function($scope){
-    $scope.onViewLoad = function(){
-      alert('view changed');
-    };
-    document.querySelector("#demo-back").style.display = "inline";
-}]);
-app.controller("AppCtrl",["$scope",function($scope){
-    $scope.onViewLoad = function(){
-        alert(786465);
-    }
+        document.querySelector("#demo-back").style.display = "inline";
 }]);
 </script>
 </html>
