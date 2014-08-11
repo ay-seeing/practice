@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=320.1,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <title>云南旅游服务平台</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/angular.min1.2.x.js"></script>
+  <script src="js/angular-route.js"></script>
+</head>
+<body ng-app="myApp">
+  <div class="wraper" ng-controller="AppCtrl">
+    <!--  该段代码开发请无视-start  -->
+    <a href="#/" id="demo-back">返回</a>
+    <!--  该段代码开发请无视-end  -->
+    <div ng-view></div>
+  </div>
+</body>
+<script>
+var app = angular.module('myApp', ['ngRoute']);
+
+app.config(['$routeProvider', function($routeProvider){
+  $routeProvider
+    .when('/', {
+        controller : 'RootCtrl',
+        templateUrl : 'tmp/main.html'
+    })
+    .when('/depart', {
+        controller : 'showBack',
+        templateUrl : 'tmp/depart.html'
+    })
+    .when('/car', {
+        controller : 'showBack',
+        templateUrl : 'tmp/car.html'
+    })
+    .when('/flight-time', {
+        controller : 'showBack',
+        templateUrl : 'tmp/flight-time.html'
+    })
+    .when('/hotel', {
+        controller : 'showBack',
+        templateUrl : 'tmp/hotel.html'
+    })
+    .when('/dinner', {
+        controller : 'showBack',
+        templateUrl : 'tmp/dinner.html'
+    })
+    .when('/guide', {
+        controller : 'showBack',
+        templateUrl : 'tmp/guide.html'
+    })
+    .when('/route', {
+        controller : 'showBack',
+        templateUrl : 'tmp/route.html'
+    })
+    .when('/service', {
+        controller : 'showBack',
+        templateUrl : 'tmp/service.html'
+    })
+    .otherwise({
+        redirectTo : '/'
+    });
+}]);
+app.controller("RootCtrl",["$scope",function($scope){
+    //if(location.href.split("#")[1]=="/"){
+        document.querySelector("#demo-back").style.display = "none";
+    /*}else{
+        document.querySelector("#demo-back").style.display = "inline";
+    }*/
+}]);
+app.controller("showBack",["$scope",function($scope){
+    $scope.onViewLoad = function(){
+      alert('view changed');
+    };
+    document.querySelector("#demo-back").style.display = "inline";
+}]);
+app.controller("AppCtrl",["$scope",function($scope){
+    $scope.onViewLoad = function(){
+        alert(786465);
+    }
+}]);
+</script>
+</html>
