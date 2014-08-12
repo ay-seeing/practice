@@ -59,7 +59,7 @@ app.config(['$routeProvider', function($routeProvider){
         controller : 'showBack',
         templateUrl : 'tmp/route.html'
     })
-    .when('/service', {
+    .when('/service/:id', {
         controller : 'showBack',
         templateUrl : 'tmp/service.html'
     })
@@ -67,14 +67,16 @@ app.config(['$routeProvider', function($routeProvider){
         redirectTo : '/'
     });
 }]);
-app.controller("RootCtrl",["$scope",function($scope){
+app.controller("RootCtrl",["$scope","$location",function($scope,$location){
+    console.log($location.path());
     //if(location.href.split("#")[1]=="/"){
         document.querySelector("#demo-back").style.display = "none";
     /*}else{
         document.querySelector("#demo-back").style.display = "inline";
     }*/
 }]);
-app.controller("showBack",["$scope",function($scope){
+app.controller("showBack",["$scope","$location","$routeParams",function($scope,$location,$routeParams){
+    console.log($routeParams,$location.path());
         document.querySelector("#demo-back").style.display = "inline";
 }]);
 </script>
