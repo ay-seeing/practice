@@ -22,7 +22,7 @@
 <body>
 	<div ng-controller="nodeControl" class="box">
 		<input type="text" ng-model="sea" id="inputsea" autofocus=""><span class="close" ng-show="sea" ng-click="clears();">&times;</span>
-		<ul ng-show="sea" ng-model="searchList">
+		<ul ng-show="listShow">
 			<li ng-repeat="item in peoples | filter:{'name':sea} | orderBy:'-name'" ng-click="locate($event)">{{item.name}} {{item.address}}</li>
 		</ul>
 	</div>
@@ -39,16 +39,25 @@ myapp.controller("nodeControl",["$scope",function($scope,$element){
 		{name:"东方明珠",address:"浦东新区世纪大道1号"}
 	];
 	$scope.peoples = peoples;
-	$scope.listShow = $scope.sea;
+	var list_show = true;
 	$scope.locate = function(event){
 		$scope.sea = event.target.innerHTML;
+		list_show = false;
+		$scope.listShow = false;
 	}
 	$scope.clears = function(){
 		$scope.sea = "";
 		document.querySelector("#inputsea").focus();
-		//document.getElementById("inputsea").autofocus = ;
 	}
-	//$witch(sea)
+	var num = 0;
+	$scope.$watch('sea',function(newValue,oldValue){
+		if(!list_show){
+			$scope.listShow = $scope.sea;
+			console.log($scope.listShow+num++);
+		}else{
+			list_show = true;
+		}
+	});
 }]);
 </script>
 </html>
