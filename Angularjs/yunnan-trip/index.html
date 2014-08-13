@@ -7,17 +7,18 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="js/angular.min1.2.x.js"></script>
   <script src="js/angular-route.js"></script>
+  <script src="js/angular-animate.min.js"></script>
 </head>
 <body ng-app="myApp">
   <div class="wraper">
     <!--  该段代码开发请无视-start  -->
-    <a href="#/" id="demo-back">返回</a>
+    <a href="" id="demo-back" ng-click="backPage()">返回</a>
     <!--  该段代码开发请无视-end  -->
-    <div ng-view></div>
+    <div class="page {{pageClass}}" ng-view></div>
   </div>
 </body>
 <script>
-var app = angular.module('myApp', ['ngRoute']);
+var app = angular.module('myApp', ['ngRoute','ngAnimate']);
 /*app.controller('RootCtrl', ['$scope', function($scope){
     $scope.title = "Home Page";
 }]);
@@ -25,59 +26,98 @@ var app = angular.module('myApp', ['ngRoute']);
 app.controller('CatsCtrl', ['$scope', function($scope){
     $scope.title = "Cats Page";
 }]);*/
-app.config(['$routeProvider', function($routeProvider){
+app.config(["$routeProvider",function($routeProvider){
   $routeProvider
     .when('/', {
         controller : 'RootCtrl',
         templateUrl : 'tmp/main.html'
     })
     .when('/depart', {
-        controller : 'showBack',
+        controller : 'departController',
         templateUrl : 'tmp/depart.html'
     })
     .when('/car', {
-        controller : 'showBack',
+        controller : 'carController',
         templateUrl : 'tmp/car.html'
     })
     .when('/flight-time', {
-        controller : 'showBack',
+        controller : 'flightController',
         templateUrl : 'tmp/flight-time.html'
     })
     .when('/hotel', {
-        controller : 'showBack',
+        controller : 'hotelController',
         templateUrl : 'tmp/hotel.html'
     })
     .when('/dinner', {
-        controller : 'showBack',
+        controller : 'dinnerController',
         templateUrl : 'tmp/dinner.html'
     })
     .when('/guide', {
-        controller : 'showBack',
+        controller : 'guideController',
         templateUrl : 'tmp/guide.html'
     })
     .when('/route', {
-        controller : 'showBack',
+        controller : 'routeController',
         templateUrl : 'tmp/route.html'
     })
-    .when('/service/:id', {
-        controller : 'showBack',
+    .when('/service:id', {
+        controller : 'serviceController',
         templateUrl : 'tmp/service.html'
     })
     .otherwise({
         redirectTo : '/'
     });
 }]);
-app.controller("RootCtrl",["$scope","$location",function($scope,$location){
-    console.log($location.path());
+var backShow = function(){
+    document.querySelector("#demo-back").style.display = "inline";
+}
+app.controller("RootCtrl",["$scope","$route","$routeParams",function($scope,$route,$routeParams){
+    console.log($route.current,$routeParams);
+    // 回退按钮
+    $scope.$parent.backPage = function(){
+        history.back();
+    }
     //if(location.href.split("#")[1]=="/"){
-        document.querySelector("#demo-back").style.display = "none";
+    $scope.pageClass = "page-home";
+    document.querySelector("#demo-back").style.display = "none";
     /*}else{
         document.querySelector("#demo-back").style.display = "inline";
     }*/
 }]);
-app.controller("showBack",["$scope","$location","$routeParams",function($scope,$location,$routeParams){
-    console.log($routeParams,$location.path());
-        document.querySelector("#demo-back").style.display = "inline";
+app.controller("departController",["$scope",function($scope){
+    $scope.pageClass = "page-depart";
+    backShow();
+}]);
+app.controller("carController",["$scope","$location",function($scope,$location){
+    //返回当前路径嘻哈值
+    console.log($location.path());
+    $scope.pageClass = "page-car";
+    backShow();
+}]);
+app.controller("flightController",["$scope",function($scope){
+    $scope.pageClass = "page-flight";
+    backShow();
+}]);
+app.controller("hotelController",["$scope",function($scope){
+    $scope.pageClass = "page-hotel";
+    backShow();
+}]);
+app.controller("dinnerController",["$scope",function($scope){
+    $scope.pageClass = "page-dinner";
+    backShow();
+}]);
+app.controller("guideController",["$scope",function($scope){
+    $scope.pageClass = "page-guide";
+    backShow();
+}]);
+app.controller("routeController",["$scope",function($scope){
+    $scope.pageClass = "page-route";
+    backShow();
+}]);
+app.controller("serviceController",["$scope","$location","$routeParams",function($scope,$location,$routeParams){
+    //console.log($route.current,$location.path(),$routeParams);
+    $scope.pageClass = "page-service";
+    backShow();
 }]);
 </script>
 </html>
