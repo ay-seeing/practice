@@ -49,11 +49,12 @@ myapp.controller("nodeControl",["$scope",function($scope,$element){
 		{name:"东方明珠",address:"浦东新区世纪大道1号"}
 	];
 	$scope.peoples = peoples;
+	$scope.sea = null;
 	var list_show = true;
 	$scope.locate = function(event){
 		$scope.sea = event.target.innerHTML;
+		$scope.listShow = "";
 		list_show = false;
-		$scope.listShow = false;
 	}
 	$scope.clears = function(){
 		$scope.sea = "";
@@ -61,9 +62,10 @@ myapp.controller("nodeControl",["$scope",function($scope,$element){
 	}
 	var num = 0;
 	$scope.$watch('sea',function(newValue,oldValue){
-		if(!list_show){
+		console.log(list_show);
+		if(list_show){
 			$scope.listShow = $scope.sea;
-			console.log($scope.listShow+num++);
+			//console.log($scope.listShow+num++);
 		}else{
 			list_show = true;
 		}
