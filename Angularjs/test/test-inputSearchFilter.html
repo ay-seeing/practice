@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>angularJs节点控制</title>
+	<script src="../js/jquery-2.0.3.min.js"></script>
 	<script src="../js/angular.min1.2.x.js"></script>
 	<style>
 	*{box-sizing:border-box;}
@@ -58,7 +59,8 @@ myapp.controller("nodeControl",["$scope",function($scope,$element){
 	}
 	$scope.clears = function(){
 		$scope.sea = "";
-		document.querySelector("#inputsea").focus();
+		//document.querySelector("#inputsea").focus();
+		$("#inputsea").focus();
 	}
 	var num = 0;
 	$scope.$watch('sea',function(newValue,oldValue){
