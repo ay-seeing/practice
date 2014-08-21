@@ -9,27 +9,26 @@
 $parentDir = dirname(__FILE__);
 //echo $parentDir;
 //echo array_pop(explode("\\",$parentDir));
-function getTree($dir){
-	//
-	$aInfo = Array();
-	listDir($aInfo,$dir);
-	//return $aInfo;
-	//print_r($aInfo);
-}
-function listDir($aInfo,$dir){
+//preg_split("/\\",$parentDir,)
+
+$aInfo = Array();
+
+
+function listDir($dir){
+	if(!$aInfo){
+		global $aInfo;
+	}
 	if(is_dir($dir)){
 		if ($dh = opendir($dir)){
 			while (($file = readdir($dh)) !== false){
 				if((is_dir($dir."/".$file)) && $file!="." && $file!=".."){
-					echo "<b><font color='red'>文件名：</font></b>",$file,"<br><hr>";
-					listDir($aInfo,$dir."/".$file);
+					//echo "<b><font color='red'>文件名：</font></b>",$file,"<br><hr>";
+					listDir($dir."/".$file);
 				}else{
 					if($file!="." && $file!=".."){
 						array_push($aInfo,getFileOneLine($dir."/".$file));
 						//echo $dir."/".$file."<br>";
-						//print_r(getFileOneLine($dir."/".$file));
-						print_r($aInfo);
-						echo "---<br />";
+					
 					}
 				}
 			}
@@ -37,6 +36,7 @@ function listDir($aInfo,$dir){
 		}
 	}
 }
+
 
 function getFileOneLine($path){
 	if(!file_exists($path)){return false;}
@@ -65,7 +65,8 @@ function getInfo($path,$str){
 	}
 }
 //print_r(getFileOneLine("test/test3/c.php"));
-getTree("./test");
+listDir("./test");
+print_r($aInfo);
  ?>
 </body>
 </html>
