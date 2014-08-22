@@ -2,7 +2,7 @@
 <?php 
 //$test=array(10,20,30,"10",10,"20","30");
 //print_r(array_keys($test,10,true));
-
+//print_r(pathinfo(__FILE__));
 // 配置项
 $configuration = array(
 	"wip"=>"wip", // 设置开发中目录名称
@@ -11,12 +11,23 @@ $configuration = array(
 $hostPath = $_SERVER["HTTP_HOST"];
 // 当前文件所在目录相对路径
 $relativePath = $_SERVER["PHP_SELF"];
+//echo $_SERVER["SCRIPT_NAME"];
 $relativePath = $hostPath.$relativePath;
-// 当前文件所在目录路径
-$currentDirPath = dirname(__FILE__);
-// 当前文件名称
-$currentFile = basename(__FILE__);
-echo $currentFile;
+// 获取引入该文件的文件路径
+$currentDirPathUrl = $_SERVER["SCRIPT_NAME"];
+
+// 当前文件所在目录路径(用include方法引入得到的是当前文件的而不是引入到的文件的目录)
+//$currentDirPath = dirname(__FILE__);
+//用下面的方法代替获取当前文件所在目录名称
+$currentDirPath = preg_split("/[\\\\\/]/",$currentDirPathUrl);
+$currentDirPathCount = count($currentDirPath);
+$currentDirPath = $currentDirPath[$currentDirPathCount-2];
+//echo $currentDirPath;
+// 当前文件名称(用include方法引入得到的是当前文件的而不是引入到的文件的名称)
+//$currentFile = basename(__FILE__);
+//用下面的方法代替获取当前文件名称
+$currentFile = array_pop(preg_split("/[\\\\\/]/",$currentDirPathUrl));
+//echo $currentFile;
 // 当前文件所在目录路径打撒成数组
 $aDir = preg_split("/[\\\\\/]/",$relativePath);
 // 当前文件所在目录名称
@@ -75,15 +86,20 @@ function getHath($key,$num){
 
 // 获取分支路径
 function loopTree($dir){
+	$currentDirPathUrl = $_SERVER["SCRIPT_NAME"];
 	if(!isset($aInfo)){
 			global $aInfo;
 		}
 	// 获取当前文件名称用于判断分支里的文件是否为该文件的分支
-	$currentFileName = basename(__FILE__);
+	//$currentFileName = basename(__FILE__);
+	$currentFileName = array_pop(preg_split("/[\\\\\/]/",$currentDirPathUrl));
 	// 返回文件绝对路径
 	//__FILE__;
 	// 获取当前文件夹所在目录名称
-	$parentDir = dirname(__FILE__);
+	//$parentDir = dirname(__FILE__);
+	$parentDir = preg_split("/[\\\\\/]/",$currentDirPathUrl);
+	$currentDirPathCount = count($parentDir);
+	$parentDir = $parentDir[$currentDirPathCount-2];
 	//echo $parentDir;
 	//echo array_pop(explode("\\",$parentDir));
 	$name = array_pop(preg_split("/[\\\\\/]/",$parentDir));

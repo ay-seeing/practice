@@ -15,6 +15,17 @@ ul,li,ol{list-style:none;}
 	</style>
 </head>
 <body>
+<?php include($_SERVER['DOCUMENT_ROOT']."/code_beta/a_practice/php-judge/panel.php"); ?>
 
+<?php 
+// send 注释
+$asend = array("种类1","send1","send2","send3","send4");
+$send = getOneParameter("send",$asend,false);
+
+// type 注释
+$atype =  array("种类2","type1","type2","type3","type4");
+$type = getOneParameter("type",$atype,true);
+
+ ?>
 </body>
 </html>
