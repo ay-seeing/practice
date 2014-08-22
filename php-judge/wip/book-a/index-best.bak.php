@@ -1,4 +1,4 @@
-<?php /*@分支呢@*/ ?>
+<?php /*@备份@*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +27,6 @@ $configuration = array(
 $hostPath = $_SERVER["HTTP_HOST"];
 // 当前文件所在目录相对路径
 $relativePath = $_SERVER["PHP_SELF"];
-
 $relativePath = $hostPath.$relativePath;
 // 当前文件所在目录路径
 $currentDirPath = dirname(__FILE__);
@@ -51,7 +50,7 @@ if(in_array($configuration["wip"],$aDir)){
 	$dir = preg_replace($pattern,"",$relativePath);
 	$manPath = "http://".$dir."/".$mainDir."/".$currentFile;
 	array_push($aInfo,array("主分支",$manPath));
-	loopTree("../..");
+	loopTree("../../");
 
 	//$tier = count($aDir);
 	/*echo $currentDirPath."<br />";
@@ -124,7 +123,6 @@ function loopTree($dir){
 								$branchDirName = explode("-",$name);
 								//if(strpos($curentParent,$name)!==false){
 								if($mainDirName[0]==$branchDirName[0]&&getFileOneLine($dir."/".$file)){
-									print_r(getFileOneLine($dir."/".$file));
 									array_push($aInfo,getFileOneLine($dir."/".$file));
 								}
 							}
@@ -217,6 +215,12 @@ function getOneParameter($Parameter,$asend,$end){
 <div class="demo-interaction-panel" id="demoInteractionPanel">
 	<div class="demo-panel-hd" id="demoPanelHd"><h3 class="demo-panel-title">交互面板</h3><span class="demo-min" id="demoMin">缩小</span></div>
 	<div class="demo-panel-bd" id="demoPanelBd">
+		<div class="demo-type demo-branch-list">
+			<h4 class="demo-h4">1111</h4>
+			<ul class="demo-list">
+				<li><a href=""></a></li>
+			</ul>
+		</div>
 	</div>
 </div>
 <script>
@@ -242,12 +246,6 @@ window.onload = function(){
 		oh4.innerHTML = data[i][0];
 		var oUl = document.createElement("ul");
 		oUl.className = "demo-list";
-		
-		//设置当前ul对应的hash关键字
-		if(i>0){
-			oUl.setAttribute("dataType",data[i][1][2].substring(1).split("&").pop().split("=")[0]);
-		}
-
 		for(var j=1;j<data[i].length;j++){
 			if(i==0){
 				oUl.innerHTML += "<li><a href='"+data[i][j][1]+"'>"+data[i][j][0]+"</a></li>";
@@ -259,59 +257,6 @@ window.onload = function(){
 		oCreateItem.appendChild(oUl);
 		odemoPanelBd.appendChild(oCreateItem);
 	}
-
-	var panel_a = odemoPanelBd.getElementsByTagName("a"),
-	panel_ul = odemoPanelBd.getElementsByTagName("ul");
-	var hash;
-	//获取url中的参数
-	var url = location.href;
-	if(url.indexOf("?")==-1){
-		hash = "";
-		/*for(var q=1;q<panel_ul.length;q++){
-			hash += "&"+panel_ul[q].getAttribute("datatype")+"=1";
-		}*/
-	}else{
-		hash = location.href.split("?")[1];
-	}
-	for(var q=1;q<panel_ul.length;q++){
-		if(hash.indexOf(panel_ul[q].getAttribute("datatype"))==-1){
-			hash += "&"+panel_ul[q].getAttribute("datatype")+"=1";
-		}
-	}
-	if(hash&&hash.indexOf("&")==0){
-		hash = hash.substring(1);
-	}
-	aHash = hash.split("&");
-	console.log(aHash);
-	for(var m=0;m<panel_a.length;m++){
-		//var listType = panel_a[m].parentNode.parentNode.getAttribute("datatype");
-		var aHref = panel_a[m].href;
-		if(aHref.indexOf("?")==-1){
-			continue;
-		}
-		//var aHrefHash = panel_a[m].href.split("?")[1].split("&").pop();
-		if(panel_a[m].href.indexOf("&")==-1){
-			var aHrefHash = panel_a[m].href.split("?").pop();
-		}else{
-			var aHrefHash = panel_a[m].href.split("&").pop();
-		}
-		console.log(aHrefHash);
-		//var ocur = true;
-		for(var n=0;n<aHash.length;n++){
-			/*if(aHrefHash.indexOf(aHash[n])==-1){
-				ocur = false;
-			}*/
-			if(aHrefHash==aHash[n]){
-				panel_a[m].parentNode.className = "current";
-			}
-		}
-		/*if(ocur){
-			panel_a[m].parentNode.className = "current";
-		}*/
-	}
-
-
-
 
 	console.log(data);
 	var oDemoMin = document.querySelector(".demo-min"),
@@ -325,7 +270,7 @@ window.onload = function(){
 			oDemoMin.innerHTML = "缩小";
 		}
 	},false);
-}
+	}
 </script>
 <!-- 交互版面内容-end -->
 
@@ -336,11 +281,7 @@ $send = getOneParameter("send",$asend,false);
 
 // type 注释
 $atype =  array("种类2","type1","type2","type3","type4");
-$type = getOneParameter("type",$atype,false);
-
-// type 注释
-$es =  array("种类3","12","34");
-$ee = getOneParameter("eee",$es,true);
+$type = getOneParameter("type",$atype,true);
  ?>
 
 <div class="wraper">

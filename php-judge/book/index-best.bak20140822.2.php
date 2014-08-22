@@ -1,4 +1,3 @@
-<?php /*@分支呢@*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +26,6 @@ $configuration = array(
 $hostPath = $_SERVER["HTTP_HOST"];
 // 当前文件所在目录相对路径
 $relativePath = $_SERVER["PHP_SELF"];
-
 $relativePath = $hostPath.$relativePath;
 // 当前文件所在目录路径
 $currentDirPath = dirname(__FILE__);
@@ -42,16 +40,17 @@ $currentDir = array_pop(preg_split("/[\\\\\/]/",$currentDirPath));
 $mainDir = explode("-",$currentDir);
 $mainDir = $mainDir[0];
 
-$aInfo = Array("其它分支");
+$aInfo = Array();
 
 // 判断当前文件是否在分支里面
 if(in_array($configuration["wip"],$aDir)){
 	//preg_replace("/[\\\\\/]/","",$currentDirPath);
 	$pattern='/[\\\\\/]'.$configuration["wip"].'[\\\\\/].+/';
 	$dir = preg_replace($pattern,"",$relativePath);
+	echo $pattern;
 	$manPath = "http://".$dir."/".$mainDir."/".$currentFile;
 	array_push($aInfo,array("主分支",$manPath));
-	loopTree("../..");
+	loopTree("../../");
 
 	//$tier = count($aDir);
 	/*echo $currentDirPath."<br />";
@@ -91,9 +90,6 @@ function getHath($key,$num){
 
 // 获取分支路径
 function loopTree($dir){
-	if(!isset($aInfo)){
-			global $aInfo;
-		}
 	// 获取当前文件名称用于判断分支里的文件是否为该文件的分支
 	$currentFileName = basename(__FILE__);
 	// 返回文件绝对路径
@@ -104,7 +100,6 @@ function loopTree($dir){
 	//echo array_pop(explode("\\",$parentDir));
 	$name = array_pop(preg_split("/[\\\\\/]/",$parentDir));
 
-	// $dir目录、$name当前文件所在目录名称、$fileName当前文件名称
 	function listDir($dir,$name,$fileName){
 		if(!isset($aInfo)){
 			global $aInfo;
@@ -119,14 +114,15 @@ function loopTree($dir){
 						if($file!="." && $file!=".." && $file==$fileName){
 							// 获取当前文件所在目录名称用于判断是否为主分支的分支
 							$curentParent = array_pop(preg_split("/[\\\\\/]/",$dir));
-							if($curentParent!=$name){
-								$mainDirName = explode("-",$curentParent);
-								$branchDirName = explode("-",$name);
-								//if(strpos($curentParent,$name)!==false){
-								if($mainDirName[0]==$branchDirName[0]&&getFileOneLine($dir."/".$file)){
-									print_r(getFileOneLine($dir."/".$file));
-									array_push($aInfo,getFileOneLine($dir."/".$file));
-								}
+							if($curentParent==$name){
+								return false;
+							}
+							echo $curentParent."--".$name;
+							$mainDirName = explode("-",$curentParent);
+							$branchDirName = explode("-",$name);
+							//if(strpos($curentParent,$name)!==false){
+							if($mainDirName[0]==$branchDirName[0]){
+								array_push($aInfo,getFileOneLine($dir."/".$file));
 							}
 						}
 					}
@@ -163,31 +159,36 @@ function loopTree($dir){
 	}
 	//print_r(getFileOneLine("test/test3/c.php"));
 	listDir($dir,$name,$currentFileName);
-	//echo json_encode($aInfo);
+	//print_r($aInfo);
 }
 
 
 //获取某一个参数
-function getOneParameter($Parameter,$asend,$end){
+function getOneParameter($Parameter,$asend){
 	if(!isset($resultType)){
 		global $resultType;
 	}
 	// 获取某个参数的值
 	$send = isset($_GET[$Parameter])?$_GET[$Parameter]:1;
-	$a_send = array($asend[0]);
+	$a_send = array();
 	foreach($asend as $key => $value){
-		if($key!=0){
-			//array($send,"链接文字",地址栏参数处理),
-			$arr = array($key,$value,getHath($Parameter,$key));
-			array_push($a_send,$arr);
-		}
+		//array($send,"链接文字",地址栏参数处理),
+		$arr = array($send,$value,getHath($Parameter,$key+1));
+		array_push($a_send,$arr);
 	}
 	array_push($resultType,$a_send);
-	if(isset($end)&&$end){
-		echo "<textarea id='demoData' style='display:none;'>".json_encode($resultType)."</textarea>";
-	}
 	return $send;
 }
+
+// send 注释
+$asend = array("send1","send2","send3","send4");
+$send = getOneParameter("send",$asend);
+
+// type 注释
+$atype =  array("123123","type2","type3","type4");
+$type = getOneParameter("type",$atype);
+
+
 
 ?>
 
@@ -214,134 +215,47 @@ function getOneParameter($Parameter,$asend,$end){
 .demo-interaction-panel-min .demo-panel-bd{display:none;}
 .demo-branch-list{border-bottom:1px dashed #999;padding-bottom:10px;margin-bottom:10px;}
 </style>
-<div class="demo-interaction-panel" id="demoInteractionPanel">
-	<div class="demo-panel-hd" id="demoPanelHd"><h3 class="demo-panel-title">交互面板</h3><span class="demo-min" id="demoMin">缩小</span></div>
-	<div class="demo-panel-bd" id="demoPanelBd">
+<div class="demo-interaction-panel">
+	<div class="demo-panel-hd"><h3 class="demo-panel-title">交互面板</h3><span class="demo-min">缩小</span></div>
+	<div class="demo-panel-bd">
+		<?php 
+		print_r($resultType)."<br />";
+		echo json_encode($resultType);
+		foreach ($resultType as $key => $value) {
+		?>
+		<div class="demo-type demo-branch-list">
+			<h4 class="demo-h4">1111</h4>
+			<ul class="demo-list">
+				<?php 
+				foreach($value as $childKey => $childValue){
+					if($key==0){
+				?>
+					<li><a href="<?php echo $childValue[1]; ?>"><?php echo $childValue[0]; ?></a></li>
+					<?php }else{ ?>
+					<li class="<?php echo $childValue[0]==($childKey+1)?'current':''; ?>"><a href="<?php echo $childValue[2]; ?>"><?php echo $childValue[1]; ?></a></li>
+				<?php 
+					}
+				}
+				?>
+			</ul>
+		</div>
+		<?php } ?>
 	</div>
 </div>
 <script>
-window.onload = function(){
-	var odata = document.getElementById("demoData"),
-		data = odata.value,
-		ominBtn = document.getElementById("demoMin"),
-		odemoInteractionPanel = document.getElementById("demoInteractionPanel"),
-		odemoPanelBd = document.getElementById("demoPanelBd");
-	if(JSON.parse){
-		data = JSON.parse(data);
+var oDemoMin = document.querySelector(".demo-min"),
+	odemoPanel = document.querySelector(".demo-interaction-panel");
+oDemoMin.addEventListener("click",function(){
+	if(odemoPanel.className =="demo-interaction-panel"){
+		odemoPanel.className = "demo-interaction-panel demo-interaction-panel-min";
+		oDemoMin.innerHTML = "展开";
 	}else{
-		data = eval ("(" + data + ")");
+		odemoPanel.className = "demo-interaction-panel";
+		oDemoMin.innerHTML = "缩小";
 	}
-
-	
-
-	for(var i=0;i<data.length;i++){
-		var oCreateItem = document.createElement("div");
-		oCreateItem.className = "demo-type demo-branch-list";
-		var oh4 = document.createElement("h4");
-		oh4.className = "demo-h4";
-		oh4.innerHTML = data[i][0];
-		var oUl = document.createElement("ul");
-		oUl.className = "demo-list";
-		
-		//设置当前ul对应的hash关键字
-		if(i>0){
-			oUl.setAttribute("dataType",data[i][1][2].substring(1).split("&").pop().split("=")[0]);
-		}
-
-		for(var j=1;j<data[i].length;j++){
-			if(i==0){
-				oUl.innerHTML += "<li><a href='"+data[i][j][1]+"'>"+data[i][j][0]+"</a></li>";
-			}else{
-				oUl.innerHTML += "<li><a href='"+data[i][j][2]+"'>"+data[i][j][1]+"</a></li>";
-			}
-		}
-		oCreateItem.appendChild(oh4);
-		oCreateItem.appendChild(oUl);
-		odemoPanelBd.appendChild(oCreateItem);
-	}
-
-	var panel_a = odemoPanelBd.getElementsByTagName("a"),
-	panel_ul = odemoPanelBd.getElementsByTagName("ul");
-	var hash;
-	//获取url中的参数
-	var url = location.href;
-	if(url.indexOf("?")==-1){
-		hash = "";
-		/*for(var q=1;q<panel_ul.length;q++){
-			hash += "&"+panel_ul[q].getAttribute("datatype")+"=1";
-		}*/
-	}else{
-		hash = location.href.split("?")[1];
-	}
-	for(var q=1;q<panel_ul.length;q++){
-		if(hash.indexOf(panel_ul[q].getAttribute("datatype"))==-1){
-			hash += "&"+panel_ul[q].getAttribute("datatype")+"=1";
-		}
-	}
-	if(hash&&hash.indexOf("&")==0){
-		hash = hash.substring(1);
-	}
-	aHash = hash.split("&");
-	console.log(aHash);
-	for(var m=0;m<panel_a.length;m++){
-		//var listType = panel_a[m].parentNode.parentNode.getAttribute("datatype");
-		var aHref = panel_a[m].href;
-		if(aHref.indexOf("?")==-1){
-			continue;
-		}
-		//var aHrefHash = panel_a[m].href.split("?")[1].split("&").pop();
-		if(panel_a[m].href.indexOf("&")==-1){
-			var aHrefHash = panel_a[m].href.split("?").pop();
-		}else{
-			var aHrefHash = panel_a[m].href.split("&").pop();
-		}
-		console.log(aHrefHash);
-		//var ocur = true;
-		for(var n=0;n<aHash.length;n++){
-			/*if(aHrefHash.indexOf(aHash[n])==-1){
-				ocur = false;
-			}*/
-			if(aHrefHash==aHash[n]){
-				panel_a[m].parentNode.className = "current";
-			}
-		}
-		/*if(ocur){
-			panel_a[m].parentNode.className = "current";
-		}*/
-	}
-
-
-
-
-	console.log(data);
-	var oDemoMin = document.querySelector(".demo-min"),
-		odemoPanel = document.querySelector(".demo-interaction-panel");
-	oDemoMin.addEventListener("click",function(){
-		if(odemoPanel.className =="demo-interaction-panel"){
-			odemoPanel.className = "demo-interaction-panel demo-interaction-panel-min";
-			oDemoMin.innerHTML = "展开";
-		}else{
-			odemoPanel.className = "demo-interaction-panel";
-			oDemoMin.innerHTML = "缩小";
-		}
-	},false);
-}
+},false);
 </script>
 <!-- 交互版面内容-end -->
-
-<?php 
-// send 注释
-$asend = array("种类1","send1","send2","send3","send4");
-$send = getOneParameter("send",$asend,false);
-
-// type 注释
-$atype =  array("种类2","type1","type2","type3","type4");
-$type = getOneParameter("type",$atype,false);
-
-// type 注释
-$es =  array("种类3","12","34");
-$ee = getOneParameter("eee",$es,true);
- ?>
 
 <div class="wraper">
 
