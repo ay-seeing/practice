@@ -1,51 +1,54 @@
-<!-- äº¤äº’ç‰ˆé¢å†…å®¹-start -->
+<!-- ½»»¥°æÃæÄÚÈİ-start -->
 <?php 
 //$test=array(10,20,30,"10",10,"20","30");
 //print_r(array_keys($test,10,true));
 //print_r(pathinfo(__FILE__));
-// é…ç½®é¡¹
+// ÅäÖÃÏî
 $configuration = array(
-	"wip"=>"wip", // è®¾ç½®å¼€å‘ä¸­ç›®å½•åç§°
-	"wipPath"=>"../wip" // è®¾ç½®å¼€å‘ä¸­ç›®å½•åç§°ç›¸å¯¹ä¸ªå¼€å‘ä¸»åˆ†æ”¯çš„ç›¸å¯¹è·¯å¾„
+	"wip"=>"wip", // ÉèÖÃ¿ª·¢ÖĞÄ¿Â¼Ãû³Æ
+	"wipPath"=>"../wip" // ÉèÖÃ¿ª·¢ÖĞÄ¿Â¼Ãû³ÆÏà¶Ô¸ö¿ª·¢Ö÷·ÖÖ§µÄÏà¶ÔÂ·¾¶
 );
 $hostPath = $_SERVER["HTTP_HOST"];
-// å½“å‰æ–‡ä»¶æ‰€åœ¨ç›®å½•ç›¸å¯¹è·¯å¾„
+// µ±Ç°ÎÄ¼şËùÔÚÄ¿Â¼Ïà¶ÔÂ·¾¶
 $relativePath = $_SERVER["PHP_SELF"];
 //echo $_SERVER["SCRIPT_NAME"];
 $relativePath = $hostPath.$relativePath;
-// è·å–å¼•å…¥è¯¥æ–‡ä»¶çš„æ–‡ä»¶è·¯å¾„
+// »ñÈ¡ÒıÈë¸ÃÎÄ¼şµÄÎÄ¼şÂ·¾¶
 $currentDirPathUrl = $_SERVER["SCRIPT_NAME"];
 
-// å½“å‰æ–‡ä»¶æ‰€åœ¨ç›®å½•è·¯å¾„(ç”¨includeæ–¹æ³•å¼•å…¥å¾—åˆ°çš„æ˜¯å½“å‰æ–‡ä»¶çš„è€Œä¸æ˜¯å¼•å…¥åˆ°çš„æ–‡ä»¶çš„ç›®å½•)
+// µ±Ç°ÎÄ¼şËùÔÚÄ¿Â¼Â·¾¶(ÓÃinclude·½·¨ÒıÈëµÃµ½µÄÊÇµ±Ç°ÎÄ¼şµÄ¶ø²»ÊÇÒıÈëµ½µÄÎÄ¼şµÄÄ¿Â¼)
 //$currentDirPath = dirname(__FILE__);
-//ç”¨ä¸‹é¢çš„æ–¹æ³•ä»£æ›¿è·å–å½“å‰æ–‡ä»¶æ‰€åœ¨ç›®å½•åç§°
+//ÓÃÏÂÃæµÄ·½·¨´úÌæ»ñÈ¡µ±Ç°ÎÄ¼şËùÔÚÄ¿Â¼Ãû³Æ
 $currentDirPath = preg_split("/[\\\\\/]/",$currentDirPathUrl);
 $currentDirPathCount = count($currentDirPath);
 $currentDirPath = $currentDirPath[$currentDirPathCount-2];
 //echo $currentDirPath;
-// å½“å‰æ–‡ä»¶åç§°(ç”¨includeæ–¹æ³•å¼•å…¥å¾—åˆ°çš„æ˜¯å½“å‰æ–‡ä»¶çš„è€Œä¸æ˜¯å¼•å…¥åˆ°çš„æ–‡ä»¶çš„åç§°)
+// µ±Ç°ÎÄ¼şÃû³Æ(ÓÃinclude·½·¨ÒıÈëµÃµ½µÄÊÇµ±Ç°ÎÄ¼şµÄ¶ø²»ÊÇÒıÈëµ½µÄÎÄ¼şµÄÃû³Æ)
 //$currentFile = basename(__FILE__);
-//ç”¨ä¸‹é¢çš„æ–¹æ³•ä»£æ›¿è·å–å½“å‰æ–‡ä»¶åç§°
+//ÓÃÏÂÃæµÄ·½·¨´úÌæ»ñÈ¡µ±Ç°ÎÄ¼şÃû³Æ
 $currentFile = array_pop(preg_split("/[\\\\\/]/",$currentDirPathUrl));
 //echo $currentFile;
-// å½“å‰æ–‡ä»¶æ‰€åœ¨ç›®å½•è·¯å¾„æ‰“æ’’æˆæ•°ç»„
+// µ±Ç°ÎÄ¼şËùÔÚÄ¿Â¼Â·¾¶´òÈö³ÉÊı×é
 $aDir = preg_split("/[\\\\\/]/",$relativePath);
-// å½“å‰æ–‡ä»¶æ‰€åœ¨ç›®å½•åç§°
+// µ±Ç°ÎÄ¼şËùÔÚÄ¿Â¼Ãû³Æ
 $currentDir = array_pop(preg_split("/[\\\\\/]/",$currentDirPath));
 
-// è·å–ä¸»ç›®å½•åç§°
+// »ñÈ¡Ö÷Ä¿Â¼Ãû³Æ
 $mainDir = explode("-",$currentDir);
 $mainDir = $mainDir[0];
 
-$aInfo = Array("å…¶å®ƒåˆ†æ”¯");
+$otherstr = iconv("gb2312","utf-8","ÆäËü·ÖÖ§");
+$aInfo = Array($otherstr);
 
-// åˆ¤æ–­å½“å‰æ–‡ä»¶æ˜¯å¦åœ¨åˆ†æ”¯é‡Œé¢
+// ÅĞ¶Ïµ±Ç°ÎÄ¼şÊÇ·ñÔÚ·ÖÖ§ÀïÃæ
 if(in_array($configuration["wip"],$aDir)){
 	//preg_replace("/[\\\\\/]/","",$currentDirPath);
 	$pattern='/[\\\\\/]'.$configuration["wip"].'[\\\\\/].+/';
 	$dir = preg_replace($pattern,"",$relativePath);
 	$manPath = "http://".$dir."/".$mainDir."/".$currentFile;
-	array_push($aInfo,array("ä¸»åˆ†æ”¯",$manPath));
+	// gbkÏÂÖĞÎÄ×ªÂë
+	$getstr = iconv("gb2312","utf-8","Ö÷·ÖÖ§");
+	array_push($aInfo,array($getstr,$manPath));
 	loopTree("../..");
 
 	//$tier = count($aDir);
@@ -64,14 +67,14 @@ $resultType = array($aInfo);
 
 
 
-// è·å–é“¾æ¥åœ°å€
+// »ñÈ¡Á´½ÓµØÖ·
 function getHath($key,$num){
-	// è·å–urlçš„hashå€¼
+	// »ñÈ¡urlµÄhashÖµ
 	$urlPath = $_SERVER["QUERY_STRING"];
 	if(empty($urlPath)){
 		return "?".$key."=".$num;
 	}
-	// è¿”å› $key çš„ä½ç½®
+	// ·µ»Ø $key µÄÎ»ÖÃ
 	$is = strpos($urlPath,$key."=");
 	$akey = explode('&',$urlPath);
 	foreach ($akey as $item => $value){
@@ -84,18 +87,18 @@ function getHath($key,$num){
 	return "?".$hash."&".$key."=".$num;
 }
 
-// è·å–åˆ†æ”¯è·¯å¾„
+// »ñÈ¡·ÖÖ§Â·¾¶
 function loopTree($dir){
 	$currentDirPathUrl = $_SERVER["SCRIPT_NAME"];
 	if(!isset($aInfo)){
 			global $aInfo;
 		}
-	// è·å–å½“å‰æ–‡ä»¶åç§°ç”¨äºåˆ¤æ–­åˆ†æ”¯é‡Œçš„æ–‡ä»¶æ˜¯å¦ä¸ºè¯¥æ–‡ä»¶çš„åˆ†æ”¯
+	// »ñÈ¡µ±Ç°ÎÄ¼şÃû³ÆÓÃÓÚÅĞ¶Ï·ÖÖ§ÀïµÄÎÄ¼şÊÇ·ñÎª¸ÃÎÄ¼şµÄ·ÖÖ§
 	//$currentFileName = basename(__FILE__);
 	$currentFileName = array_pop(preg_split("/[\\\\\/]/",$currentDirPathUrl));
-	// è¿”å›æ–‡ä»¶ç»å¯¹è·¯å¾„
+	// ·µ»ØÎÄ¼ş¾ø¶ÔÂ·¾¶
 	//__FILE__;
-	// è·å–å½“å‰æ–‡ä»¶å¤¹æ‰€åœ¨ç›®å½•åç§°
+	// »ñÈ¡µ±Ç°ÎÄ¼ş¼ĞËùÔÚÄ¿Â¼Ãû³Æ
 	//$parentDir = dirname(__FILE__);
 	$parentDir = preg_split("/[\\\\\/]/",$currentDirPathUrl);
 	$currentDirPathCount = count($parentDir);
@@ -104,7 +107,7 @@ function loopTree($dir){
 	//echo array_pop(explode("\\",$parentDir));
 	$name = array_pop(preg_split("/[\\\\\/]/",$parentDir));
 
-	// $dirç›®å½•ã€$nameå½“å‰æ–‡ä»¶æ‰€åœ¨ç›®å½•åç§°ã€$fileNameå½“å‰æ–‡ä»¶åç§°
+	// $dirÄ¿Â¼¡¢$nameµ±Ç°ÎÄ¼şËùÔÚÄ¿Â¼Ãû³Æ¡¢$fileNameµ±Ç°ÎÄ¼şÃû³Æ
 	function listDir($dir,$name,$fileName){
 		if(!isset($aInfo)){
 			global $aInfo;
@@ -113,11 +116,11 @@ function loopTree($dir){
 			if ($dh = opendir($dir)){
 				while (($file = readdir($dh)) !== false){
 					if((is_dir($dir."/".$file)) && $file!="." && $file!=".."){
-						//echo "<b><font color='red'>æ–‡ä»¶åï¼š</font></b>",$file,"<br><hr>";
+						//echo "<b><font color='red'>ÎÄ¼şÃû£º</font></b>",$file,"<br><hr>";
 						listDir($dir."/".$file,$name,$fileName);
 					}else{
 						if($file!="." && $file!=".." && $file==$fileName){
-							// è·å–å½“å‰æ–‡ä»¶æ‰€åœ¨ç›®å½•åç§°ç”¨äºåˆ¤æ–­æ˜¯å¦ä¸ºä¸»åˆ†æ”¯çš„åˆ†æ”¯
+							// »ñÈ¡µ±Ç°ÎÄ¼şËùÔÚÄ¿Â¼Ãû³ÆÓÃÓÚÅĞ¶ÏÊÇ·ñÎªÖ÷·ÖÖ§µÄ·ÖÖ§
 							$curentParent = array_pop(preg_split("/[\\\\\/]/",$dir));
 							if($curentParent!=$name){
 								$mainDirName = explode("-",$curentParent);
@@ -139,25 +142,27 @@ function loopTree($dir){
 		if(!file_exists($path)){return false;}
 		$f= fopen($path,"r");
 		/*
-		è¯»å–æ•´ä¸ªæ–‡ä»¶
+		¶ÁÈ¡Õû¸öÎÄ¼ş
 		while (!feof($f))
 		{
 			$line = fgets($f);
 			echo "site: ",$line,"<br />";
 		}*/
-		// è·å¾—ç¬¬ä¸€è¡Œ
+		// »ñµÃµÚÒ»ĞĞ
 		$line = fgets($f);
 		fclose($f);
 		//return $line;
 		return getInfo($path,$line);
 
-		/*//æ˜¾ç¤ºæœ€åä¸€è¡Œ
+		/*//ÏÔÊ¾×îºóÒ»ĞĞ
 		$fp = file("e:/test/users1.sql");
 		echo $fp[count($fp)-1];*/
 	}
 	function getInfo($path,$str){
 		if(preg_match("/@(.*?)@/i", $str, $matches)){
-			$arr = Array($matches[1],$path);
+			// gbkÏÂÖĞÎÄ×ªÂë
+			$getstr = iconv("gb2312","utf-8",$matches[1]);
+			$arr = Array($getstr,$path);
 			return $arr;
 		}
 	}
@@ -167,26 +172,34 @@ function loopTree($dir){
 }
 
 
-//è·å–æŸä¸€ä¸ªå‚æ•°
+//»ñÈ¡Ä³Ò»¸ö²ÎÊı
 function getOneParameter($Parameter,$asend,$end){
 	if(!isset($resultType)){
 		global $resultType;
 	}
-	// è·å–æŸä¸ªå‚æ•°çš„å€¼
-	$send = isset($_GET[$Parameter])?$_GET[$Parameter]:1;
-	$a_send = array($asend[0]);
-	foreach($asend as $key => $value){
-		if($key!=0){
-			//array($send,"é“¾æ¥æ–‡å­—",åœ°å€æ å‚æ•°å¤„ç†),
-			$arr = array($key,$value,getHath($Parameter,$key));
-			array_push($a_send,$arr);
+	if($Parameter!=""){
+		// »ñÈ¡Ä³¸ö²ÎÊıµÄÖµ
+		$send = isset($_GET[$Parameter])?$_GET[$Parameter]:1;
+		$getstr = iconv("gb2312","utf-8",$asend[0]);
+		$a_send = array($getstr);
+		foreach($asend as $key => $value){
+			if($key!=0){
+				//array($send,"Á´½ÓÎÄ×Ö",µØÖ·À¸²ÎÊı´¦Àí),
+				$otherstr = iconv("gb2312","utf-8",$value);
+				$arr = array($key,$otherstr,getHath($Parameter,$key));
+				array_push($a_send,$arr);
+			}
+		}
+		array_push($resultType,$a_send);
+		if(isset($end)&&$end){
+			echo "<textarea id='demoData' style='display:none;'>".json_encode($resultType)."</textarea>";
+		}
+		return $send;
+	}else{
+		if(isset($end)&&$end){
+			echo "<textarea id='demoData' style='display:none;'>".json_encode($resultType)."</textarea>";
 		}
 	}
-	array_push($resultType,$a_send);
-	if(isset($end)&&$end){
-		echo "<textarea id='demoData' style='display:none;'>".json_encode($resultType)."</textarea>";
-	}
-	return $send;
 }
 
 ?>
@@ -212,7 +225,7 @@ function getOneParameter($Parameter,$asend,$end){
 .demo-branch-list{border-bottom:1px dashed #999;padding-bottom:10px;margin-bottom:10px;}
 </style>
 <div class="demo-interaction-panel" id="demoInteractionPanel">
-	<div class="demo-panel-hd" id="demoPanelHd"><h3 class="demo-panel-title">äº¤äº’é¢æ¿</h3><span class="demo-min" id="demoMin">ç¼©å°</span></div>
+	<div class="demo-panel-hd" id="demoPanelHd"><h3 class="demo-panel-title">½»»¥Ãæ°å</h3><span class="demo-min" id="demoMin">ËõĞ¡</span></div>
 	<div class="demo-panel-bd" id="demoPanelBd">
 	</div>
 </div>
@@ -233,6 +246,7 @@ function addloads(func) {
   }
 };
 addloads(panelFn);
+//window.addEventListener("load",panelFn);
 function panelFn(){
 	var odata = document.getElementById("demoData"),
 		data = odata.value,
@@ -244,18 +258,19 @@ function panelFn(){
 	}else{
 		data = eval ("(" + data + ")");
 	}
-
-	// æ²¡æœ‰æ•°æ®åˆ™é€€å‡º
+	
+	// Ã»ÓĞÊı¾İÔòÍË³ö
 	if(data.length==1&&data[0].length==1){
 		odemoInteractionPanel.style.display = "none";
 		return false;
 	}
 
 	for(var i=0;i<data.length;i++){
-		// å½“æŸåˆ—åªæœ‰æ ‡é¢˜æ—¶è·³è¿‡
+		// µ±Ä³ÁĞÖ»ÓĞ±êÌâÊ±Ìø¹ı
 		if(data[i].length==1){
 			continue;
 		}
+		
 		var oCreateItem = document.createElement("div");
 		oCreateItem.className = "demo-type demo-branch-list";
 		var oh4 = document.createElement("h4");
@@ -264,7 +279,7 @@ function panelFn(){
 		var oUl = document.createElement("ul");
 		oUl.className = "demo-list";
 		
-		//è®¾ç½®å½“å‰ulå¯¹åº”çš„hashå…³é”®å­—
+		//ÉèÖÃµ±Ç°ul¶ÔÓ¦µÄhash¹Ø¼ü×Ö
 		if(i>0){
 			oUl.setAttribute("dataType",data[i][1][2].substring(1).split("&").pop().split("=")[0]);
 		}
@@ -284,7 +299,7 @@ function panelFn(){
 	var panel_a = odemoPanelBd.getElementsByTagName("a"),
 	panel_ul = odemoPanelBd.getElementsByTagName("ul");
 	var hash;
-	//è·å–urlä¸­çš„å‚æ•°
+	//»ñÈ¡urlÖĞµÄ²ÎÊı
 	var url = location.href;
 	if(url.indexOf("?")==-1){
 		hash = "";
@@ -340,12 +355,12 @@ function panelFn(){
 	oDemoMin.addEventListener("click",function(){
 		if(odemoPanel.className =="demo-interaction-panel"){
 			odemoPanel.className = "demo-interaction-panel demo-interaction-panel-min";
-			oDemoMin.innerHTML = "å±•å¼€";
+			oDemoMin.innerHTML = "Õ¹¿ª";
 		}else{
 			odemoPanel.className = "demo-interaction-panel";
-			oDemoMin.innerHTML = "ç¼©å°";
+			oDemoMin.innerHTML = "ËõĞ¡";
 		}
 	},false);
 }
 </script>
-<!-- äº¤äº’ç‰ˆé¢å†…å®¹-end -->
+<!-- ½»»¥°æÃæÄÚÈİ-end -->

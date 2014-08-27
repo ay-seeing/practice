@@ -15,7 +15,7 @@ ul,li,ol{list-style:none;}
 	</style>
 </head>
 <body>
-<?php include($_SERVER['DOCUMENT_ROOT']."/code_beta/a_practice/php-judge/panel.php"); ?>
+<?php include($_SERVER['DOCUMENT_ROOT']."/code_beta/a_practice/php-judge/panelUTF8.php"); ?>
 
 <?php 
 // send 注释

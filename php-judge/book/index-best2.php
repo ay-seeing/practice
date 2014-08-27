@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>phpå‚æ•°åˆ¤æ–­</title>
+	<meta charset="gb2312">
+	<title>php²ÎÊıÅĞ¶Ï</title>
 	<style>
 *{margin:0;padding:0;}
 body{font-size:14px;line-height:1.5em;font-family:tahoma,arial,"microsoft yahei";color:#666;}
@@ -11,49 +11,50 @@ ul,li,ol{list-style:none;}
 .red{color:red;}
 .green{color:green;}
 .blue{color:blue;}
+.demo-interaction-panel{top:50px !important;}
 	</style>
 </head>
 <body>
-<?php include($_SERVER['DOCUMENT_ROOT']."/code_beta/a_practice/php-judge/panelUTF8.php"); ?>
+<?php include($_SERVER['DOCUMENT_ROOT']."/code_beta/a_practice/php-judge/panelGBK.php"); ?>
 <?php /*include("../panel.php");*/ ?>
 
 
 
 
 <?php 
-// send æ³¨é‡Š
-$asend = array("ç§ç±»1","send1","send2","send3","send4");
+// send ×¢ÊÍ
+$asend = array("ÖÖÀà1","send1","send2","send3","send4");
 $send = getOneParameter("send",$asend,false);
 
-// type æ³¨é‡Š
-$atype =  array("ç§ç±»2","type1","type2","type3","type4");
+// type ×¢ÊÍ
+$atype =  array("ÖÖÀà2","type1","type2","type3","type4");
 $type = getOneParameter("type",$atype,false);
 
-// type æ³¨é‡Š
-$es =  array("ç§ç±»3","12","34");
+// type ×¢ÊÍ
+$es =  array("ÖÖÀà3","12","34");
 $ee = getOneParameter("eee",$es,true);
  ?>
 
 <div class="wraper">
 
 	<?php  if($send==1){ ?>
-		<div class="red">å½“send=1æ—¶å€™æ˜¾ç¤º</div>
+		<div class="red">µ±send=1Ê±ºòÏÔÊ¾</div>
 	<?php  }elseif($send==2){ ?>
-		<div class="green">å½“send=2æ—¶å€™æ˜¾ç¤º</div>
+		<div class="green">µ±send=2Ê±ºòÏÔÊ¾</div>
 	<?php  }elseif($send==3){ ?>
-		<div class="blue">å½“send=3æ—¶å€™æ˜¾ç¤º</div>
+		<div class="blue">µ±send=3Ê±ºòÏÔÊ¾</div>
 	<?php  }elseif($send==4){ ?>
-		<div>å½“send=4æ—¶å€™æ˜¾ç¤º</div>
+		<div>µ±send=4Ê±ºòÏÔÊ¾</div>
 	<?php } ?>
 
 	<?php  if($type==1){ ?>
-		<div class="red">å½“type=1æ—¶å€™æ˜¾ç¤º</div>
+		<div class="red">µ±type=1Ê±ºòÏÔÊ¾</div>
 	<?php  }elseif($type==2){ ?>
-		<div class="green">å½“type=2æ—¶å€™æ˜¾ç¤º</div>
+		<div class="green">µ±type=2Ê±ºòÏÔÊ¾</div>
 	<?php  }elseif($type==3){ ?>
-		<div class="blue">å½“type=3æ—¶å€™æ˜¾ç¤º</div>
+		<div class="blue">µ±type=3Ê±ºòÏÔÊ¾</div>
 	<?php  }elseif($type==4){ ?>
-		<div>å½“type=4æ—¶å€™æ˜¾ç¤º</div>
+		<div>µ±type=4Ê±ºòÏÔÊ¾</div>
 	<?php } ?>
 
 </div>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>控制面板调用和使用</title>
+	<style>
+*{margin:0;padding:0;}
+body{font:14px/2em arial,"microsoft yahei";color:#666;}
+.wraper{width:60%;min-width:600px;max-width:1200px;margin:40px auto;}
+h1{font-size:30px;}
+.step{margin-top:40px;}
+.t{font-weight:bold;font-size:18px;color:#06c;}
+.code{border:2px solid #ccc;padding:10px;margin:10px 0;}
+.notice{color:#E56F03;}
+.black{color:black;}
+.gray{color:#ccc;}
+.red{color:red;}
+.mt10{margin-top:10px;}
+.mt20{margin-top:20px;}
+	</style>
+</head>
+<body>
+<div class="wraper">
+	<h1>控制面板使用步骤</h1>
+	<div class="mt20"><a href="http://prototype.ui.sh.ctriptravel.com/code_beta/a_practice/php-judge/book/index-best.php">DEMO</a></div>
+	<dl class="step">
+		<dt class="t"><span class="num">1、</span>先确定好目录结构</dt>
+		<dd class="m">
+			<p>目录结构需如下：</p>
+			<div><img src="pic1.png" alt=""></div>
+			<p>上图以 search1.5 主分支为例，将  search1.5 项目开一个分支放到 wip(开发中) 文件夹中。</p>
+			<p><span class="notice">注意：</span><br />1、分支名称要以主分支文件夹开头，然后用中划线链接其他名称。<br />2、主分支应避免使用中划线。<br />3、不支持多层嵌套，php文件直接放在项目文件夹下面。</p>
+		</dd>
+	</dl>
+	<dl class="step">
+		<dt class="t"><span class="num">2、</span>项目分支里针对需要修改的文件进行处理</dt>
+		<dd class="m">
+			<p>每个项目或变更可能不会牵涉到所有文件，因此给修改的文件添加注释，以便控制面板能匹配到该文件：</p>
+			<div class="code">
+				&lt;?php /*@搜索结果页@*/ ?&gt;
+			</div>
+			<p><span class="notice">注意：</span><br />1、以上注释要放在php文件的第一行，且注释左右要有 @ 符号。<br />2、主分支下的php文件不需要改注释，否则开分支时不管文件是否有改动，都会有改分支在控制面板里面显示。</p>
+		</dd>
+	</dl>
+	<dl class="step">
+		<dt class="t"><span class="num">3、</span>在文件中引入控制面板php文件</dt>
+		<dd class="m">
+			<p>在页面body里面引入php控制面板文件，引用方式如下：</p>
+			<div class="code">
+				&lt;?php include($_SERVER['DOCUMENT_ROOT']."/code_pub/cn/flight/panelUTF8.php"); ?&gt;<br />
+				<span class="gray">//或</span><br />
+				&lt;?php include($_SERVER['DOCUMENT_ROOT']."/code_pub/cn/flight/panelGBK.php"); ?&gt;<br />
+			</div>
+			<p><span class="notice">注意：</span><br />1、因为目前我们使用的文档是gb2312的编码，所以提供两种编码的文件，按需引用。</p>
+		</dd>
+	</dl>
+	<dl class="step">
+		<dt class="t"><span class="num">4、</span>启动面板和添加参数</dt>
+		<dd class="m">
+			<p class="black">启动面板有两种：<strong>带参数</strong>和<strong>不带参数</strong></p>
+			<p class="black mt10"><strong>不带参数：</strong></p>
+			<div class="code">
+				getOneParameter("","",true);
+			</div>
+			<p><span class="notice">注意：</span><br />1、前两个参数用空的字符串。<br />2、第三个参数是true。</p>
+	
+			<p class="black mt10"><strong>一个参数：</strong></p>
+			<div class="code">
+				<span class="gray">// send 注释</span><br />
+				$asend = array("title","send1","send2","send3","send4");<br />
+				$send = getOneParameter("send",$asend,true);<br />
+			</div>
+			<div><img src="pic2.png" alt=""></div>
+			<p><span class="notice">注意：</span><br />1、参数数组（$asend）第一个元素是标题，后面的是参数值对应控制面板内的链接文案，如上图：<br />2、getOneParameter 函数第一个参数是 参数的键值 ，第二个参数就是刚才定义的参数数组，第三个参数为true。<br />3、$send 变量是 getOneParameter 函数第一个参数的值。</p>
+	
+			<p class="black mt10"><strong>多个参数：</strong></p>
+			<p>多个参数和一个参数类似，只是有点不同</p>
+			<div class="code">
+				<span class="gray">// send 注释</span><br />
+				$asend = array("title2","send1","send2","send3","send4");<br />
+				$send = getOneParameter("send",$asend,<span class="red">false</span>);<br /><br />
+				<span class="gray">// type 注释</span><br />
+				$atype = array("title2","type1","type2","type3","type4");<br />
+				$type = getOneParameter("type",$atype,<span class="red">true</span>);<br />
+			</div>
+			<div><img src="pic3.png" alt=""></div>
+			<p><span class="notice">注意：</span><br />1、getOneParameter 函数的第三个参数只有在最后一个参数的时候才为 true，否则为false。效果如上图：</p>
+		</dd>
+	</dl>
+</div>
+<?php include($_SERVER['DOCUMENT_ROOT']."/code_pub/cn/flight/panel.php"); ?>
+<?php 
+// send 注释
+$asend = array("种类1","send1","send2","send3","send4");
+$send = getOneParameter("",$asend,true);
+?>
+</body>
+</html>
