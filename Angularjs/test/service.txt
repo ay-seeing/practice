@@ -1,0 +1,123 @@
+原文定义：
+Angular services are singletons objects or functions that carry out specific tasks common to web apps.
+
+它是一个单例对象或函数，对外提供特定的功能。
+
+1、首先是一个单例，即无论这个服务被注入到任何地方，对象始终只有一个实例，因此每次访问的都是同一个实例。
+2、其次这与我们自己定义一个function然后在其他地方调用不同，因为服务被定义在一个模块中，所以其使用范围是可以被我们管理的。ng的避免全局变量污染意识非常强。
+
+
+
+
+
+
+
+系统内置的服务以$开头，我们也可以自定义服务
+
+自定义服务方式：
+1、使用系统内置的$provide服务
+2、使用Module的factory方法
+3、使用Module的service方法
+
+例1：
+var app = angular.module("myapp",[],function($provide){
+	$provide.factorry("myService",function(){
+		var data = {
+			name:"yiyang",
+			height:"173"
+		}
+		return data;
+	});
+});
+
+
+例2：
+var app = angular.module("myapp",[]);
+app.factory("mySerice",function(){
+	var data = {
+		name:"yiyang",
+		height:"173"
+	}
+	return data;
+});
+
+
+例3：
+var app = angular.module("myapp",[]);
+app.service("myService",function(){
+	this.name = "yiyang";
+	this.height = "173";
+});
+
+
+Module的factory和$provide的factory方法是一模一样的
+
+Module的service方法，它没有return任何东西，是因为service方法本身返回一个构造器，系统会自动使用new关键字来创建出一个对象。
+
+
+这样调用该服务的地方便可以直接通过remoteData.name来访问数据了
+
+
+
+
+
+
+使用服务自定义服务
+可以有3中使用服务方式：
+1、直接传入参数使用
+2、传入参数+使用别名
+3、直接使用别名+显示声明
+
+例1：
+app.controller("test",function($scope,myService){
+	console.log("name:"+myService.name+" height:"+myService.height);
+});
+
+
+例2：
+app.controller("test",["$scope","myService",function(scope,myser){
+	console.log("name:"+myser.name+" height:"+myser.height);
+}]);
+
+
+例3：
+app.controller("test",function(scope,myser){
+	console.log("name:"+myser.name+" height:"+myser.height);
+});
+test.$inject = ["$scope","myService"];
+
+
+
+
+
+
+
+
+
+服务与服务之间可以有依赖关系，如：
+
+var app = angular.module("myapp",[]);
+
+app.controller("test",["$scope","validation",function($scope,validation){
+	$scope.validation = validation;
+}]);
+
+app.factory("myService",function(){
+	var data = {
+		name = "yiyang",
+		height = "173"
+	}
+	return data;
+});
+
+app.factory("validation",function(myService){
+	return function(){
+		if(myService.name=="yiyang"){
+			alert("验证通过");
+		}else{
+			alert("验证失败");
+		}
+	}
+});
+
+

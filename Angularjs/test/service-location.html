@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>$location</title>
+	<script src="../js/angular.min1.2.x.js"></script>
+</head>
+<body ng-app="myapp">
+	<div ng-controller="testC"></div>
+<script>
+var app = angular.module("myapp",[]);
+app.controller("testC",["$scope","$location",function($scope,$location){
+	console.log($location);
+}]);
+app.factory("remoteDate",function(){
+	var data = {name:"n",value:"v"}
+	return data;
+});
+/*app.controller("testC",[$scope,remoteDate,function($scope,remoteDate){
+	$
+}]);*/
+</script>
+</body>
+</html>
