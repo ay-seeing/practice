@@ -1,3 +1,9 @@
+$的命名约定
+前缀$是表示 Angular自己提供的服务名称，如$scope或$provide等，为了防止冲突，最好避免命名自己开发的服务以为$开头。
+如果你检查一个scope内部，你也可能会发现一些属性开头也是以 $开头。这些特性被认为是私有的，并且不应该访问或修改。
+
+
+
 原文定义：
 Angular services are singletons objects or functions that carry out specific tasks common to web apps.
 
@@ -121,3 +127,43 @@ app.factory("validation",function(myService){
 });
 
 
+
+
+Angularjs 提供的标准服务组件
+$http   用于处理 XMLHttpRequest
+$location   提供当前 URL 的信息
+$q     异步请求使用，promise/deferred 模块
+$routeProvider    配置路由
+$log   日志服务
+
+
+
+
+$http  方法：
+
+$http.get()
+$http.head()
+$http.post()
+$http.put()
+$http.delete()
+$http.jsonp()
+
+
+
+
+
+结合模块和服务
+angular.module('MyModule', [], function($provide){
+  $provide.factory('S1', function(){
+    return 'I am S1';
+  });
+  $provide.factory('S2', function(){
+    return {see: function(){return 'I am S2'}}
+  });
+});
+
+var app = angular.module('Demo', ['MyModule'], angular.noop);
+app.controller('TestCtrl', function($scope, S1, S2){
+  console.log(S1)
+  console.log(S2.see())
+});
