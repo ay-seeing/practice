@@ -10,9 +10,21 @@ ul.number{width:60%;margin:0 auto;}
 .number h2{font:16px/1.5em arial,"microsoft yahei";color:#555;margin-bottom:10px;}
 .number li{float:left;width:25%;list-style:decimal inside;padding:20px;margin-top:50px;box-sizing:border-box;}
 .bottom-text{fill:red !important;}
-/* fix for IE */
+/* fix for IE start */
 img {width: 100%;}
 object{width:100%;}
+embed{width:100%;}
+/* fix for IE end */
+
+
+svg * { transition: fill .1s ease-out, opacity .1s easeout; }
+@media all and (max-width: 250px) {
+       #curved_bg { opacity: 0; }
+       #secondary_content, #primary_content { fill:  #195463; }
+ }
+ @media all and (max-width: 200px) { /* ... */ }
+ @media all and (max-width: 150px) {  /* ... */ }
+
 </style>
 </head>
 <body>
