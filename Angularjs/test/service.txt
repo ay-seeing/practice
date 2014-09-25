@@ -141,6 +141,37 @@ $log   日志服务
 
 $http  方法：
 
+$http(config)
+	.success(function(data,status,headers,config){})
+	.error(function(data,status,headers,config
+
+promise
+
+config为一个JSON对象，其中主要包含该请求的url、data、method等，如{url:"login.do",method:"post",data:{name:"12346",pwd:"123"}}。
+method  {String} 请求方式e.g. "GET"."POST"
+url {String} 请求的URL地址
+params {key,value} 请求参数，将在URL上被拼接成？key=value
+data {key,value} 数据，将被放入请求内发送至服务器
+cache {boolean} 若为true，在http GET请求时采用默认的$http cache，否则使用$cacheFactory的实例
+timeout {number} 设置超时时间
+
+
+success为请求成功后的回调函数，error为请求失败后的回调函数。
+data 响应体
+status 相应的状态值
+headers 获取getter的函数
+config 请求中的config对象，同上第1点 
+
+
+例：
+$http({url:"login.do",{name:"yiyang",password:"12345"}}).success(function(data, status, headers, config){
+    alert("success");
+}).error(function(data, status, headers, config){
+    alert("error");
+})
+
+
+快捷方法：
 $http.get()
 $http.head()
 $http.post()
@@ -149,6 +180,14 @@ $http.delete()
 $http.jsonp()
 
 
+缓存：
+$http.get('/foo/bar' + itemId, {cache: true})
+ .success(function(data){
+    data; //{foo : 'bar'}
+ })
+ .error(function(data,status,headers,config){
+    //一些错误处理代码
+ });
 
 
 

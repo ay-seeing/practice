@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>$http.jsonp</title>
+	    <script src="../js/angular.min1.2.x.js"></script>
+
+</head>
+<body ng-app>
+	<div ng-controller="test">
+		<input type="button" ng-click="sayss()" value="get">
+	</div>
+	<script>
+/*var app = angular.module("myapp",[]);
+app.controller("test",["$scope","$http",function($scope,$http){
+	$scope.say = function(){
+		$http.get("servicejs.js").success(function(data, status, headers, config){
+			console.log(data);
+		}).error(function(data, status, headers, config){
+			console.log("error");
+		});
+		//console.log(90);
+	}
+}]);*/
+function test($scope,$http){
+	$scope.sayss = function(){
+		var url = "http://public-api.wordpress.com/rest/v1/sites/wtmpeachtest.wordpress.com/posts?callback=JSON_CALLBACK";
+		url = "http://localhost/practice/angularjs/test/servicejs.js?callback=JSON_CALLBACK";
+
+		$http.jsonp(url).success(function(data){
+			console.log(data);
+		}).error(function(data){
+			console.log("error");
+		});
+		//console.log(90);
+	}
+}
+	</script>
+</body>
+</html>

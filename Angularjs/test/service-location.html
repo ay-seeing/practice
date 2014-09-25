@@ -4,13 +4,23 @@
 	<meta charset="UTF-8">
 	<title>$location</title>
 	<script src="../js/angular.min1.2.x.js"></script>
+	<style>
+body{color:#666;}
+strong{font-weight:bold;color:red;margin-right:10px;}
+	</style>
 </head>
 <body ng-app="myapp">
-	<div ng-controller="testC"></div>
+	<div ng-controller="testC">
+		<ul id="show"></ul>
+	</div>
 <script>
+var oshow = document.getElementById("show");
 var app = angular.module("myapp",[]);
 app.controller("testC",["$scope","$location",function($scope,$location){
 	console.log($location);
+	for(var i in $location){
+		oshow.innerHTML += "<li><strong>"+i+"</strong>"+$location[i]+"</li>";
+	}
 }]);
 app.factory("remoteDate",function(){
 	var data = {name:"n",value:"v"}
