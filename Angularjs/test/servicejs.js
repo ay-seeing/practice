@@ -1,0 +1,1 @@
+[{"cube":"1" ,"points":"160"},{"cube":"2","points":"690"},{"cube":"3","points":"331"}]
