@@ -22,19 +22,37 @@ app.controller("test",["$scope","$http",function($scope,$http){
 		//console.log(90);
 	}
 }]);*/
+
+
+
 function test($scope,$http){
 	$scope.sayss = function(){
 		var url = "http://public-api.wordpress.com/rest/v1/sites/wtmpeachtest.wordpress.com/posts?callback=JSON_CALLBACK";
-		url = "http://localhost/practice/angularjs/test/servicejs.js?callback=JSON_CALLBACK";
+		//var url = "http://localhost/practice/angularjs/test/service.json?callback=JSON_CALLBACK";
+		//var url = "http://localhost/practice/angularjs/test/servicejs.js?callback=JSON_CALLBACK";
 
 		$http.jsonp(url).success(function(data){
+			console.log("success");
 			console.log(data);
 		}).error(function(data){
-			console.log("error");
+			console.log("error"+data);
 		});
 		//console.log(90);
+
+		/*var p = $http({
+	    method: 'JSONP',
+	    url: 'http://public-api.wordpress.com/rest/v1/sites/wtmpeachtest.wordpress.com/posts',
+	    params: {callback:'JSON_CALLBACK'}
+	  });
+	  p.success(function(response, status, headers, config){
+	      console.log(response);
+	      $scope.name = response.name;
+	  });*/
 	}
 }
+
+
+
 	</script>
 </body>
 </html>

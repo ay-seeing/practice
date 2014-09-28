@@ -6,21 +6,26 @@
     <script src="../js/angular.min1.2.x.js"></script>
 <script type="text/javascript">
     function ctrl($http,$scope){
+        $scope.user={
+            name:"yiyang",
+            pwd:"123"
+        }
         var myparams = {a:3};
         $scope.login = function(user){
             $http.get("service-http2.html",user,{cache:true}).success(function(data, status, headers, config){
-                alert("success");
-                console.log(data);
-                console.log(status);
-                console.log(headers);
+                // alert("success");
+                // console.log(data);
+                // console.log(status);
+                // console.log(headers);
                 console.log(config);
             }).error(function(data, status, headers, config){
                 alert("error");
             })
         }
         $scope.login1 = function(user){
-            $http({url:"login.do",method:"get",data:user,cache:true}).success(function(data, status, headers, config){
-                alert("success");
+            $http({url:"login.do",method:"get",data:user}).success(function(data, status, headers, config){
+                // alert("success");
+                console.log(config);
             }).error(function(data, status, headers, config){
                 alert("error");
             })

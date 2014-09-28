@@ -18,12 +18,86 @@ Angular services are singletons objects or functions that carry out specific tas
 
 
 
+Angularjs 提供的标准服务组件
+$http   用于处理 XMLHttpRequest
+$location   提供当前 URL 的信息
+$q     异步请求使用，promise/deferred 模块
+$routeProvider    配置路由
+$log   日志服务
+。。。
+
+$animate、$compile、$document、$interval、$parse、$filter、$window
+http://www.ngnice.com/docs/api/ng/service
+
+
+
+
+$http  方法：
+
+$http(config)
+	.success(function(data,status,headers,config){})
+	.error(function(data,status,headers,config
+
+promise
+
+config为一个JSON对象，其中主要包含该请求的url、data、method等，如{url:"login.do",method:"post",data:{name:"12346",pwd:"123"}}。
+	method  {String} 请求方式e.g. "GET"."POST"
+	url {String} 请求的URL地址
+	params {key,value} 请求参数，将在URL上被拼接成？key=value
+	data {key,value} 数据，将被放入请求内发送至服务器
+	cache {boolean} 若为true，在http GET请求时采用默认的$http cache，否则使用$cacheFactory的实例
+	timeout {number} 设置超时时间
+
+
+success为请求成功后的回调函数，error为请求失败后的回调函数。
+	data 响应体
+	status 相应的状态值
+	headers 获取getter的函数
+	config 请求中的config对象，同上第1点 
+
+
+例：
+$http({url:"login.do",{name:"yiyang",password:"12345"}}).success(function(data, status, headers, config){
+    alert("success");
+}).error(function(data, status, headers, config){
+    alert("error");
+})
+
+
+快捷方法：
+$http.get()
+$http.head()
+$http.post()
+$http.put()
+$http.delete()
+$http.jsonp()
+
+
+缓存：避免重复从服务器请求
+$http.get('/foo/bar' + itemId, {cache: true})
+ .success(function(data){
+    data; //{foo : 'bar'}
+ })
+ .error(function(data,status,headers,config){
+    //一些错误处理代码
+ });
+
+
+
+
+
+
+
+
+
+
+
 系统内置的服务以$开头，我们也可以自定义服务
 
 自定义服务方式：
-1、使用系统内置的$provide服务
-2、使用Module的factory方法
-3、使用Module的service方法
+1、使用系统内置的 $provide 服务
+2、使用 Module 的 factory 方法
+3、使用 Module 的 service 方法
 
 例1：
 var app = angular.module("myapp",[],function($provide){
@@ -56,7 +130,6 @@ app.service("myService",function(){
 });
 
 
-Module的factory和$provide的factory方法是一模一样的
 
 Module的service方法，它没有return任何东西，是因为service方法本身返回一个构造器，系统会自动使用new关键字来创建出一个对象。
 
@@ -129,66 +202,6 @@ app.factory("validation",function(myService){
 
 
 
-Angularjs 提供的标准服务组件
-$http   用于处理 XMLHttpRequest
-$location   提供当前 URL 的信息
-$q     异步请求使用，promise/deferred 模块
-$routeProvider    配置路由
-$log   日志服务
-
-
-
-
-$http  方法：
-
-$http(config)
-	.success(function(data,status,headers,config){})
-	.error(function(data,status,headers,config
-
-promise
-
-config为一个JSON对象，其中主要包含该请求的url、data、method等，如{url:"login.do",method:"post",data:{name:"12346",pwd:"123"}}。
-method  {String} 请求方式e.g. "GET"."POST"
-url {String} 请求的URL地址
-params {key,value} 请求参数，将在URL上被拼接成？key=value
-data {key,value} 数据，将被放入请求内发送至服务器
-cache {boolean} 若为true，在http GET请求时采用默认的$http cache，否则使用$cacheFactory的实例
-timeout {number} 设置超时时间
-
-
-success为请求成功后的回调函数，error为请求失败后的回调函数。
-data 响应体
-status 相应的状态值
-headers 获取getter的函数
-config 请求中的config对象，同上第1点 
-
-
-例：
-$http({url:"login.do",{name:"yiyang",password:"12345"}}).success(function(data, status, headers, config){
-    alert("success");
-}).error(function(data, status, headers, config){
-    alert("error");
-})
-
-
-快捷方法：
-$http.get()
-$http.head()
-$http.post()
-$http.put()
-$http.delete()
-$http.jsonp()
-
-
-缓存：
-$http.get('/foo/bar' + itemId, {cache: true})
- .success(function(data){
-    data; //{foo : 'bar'}
- })
- .error(function(data,status,headers,config){
-    //一些错误处理代码
- });
-
 
 
 结合模块和服务
@@ -206,3 +219,9 @@ app.controller('TestCtrl', function($scope, S1, S2){
   console.log(S1)
   console.log(S2.see())
 });
+
+
+
+
+
+$scope     $rootScope     $parent
