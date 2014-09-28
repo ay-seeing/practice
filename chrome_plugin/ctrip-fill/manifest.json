@@ -1,6 +1,6 @@
 {
-  "name": "二维码生成",
-  "description": "说明：二维码生成插件，默认生成当前页面路径二维码，弹层中输入任何字符串都可以重新生成二维码",
+  "name": "答案快速填写插件",
+  "description": "答案快速填写插件",
   "version": "1.0",
   "permissions": [
     "tabs", "http://*/*", "https://*/*"
@@ -15,9 +15,16 @@
     "128": "image/icon-128.png"
   },
   "browser_action": {
-      "default_title": "获取当前路径二维码",
+      "default_title": "答案快速填写插件",
       "default_icon": "image/icon-19.png",
       "default_popup": "popup.html"
   },
-  "manifest_version": 2
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["http://*/*"],
+      //"css": ["mystyles.css"],
+      "js": ["js/contentjs.js"]
+    }
+  ]
 }
