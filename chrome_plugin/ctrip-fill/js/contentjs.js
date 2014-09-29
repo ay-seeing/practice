@@ -43,48 +43,134 @@ var _$ = {
 var listBox = _$.getClass(document,"exam_check_cont","div")[0];
 var aDt = listBox.getElementsByTagName("dt");
 var aDtLenth = aDt.length;
+var data_url = "http://prototype.local.sh.ctriptravel.com/code_beta/a_practice/chrome_plugin/source_file/answer.json";
 
-function getInfo(){
-    var info = [];
-    for(var i=0;i<aDtLenth;i++){
-        aDt[i].o = {};
-        var oDd = _$.nextTag(aDt[i]);
-        aDt[i].o.title = _$.getClass(oDd,"exam-q","p")[0].innerHTML;
+function getInfo(url){
+    var info;
+   $.ajax({url:url,async:false,error:function(){
+        //alert("失败");
+        info = [];
+        for(var i=0;i<aDtLenth;i++){
+            aDt[i].o = {};
+            var oDd = _$.nextTag(aDt[i]);
+            var yes = _$.getClass(oDd,"label_comm_a_cont","div")[0];
+            if(yes && yes.className.indexOf("label_error")!=-1){
+                yes = false;
+            }else{
+                yes = true;
+            }
 
-        //var is_multiple = (aDt[i].innerHTML=="多选题");
-        //console.log(is_multiple);
-        var aInput = oDd.getElementsByTagName("input");
-        //console.log(oDd);
-        var yes = _$.getClass(oDd,"label_comm_a_cont","div")[0];
-        if(yes && yes.className.indexOf("label_error")!=-1){
-            yes = false;
-        }else{
-            yes = true;
+            aDt[i].o.title = _$.getClass(oDd,"exam-q","p")[0].innerHTML;
+
+            //var is_multiple = (aDt[i].innerHTML=="多选题");
+            //console.log(is_multiple);
+            //var aInput = oDd.getElementsByTagName("input");
+            var aLi = oDd.getElementsByTagName("li");
+            //console.log(oDd);
+            if(yes){
+                aDt[i].o.choose = [];
+                for(var j=0;j<aLi.length;j++){
+                    var oInput = aLi[j].getElementsByTagName("input")[0];
+                    if(oInput.getAttribute("checked") == ""){
+                        var str = aLi[j].innerText;
+                        str = str.replace(/[a-zA-Z]\s/g,"");
+                        aDt[i].o.choose.push(str);
+                    }
+                }
+                /*else{
+                    for(var j=0;j<aLi.length;j++){
+                        var oInput = aLi[j].getElementsByTagName("input")[0];
+                        if(oInput.getAttribute("checked") == ""){
+                            var str = aLi[j].innerText;
+                            str = str.replace(/[a-zA-Z]\s/g,"");
+                            var is_there = false;
+                            var aChoose = aDt[i].o.choose;
+                            for(var n=0;n<aChoose.length;n++){
+                                if(aChoose[n]==str){
+                                    is_there = true;
+                                }
+                            }
+                            if(!is_there){
+                                aDt[i].o.choose.push(str);
+                            }
+                        }
+                    }
+                }*/
+                /*for(var j=0;j<aLi.length;j++){
+                    var oInput = aLi[j].getElementsByTagName("input")[0];
+                    if(oInput.getAttribute("checked") == ""){
+                        var str = aLi[j].innerText;
+                        str = str.replace(/[a-zA-Z]\s/g,"");
+                        var is_there = true;
+                        for(var )
+                        aDt[i].o.choose.push(str);
+                    }
+                }*/
+            }else{
+                aDt[i].o.choose = false;
+            }
+            info.push(aDt[i].o);
         }
-        for(var j=0;j<aInput.length;j++){
-            if(aInput[j].getAttribute("checked") == ""){
-                if(yes){
-                    aDt[i].o.choose = [];
-                    aDt[i].o.choose.push(j);
-                }else{
-                    aDt[i].o.choose = false;
+    }}).done(function(data){
+        //alert("成功");
+        info = data;
+        console.log(info);
+        /*for(var i=0;i<aDtLenth;i++){
+            aDt[i].o = {};
+            var oDd = _$.nextTag(aDt[i]);
+            var yes = _$.getClass(oDd,"label_comm_a_cont","div")[0];
+            if(yes && yes.className.indexOf("label_error")!=-1){
+                yes = false;
+            }else{
+                yes = true;
+            }
+
+            aDt[i].o.title = _$.getClass(oDd,"exam-q","p")[0].innerHTML;
+
+            var aLi = oDd.getElementsByTagName("li");
+
+            if(yes){
+                for(var j=0;j<aLi.length;j++){
+                    var oInput = aLi[j].getElementsByTagName("input")[0];
+                    if(oInput.getAttribute("checked") == ""){
+                        var str = aLi[j].innerText;
+                        str = str.replace(/[a-zA-Z]\s/g,"");
+                        //var is_there = false;
+                        for(var m in info){
+                            if(info[m].title == aDt[i].o.title){
+                                var aChoose = ainfo[m].choose;
+                                for(var n=0;n<aChoose.length;n++){
+                                    if(aChoose[n]==str){
+                                        is_there = true;
+                                    }else{
+                                        aDt[i].o.choose.push(str);
+                                    }
+                                }
+                            }
+                        }
+                        // var aChoose = aDt[i].o.choose;
+                        
+                        // if(!is_there){
+                        //     aDt[i].o.choose.push(str);
+                        // }
+                    }
                 }
             }
-        }
-        info.push(aDt[i].o);
-    }
+        }*/
+    });
     return info;
-    //console.log(info);
 }
 
 
 function setInfo(url){
     // 获取数据
-    $.ajax(url).done(function(data) {
+    $.ajax({url:url,error:function(){alert("链接失败");}}).done(function(data) {
+        //alert(data);
         for(var i=0;i<aDtLenth;i++){
           var o = {};
           var oDd = _$.nextTag(aDt[i]);
           var aInput = oDd.getElementsByTagName("input");
+          var aLi = oDd.getElementsByTagName("li");
           o.title = _$.getClass(oDd,"exam-q","p")[0].innerHTML;
 
           for(var d in data){
@@ -96,7 +182,15 @@ function setInfo(url){
           if(currentAnswer){
               for(var j=0;j<currentAnswer.length;j++){
                 //console.log(currentAnswer[j]);
-                aInput[currentAnswer[j]].setAttribute("checked","checked");
+                //aInput[currentAnswer[j]].setAttribute("checked","checked");
+                for(var m=0;m<aLi.length;m++){
+                    var str = aLi[m].innerText;
+                    str = str.replace(/[a-zA-Z]\s/g,"");
+                    if(str==currentAnswer[j]){
+                        //aLi[m].getElementsByTagName("input")[0].setAttribute("checked","checked")
+                        aLi[m].getElementsByTagName("input")[0].checked = "checked";
+                    }
+                }
               }
           }else{
             oDd.style.background = "#f0f0f0";
@@ -110,13 +204,13 @@ function setInfo(url){
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     //console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
     if(request.getInfo){
-        var datas = getInfo();
+        var datas = getInfo(data_url);
         datas = JSON.stringify(datas);
         window.open("write-answer.php?data="+datas,"newWindow","height=500,width=800,top=0,left=0, toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no");
     }
 
     if(request.setInfo){
-        setInfo("http://prototype.local.sh.ctriptravel.com/code_beta/a_practice/chrome_plugin/source_file/answer.json");
+        setInfo(data_url);
     }
 
     if (request.greeting == "hello"){
