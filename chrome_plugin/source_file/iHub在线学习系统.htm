@@ -38,7 +38,7 @@
             </dd>
             <dt>单选题</dt>
             <dd>
-                <p class="exam-q">阿斯蒂芬</p>
+                <p class="exam-q">为二位乐俊凯</p>
                 <ul class="exam-a a-redio">
                     <li><label><input type="radio" name="qa1637" disabled="">A&nbsp;退热贴</label></li>
                     <li><label><input type="radio" name="qa1637" disabled="">B&nbsp;体育体育</label></li>
@@ -87,8 +87,8 @@
                     <li><label><input type="radio" name="qa1640" disabled="">C&nbsp;用户这些手机</label></li>
                     <li><label><input type="radio" name="qa1640" checked="" disabled="">D&nbsp;阿斯蒂芬</label></li>
                 </ul>
-                <div class="label_comm_a_cont">
-                    正确<div class="label_comm_a_right"></div>
+                <div class="label_comm_a_cont label_error">
+                    错误<div class="label_comm_a_right"></div>
                     <div class="label_comm_a_btm"></div>
                 </div>
             </dd>
@@ -106,76 +106,6 @@
                     <div class="label_comm_a_btm"></div>
                 </div>
             </dd>
-            <dt>单选题</dt>
-            <dd>
-                <p class="exam-q">微热的心</p>
-                <ul class="exam-a a-redio">
-                    <li><label><input type="radio" name="qa1642" checked="" disabled="">A&nbsp;建行卡号</label></li>
-                    <li><label><input type="radio" name="qa1642" disabled="">B&nbsp;成v吧V刹</label></li>
-                    <li><label><input type="radio" name="qa1642" disabled="">C&nbsp;体育台</label></li>
-                    <li><label><input type="radio" name="qa1642" disabled="">D&nbsp;该换风格哈</label></li>
-                </ul>
-                <div class="label_comm_a_cont">
-                    正确<div class="label_comm_a_right"></div>
-                    <div class="label_comm_a_btm"></div>
-                </div>
-            </dd>
-            <dt>单选题</dt>
-            <dd>
-                <p class="exam-q">同仁医院</p>
-                <ul class="exam-a a-redio">
-                    <li><label><input type="radio" name="qa1643" checked="" disabled="">A&nbsp;语言</label></li>
-                    <li><label><input type="radio" name="qa1643" disabled="">B&nbsp;与</label></li>
-                    <li><label><input type="radio" name="qa1643" disabled="">C&nbsp;与偶</label></li>
-                    <li><label><input type="radio" name="qa1643" disabled="">D&nbsp;非常规梵蒂冈</label></li>
-                </ul>
-                <div class="label_comm_a_cont">
-                    正确<div class="label_comm_a_right"></div>
-                    <div class="label_comm_a_btm"></div>
-                </div>
-            </dd>
-            <dt>单选题</dt>
-            <dd>
-                <p class="exam-q">看记录交</p>
-                <ul class="exam-a a-redio">
-                    <li><label><input type="radio" name="qa1689" disabled="">A&nbsp;阿斯蒂芬</label></li>
-                    <li><label><input type="radio" name="qa1689" disabled="">B&nbsp;同一人</label></li>
-                    <li><label><input type="radio" name="qa1689" disabled="">C&nbsp;抑郁</label></li>
-                    <li><label><input type="radio" name="qa1689" checked="" disabled="">D&nbsp;u偶偶</label></li>
-                </ul>
-                <div class="label_comm_a_cont">
-                    正确<div class="label_comm_a_right"></div>
-                    <div class="label_comm_a_btm"></div>
-                </div>
-            </dd>
-            <dt>单选题</dt>
-            <dd>
-                <p class="exam-q">路交口换句话</p>
-                <ul class="exam-a a-redio">
-                    <li><label><input type="radio" name="qa1690" disabled="">A&nbsp;发阿斯顿飞</label></li>
-                    <li style="width:100%;"><label><input type="radio" name="qa1690" checked="" disabled="">B&nbsp;阿斯蒂芬</label></li><br>
-                    <li><label><input type="radio" name="qa1690" disabled="">C&nbsp;是电饭锅实得分</label></li>
-                    <li style="width:100%;"><label><input type="radio" name="qa1690" disabled="">D&nbsp;额大幅</label></li><br>
-                </ul>
-                <div class="label_comm_a_cont">
-                    正确<div class="label_comm_a_right"></div>
-                    <div class="label_comm_a_btm"></div>
-                </div>
-            </dd>
-            <dt>单选题</dt>
-            <dd>
-                <p class="exam-q">阿斯蒂芬</p>
-                <ul class="exam-a a-redio">
-                    <li style="width:100%;"><label><input type="radio" name="qa1691" disabled="">A&nbsp;额外热</label></li><br>
-                    <li style="width:100%;"><label><input type="radio" name="qa1691" checked="" disabled="">B&nbsp;是的V大是否是范德萨</label></li><br>
-                    <li style="width:100%;"><label><input type="radio" name="qa1691" disabled="">C&nbsp;阿萨德飞洒的</label></li><br>
-                    <li style="width:100%;"><label><input type="radio" name="qa1691" disabled="">D&nbsp;撒的范德萨</label></li><br>
-                </ul>
-                <div class="label_comm_a_cont">
-                    正确<div class="label_comm_a_right"></div>
-                    <div class="label_comm_a_btm"></div>
-                </div>
-            </dd>
             </dl>
 			<div class="add_confirm">
 				<a class="btn-ini confirm" href="http://ihub.mgmt.ctripcorp.com/platform/course/examination/examlist/112">返回</a>
@@ -184,7 +114,7 @@
 
 
 <script>
-var _$ = {
+/*var _$ = {
     getId : function(str){
         if(typeof str == "string"){
             return document.getElementById(str);
@@ -240,7 +170,7 @@ function getInfo(){
         var aInput = oDd.getElementsByTagName("input");
         //console.log(oDd);
         var yes = _$.getClass(oDd,"label_comm_a_cont","div")[0];
-        if(yes.className.indexOf("label_error")!=-1){
+        if(yes && yes.className.indexOf("label_error")!=-1){
             yes = false;
         }else{
             yes = true;
@@ -261,7 +191,26 @@ function getInfo(){
     }
     console.log(info);
 }
-getInfo();
+
+
+function setInfo(data){
+    for(var i=0;i<aDtLenth;i++){
+        var o = {};
+        var oDd = _$.nextTag(aDt[i]);
+        var aInput = oDd.getElementsByTagName("input");
+        o.title = _$.getClass(oDd,"exam-q","p")[0].innerHTML;
+
+        for(var d in data){
+            if(o.title == data[d].title){
+                var currentO = data.splice(d,1);
+            }
+        }
+        
+        for(var j=0;j<currentO.length;j++){
+            aInput[j].setAttribute("checked","checked");
+        }
+    }
+}*/
 
 </script>
 

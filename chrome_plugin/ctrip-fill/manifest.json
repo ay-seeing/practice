@@ -4,11 +4,11 @@
   "version": "1.0",
   "permissions": [
     "tabs", "http://*/*", "https://*/*"
-  ],/*
+  ],
   "background":{
    //"page":"background.html",
-   "scripts":["jquery-1.10.2.min.js","jquery.qrcode.min.js","bg.js"]
-  },*/
+   "scripts":["js/jquery-1.10.2.min.js","js/bg.js"]
+  },
   "icons":{
     "19": "image/icon-19.png",
     "38": "image/icon-38.png",
@@ -24,7 +24,7 @@
     {
       "matches": ["http://*/*"],
       //"css": ["mystyles.css"],
-      "js": ["js/contentjs.js"]
+      "js": ["js/jquery-1.10.2.min.js","js/contentjs.js"]
     }
   ]
 }
