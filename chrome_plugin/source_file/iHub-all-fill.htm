@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8' />
+		<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+		<title>iHub在线学习系统</title>
+		<link rel="stylesheet" href="css/basic.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" href="css/examnew.css" />
+		<script type="text/javascript">
+			var rootPath="";
+			var courseId="214";
+			var data='alert("本次考试不存在,或已结束");window.location.href="http://ihub.mgmt.ctripcorp.com:80/platform/course/examination/examlist/214";return;';
+			var resultId = -1;
+			var fileUrl='http://ihub-media.mgmt.ctripcorp.com';
+		</script>
+		<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="/js/jquery.cookie-min.js"></script>
+		<script type="text/javascript" src="/js/platform/course/examination/examination-exam.js"></script>
+	</head>
+	<body>
+		<div class="head head-type2">
+			<div class="layout-wp">
+				<table class="sec-exam">
+					<tr>
+						<td class="exam-bg">考试剩余时间：<span class="date-remaining">0</span></td>
+						<td class="exam-bg th-70"><a href="javascript:;" class="btn-ini btn-stop" id="btnPause" style="display:none;">暂停</a></td>
+						<td class="th-left-20">
+						<a href="javascript:;" class="btn-ini" onclick="doTypePage('single')">单选题（<span id="completeCount_single"></span>/0）</a>
+						<a href="javascript:;" class="btn-ini" onclick="doTypePage('mutil')">多选题（<span id="completeCount_mutil"></span>/0）</a>
+						<a href="javascript:;" class="btn-ini" onclick="doTypePage('fill')">填空题（<span id="completeCount_fill"></span>/0）</a>
+						<a href="javascript:;" class="btn-ini" onclick="doTypePage('question')">问答题（<span id="completeCount_question"></span>/0）</a></td>
+						<td class="th-180"><span class="exam-speed no-border">总题数<strong>0</strong></span><span class="exam-speed">已完成<strong id="completeCount">5</strong></span></td>
+						<td class="th-80"><a href="javascript:;" class="btn-ini btn-submit">提交试卷</a></td>
+					</tr>
+				</table>
+				
+			</div>
+		</div>
+		<div id="dv_headNav" class="layout-wp ui-index-cont" style="text-align:right;font-size:16px;">
+			<a name="aPrevious" class="btn-ini" href="javascript:void(0)" onclick="javascript:$('body,html').animate({scrollTop:0});return false;" style="box-shadow:0 1px 0 rgba(228,228,228,1);"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a name="aNext" class="btn-ini" href="javascript:void(0)" onclick="javascript:$('body,html').animate({scrollTop:0});return false;" style="box-shadow:0 1px 0 rgba(228,228,228,1);"></a>
+		</div>
+		<!--原导航位置-->
+
+		<div class="layout-wp ui-index-cont" id="divQuestionContent">
+			<h2 class="exam-title">如何在CL平台中进行自动化代码扫描<br />C卷</h2>
+		<!--导航新位置2014.8.7-->
+		<div class="scPanel exam_nav_cont exam_nav_cont_right" style="z-index:10;">
+			<h4 class='exam_nav_header' style="cursor:pointer;" id="divNavShow">试题导航&nbsp;&nbsp;&gt;&gt;</h4>
+			<div id="dv_qList" class="exam_nav"></div>
+		</div>
+		<div class="scPanel exam_nav_cont exam_nav_cont_right" style="z-index:10;width: 20px;display:none;" id="showNav">
+			<h4 class='exam_nav_header' style=" width: 20px; height: 160px;cursor:pointer;" id="divNavHide">试题导航&lt;&lt;</h4>
+		</div>
+			<dl class="exam-cont exam_check_cont">
+				
+            <dt>单选题</dt>
+            <dd>
+                <p class="exam-q">为二位乐俊凯</p>
+                <ul class="exam-a a-redio">
+                    <li><label><input type="radio" name="qa1637" >A&nbsp;退热贴</label></li>
+                    <li><label><input type="radio" name="qa1637" >B&nbsp;体育体育</label></li>
+                    <li><label><input type="radio" name="qa1637" >C&nbsp;坏女孩该</label></li>
+                    <li><label><input type="radio" name="qa1637"  >D&nbsp;偶偶偶</label></li>
+                </ul>
+            </dd>
+            <dt>单选题</dt>
+            <dd>
+                <p class="exam-q">雨图腾</p>
+                <ul class="exam-a a-redio">
+                    <li><label><input type="radio" name="qa1638" >A&nbsp;山东黑豹</label></li>
+                    <li><label><input type="radio" name="qa1638" >B&nbsp;弄不明白呢</label></li>
+                    <li><label><input type="radio" name="qa1638" >C&nbsp;是电饭锅</label></li>
+                    <li><label><input type="radio" name="qa1638"  >D&nbsp;飞规划局</label></li>
+                </ul>
+            </dd>
+            <dt>单选题</dt>
+            <dd>
+                <p class="exam-q">阿萨德发斯蒂芬</p>
+                <ul class="exam-a a-redio">
+                    <li style="width:100%;"><label><input type="checkbox" name="qa1636" >A&nbsp;阿萨德飞洒的</label></li><br>
+                    <li style="width:100%;"><label><input type="checkbox" name="qa1636" >B&nbsp;是电饭锅dfg</label></li><br>
+                    <li style="width:100%;"><label><input type="checkbox" name="qa1636"  >C&nbsp;问问穷人</label></li><br>
+                    <li style="width:100%;"><label><input type="checkbox" name="qa1636" >D&nbsp;环境该环境</label></li><br>
+                </ul>
+            </dd>
+            <dt>单选题</dt>
+            <dd>
+                <p class="exam-q">围绕</p>
+                <ul class="exam-a a-redio">
+                    <li><label><input type="radio" name="qa1639"  >A&nbsp;为儿童高</label></li>
+                    <li><label><input type="radio" name="qa1639" >B&nbsp;人体艺术</label></li>
+                    <li><label><input type="radio" name="qa1639" >C&nbsp;体育体育</label></li>
+                    <li><label><input type="radio" name="qa1639" >D&nbsp;体育hi看</label></li>
+                </ul>
+            </dd>
+            <dt>单选题</dt>
+            <dd>
+                <p class="exam-q">阿斯蒂芬</p>
+                <ul class="exam-a a-redio">
+                    <li><label><input type="radio" name="qa1640" >A&nbsp;阿斯蒂芬</label></li>
+                    <li><label><input type="radio" name="qa1640" >B&nbsp;阿斯蒂芬</label></li>
+                    <li><label><input type="radio" name="qa1640" >C&nbsp;用户这些手机</label></li>
+                    <li><label><input type="radio" name="qa1640"  >D&nbsp;阿斯蒂芬</label></li>
+                </ul>
+            </dd>
+            <dt>单选题</dt>
+            <dd>
+                <p class="exam-q">过户费贵航股份</p>
+                <ul class="exam-a a-redio">
+                    <li><label><input type="radio" name="qa1641"  >A&nbsp;v吧</label></li>
+                    <li><label><input type="radio" name="qa1641" >B&nbsp;获国家</label></li>
+                    <li><label><input type="radio" name="qa1641" >C&nbsp;体育</label></li>
+                    <li><label><input type="radio" name="qa1641" >D&nbsp;ui哦</label></li>
+                </ul>
+            </dd>
+            
+			</dl>
+		</div>
+
+		<div id="dv_footNav" class="layout-wp ui-index-cont" style="text-align:right;font-size:16px;">
+			<a name="aPrevious" class="btn-ini" href="javascript:void(0)" onclick="javascript:$('body,html').animate({scrollTop:0});return false;" style="box-shadow:0 1px 0 rgba(228,228,228,1);"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a name="aNext" class="btn-ini" href="javascript:void(0)" onclick="javascript:$('body,html').animate({scrollTop:0});return false;" style="box-shadow:0 1px 0 rgba(228,228,228,1);"></a>
+		</div>
+		<div class="float_box">
+			<div class="pop-base">
+				<a class="close_btn" href="javascript:void(0);" onclick="">×</a>
+				<h4 class="course_type_title">温馨提示：</h4>
+				<div class="add_item">每场考试可暂停1次，暂停时长至多30分钟。<br />您确定要暂定吗？</div>
+				<div class="add_confirm">
+					<button class="button confirm">确定</button>
+					<button class="button cancel">取消</button>
+				</div>
+			</div>
+		</div>
+		<!--/END 弹窗：暂停-->
+		<div class="float_box" id="dv_warning">
+			<div class="pop-base">
+				<a class="close_btn" href="javascript:void(0);" onclick="">×</a>
+				<h4 class="course_type_title">温馨提示：</h4>
+				<div class="add_item"></div>
+				<div class="add_confirm">
+					<button class="button confirm" id="btnwarning">确定</button>
+				</div>
+			</div>
+		</div>
+		<!--/END 弹窗：警告提示-->
+		<div class="float_box" id="dv_confirm">
+			<div class="pop-base">
+				<a class="close_btn" href="javascript:void(0);" onclick="">×</a>
+				<h4 class="course_type_title">确认提示：</h4>
+				<div class="add_item"></div>
+				<div class="add_confirm">
+					<button class="button confirm" id="btnconfirmok">确定</button>
+					<button class="button cancel" id="btnconfirmcancel">取消</button>
+				</div>
+			</div>
+		</div>
+		<!--/END 弹窗：确认提示-->
+		<div class="float_box" id="dv_SubmitConfirm">
+			<div class="pop-base">
+				<a class="close_btn" href="javascript:void(0);" onclick="">×</a>
+				<h4 class="course_type_title">交卷确认：</h4>
+				<div class="add_item"></div>
+				<div class="add_confirm">
+					<button class="button confirm" id="btnsubmitconfirmok">立即交卷</button>
+					<button class="button cancel" id="btnsubmitconfirmcancel">暂不交卷</button>
+				</div>
+			</div>
+		</div>
+		<!--/END 弹窗：交卷确认-->
+		<div class="float_box" id="dv_Submiting">
+			<div class="pop-base">
+				<a class="close_btn" href="javascript:void(0);" onclick="">×</a>
+				<h4 class="course_type_title">交卷确认：</h4>
+				<div class="add_item"></div>
+			</div>
+		</div>
+		<!--/END 弹窗：交卷进行中-->
+		<div class="float_box" id="dv_initPaper">
+			<div class="pop-base">
+				<a class="close_btn" href="javascript:void(0);" onclick="">×</a>
+				<h4 class="course_type_title">加载...：</h4>
+				<div class="add_item"></div>
+			</div>
+		</div>
+		<!--/END 弹窗：初始化加载-->
+		<div class="float_box" id="dv_pause">
+			<div class="pop-base">
+				<h4 class="course_type_title">暂停...</h4>
+				<div class="add_item" id="dv_pausetime"></div>
+				<div class="add_confirm">
+					<button class="button confirm" id="btncontinue">继续答题</button>
+				</div>
+			</div>
+		</div>
+		<!--/END 弹窗：初始化加载-->
+	</body>
+</html>
