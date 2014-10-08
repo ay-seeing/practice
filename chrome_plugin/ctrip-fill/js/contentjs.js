@@ -77,8 +77,8 @@ var aDt = listBox.getElementsByTagName("dt");
 var aDds = listBox.getElementsByTagName("dd");
 var aDtLenth = aDt.length;
 var aDdLenth = aDds.length;
-/*var data_url = "http://prototype.local.sh.ctriptravel.com/code_beta/a_practice/chrome_plugin/source_file/answer.json";
-var writeP*/hp = "http://prototype.local.sh.ctriptravel.com/code_beta/a_practice/chrome_plugin/source_file/write-answer.php";
+// var data_url = "http://prototype.local.sh.ctriptravel.com/code_beta/a_practice/chrome_plugin/source_file/answer.json";
+// var writePhp = "http://prototype.local.sh.ctriptravel.com/code_beta/a_practice/chrome_plugin/source_file/write-answer.php";
 var data_url = "http://doc.ui.sh.ctriptravel.com/utools/write-answer/answer.json";
 var writePhp = "http://doc.ui.sh.ctriptravel.com/utools/write-answer/write-answer.php";
 
