@@ -11,6 +11,18 @@
   <!-- <div class="answer-json">
     <textarea name="" id="" cols="30" rows="10" id="answerValue"></textarea>
   </div> -->
-  <div style="white-space:nowrap;"><input type="button" value="获取0" id="getBtn">&nbsp;<input type="button" value="填写" id="setBtn"></div>
+
+  <div class="pop-wraper">
+  	<div class="fill-page">错误的题目会<span class="red">标红</span></div>
+  	<div class="fill-page">没有的题目会<span class="blue">标蓝</span></div>
+  	<div class="btn-bar"><input type="button" value="获取" id="getBtn">&nbsp;<input type="button" value="填写" id="setBtn">&nbsp;<input type="button" value="清除服务器数据" class="worry" id="clearBtn"></div>
+  </div>
+  <div class="mask" id="mask" style="display:none;"></div>
+  <div class="mask-pop" id="clearData" style="display:none;">
+    <div class="pop-bd">
+      <div class="center">确定要清除服务器数据吗？</div>
+      <div><input type="button" value="确定" id="determineClear" />&nbsp;<input type="button" value="取消" id="cancelClear"></div>
+    </div>
+  </div>
 </body>
 </html>
