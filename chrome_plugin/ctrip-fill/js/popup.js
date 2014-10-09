@@ -66,6 +66,8 @@ document.addEventListener('DOMContentLoaded',function(){
     oGet.style.display = oClear.style.display = "none";
   }else{
     oSet.style.display = "none";
+    // 隐藏清除数据按钮
+    oClear.style.display = "none";
     $(".fill-page").hide();
   }
 });
