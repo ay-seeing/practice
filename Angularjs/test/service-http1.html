@@ -23,9 +23,8 @@
             })
         }
         $scope.login1 = function(user){
-            $http({url:"login.do",method:"get",data:user}).success(function(data, status, headers, config){
-                // alert("success");
-                console.log(config);
+            $http({url:"login.do",method:"get",data:user,cache:true}).success(function(data, status, headers, config){
+                alert("success");
             }).error(function(data, status, headers, config){
                 alert("error");
             })
