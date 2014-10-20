@@ -1,0 +1,11 @@
+{
+  "name": "gruntFirst",
+  "version": "0.1.0",
+  "description": "test grunt",
+  "author": "yiyang",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify":"*"
+  }
+}
