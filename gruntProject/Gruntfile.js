@@ -26,7 +26,7 @@ module.exports = function(grunt) {
         uglify: {
             //文件头部输出信息
             options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+                banner: '/*! <%= pkg.name %> <%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             //具体任务配置
             build: {
