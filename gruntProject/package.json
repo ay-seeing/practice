@@ -1,11 +1,12 @@
 {
-  "name": "gruntFirst",
+  "name": "second",
   "version": "0.1.0",
-  "description": "test grunt",
+  "description": "test grunt second ",
+  "main": "Gruntfile.js",
   "author": "yiyang",
   "license": "ISC",
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-uglify":"*"
+  "devDependencies":{
+		"grunt":"~0.4.2",
+		"grunt-contrib-uglify": "~0.2.2"
   }
 }
