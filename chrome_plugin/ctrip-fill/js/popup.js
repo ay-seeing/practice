@@ -63,11 +63,14 @@ document.addEventListener('DOMContentLoaded',function(){
 	var bg = chrome.extension.getBackgroundPage();
 	//bg.aa();
   if(bg.fill && bg.fill==true){
-    oGet.style.display = oClear.style.display = "none";
+    // oGet.style.display = oClear.style.display = "none";
+    oGet.parentNode.removeChild(oGet);
+    oClear.parentNode.removeChild(oClear);
   }else{
-    oSet.style.display = "none";
-    // 隐藏清除数据按钮
-    oClear.style.display = "none";
+    // oSet.style.display = "none";
+    oSet.parentNode.removeChild(oSet);
+    // oClear.style.display = "none";
+    oClear.parentNode.removeChild(oClear);
     $(".fill-page").hide();
   }
 });

@@ -131,6 +131,8 @@ function oneSet(info){
         }
 
         aDds[i].o.title = _$.getClass(oDd,"exam-q","p")[0].innerHTML;
+        // 将中文引号换成英文引号
+        aDds[i].o.title = aDds[i].o.title.replace(/[“”\""]/g,"'");
 
         //var is_multiple = (aDds[i].innerHTML=="多选题");
         //console.log(is_multiple);
@@ -167,6 +169,8 @@ function agenSet(info){
         }
 
         aDds[i].o.title = _$.getClass(oDd,"exam-q","p")[0].innerHTML;
+        // 将中文引号换成英文引号
+        aDds[i].o.title = aDds[i].o.title.replace(/[“”\""]/g,"'");
 
         var aLi = oDd.getElementsByTagName("li");
 
@@ -247,6 +251,8 @@ function setInfo(url){
           var title = _$.getClass(oDd,"exam-q","p")[0];
           o.title = title.getElementsByTagName("strong")[0].innerHTML;
           o.title = o.title.replace(/\d+\.\&nbsp\;\&nbsp\;/g,"");
+          // 将中文引号换成英文引号
+          o.title = o.title.replace(/[“”\""]/g,"'");
           //console.log(o.title);
 
           var is_answer = false;
