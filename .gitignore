@@ -7,3 +7,5 @@ flight_logo/img/
 *.DS_Store
 Angularjs/yunnan-trip/
 Angularjs/vingo/
+folder_compare/
+!compare.php
