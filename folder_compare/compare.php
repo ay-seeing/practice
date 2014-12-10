@@ -15,26 +15,27 @@ input.error{border-color:red;}
 .item{width:100%;float:left;border:3px solid #ccc;background:#fff;padding:15px;line-height:36px;position:relative;}
 .item li{padding-left:90px;margin-top:15px;position:relative;}
 .item .t{position:absolute;left:0;top:0;}
-.item .add{position:absolute;right:10px;top:10px;width:16px;height:16px;cursor:pointer;}
-.item .add::after,.item .add::before{content:"";position:absolute;left:50%;top:50%;background:#ccc;}
-.item .add::before{width:16px;height:4px;margin-left:-8px;margin-top:-2px;}
-.item .add::after{width:4px;height:16px;margin-left:-2px;margin-top:-8px;}
-.item .add:hover::after,.item .add:hover::before{background:#4285F4;}
 .show-box{margin:30px 0;}
 .show-list li{position:relative;height:30px;line-height:30px;list-style:decimal outside;margin-left:20px;}
 .show-list .no-number{list-style:none;}
 .show-list .t{position:absolute;top:0;width:80px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
 .show-list .m{margin:0 60px 0 80px;}
-.show-list .f{position:absolute;right:0;top:0;width:60px;height:30px;cursor:pointer;}
-.icon{float:right;width:30px;height:30px;position:relative;}
+.show-list .f{position:absolute;right:0;top:0;width:60px;height:30px;}
+.icon{float:right;width:30px;height:30px;position:relative;cursor:pointer;}
 .icon::before,.icon::after{content:"";position:absolute;left:50%;top:50%;background:#ccc;}
+
 .editor::before{width:16px;height:6px;transform:rotate(-45deg);margin-left:-8px;margin-top:-3px;}
 .editor::after{width:0;height:0;overflow:hidden;border:2px solid #ccc;background:transparent;border-color:transparent transparent #ccc #ccc;margin-left:-8px;margin-top:4px;}
 .editor:hover::before{background:#4285F4;}
 .editor:hover::after{border-color:transparent transparent #4285F4 #4285F4;}
+
 .select::before{width:8px;height:3px;transform:rotate(45deg);margin-left:-8px;}
 .select::after{width:15px;height:3px;transform:rotate(-45deg);margin-left:-5px;margin-top:-2px;}
 .select:hover::before,.select:hover::after{background:#4285F4;}
+
+.add::before{width:16px;height:4px;margin-left:-8px;margin-top:-2px;}
+.add::after{width:4px;height:16px;margin-left:-2px;margin-top:-8px;}
+.add:hover::after,.add:hover::before{background:#4285F4;}
 	</style>
 </head>
 <body>
@@ -179,12 +180,11 @@ function showList($arr){
 	<div class="show-box">
 		<h3>记录</h3>
 		<ol class="show-list" id="showList">
-			<li class="no-number"><span class="t">标题</span><div class="m">目标文件路径</div><div class="f"><span class="icon select"></span><span class="icon editor"></span></div></li>
+			<li class="no-number"><span class="t">标题</span><div class="m">目标文件路径</div><div class="f"><span class="icon add"></span></div></li>
 			<?php showList($data); ?>
 		</ol>
 	</div>
 	<div class="item" id="current">
-		<span class="add"></span>
 		<h3>复制样式表</h3>
 		<form action="" method="get" id="form">
 			<input type="text" name="gain" class="hide" />
