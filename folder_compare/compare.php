@@ -18,6 +18,7 @@ input.error{border-color:red;}
 .show-box{margin:30px 0;}
 .show-list li{position:relative;height:30px;line-height:30px;list-style:decimal outside;margin-left:20px;}
 .show-list .no-number{list-style:none;}
+.show-list .current{color:#4285F4;}
 .show-list .t{position:absolute;top:0;width:80px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
 .show-list .m{margin:0 60px 0 80px;}
 .show-list .f{position:absolute;right:0;top:0;width:60px;height:30px;}
@@ -45,6 +46,9 @@ $n = isset($_GET["n"]) ? $_GET["n"] : false;
 $m = isset($_GET["m"]) ? $_GET["m"] : false;
 $s = isset($_GET["s"]) ? $_GET["s"] : false;
 $t = isset($_GET["t"]) ? $_GET["t"] : false;
+
+// 当前选中第几个
+// $num = isset($_GET["num"]) ? $_GET["num"] : 0;
 
 // 是否复制文件
 $gain = isset($_GET["gain"]) ? $_GET["gain"] : false;
@@ -111,7 +115,7 @@ function writeFn($file,$str){
 }
 
 
-// 将要复制的文件名写入数组
+// 将要复制的文件名写入数组(发布分支里面的样式图片)
 $allFiles = Array();
 function readDirFn($dir,$type){
 	//输出参数个数
@@ -139,22 +143,41 @@ function readDirFn($dir,$type){
 }
 // 将online主分支里面的样式表名称写入到数组里
 readDirFn($m,"css");
-//print_r($allFiles);
+// 输出要复制的文件
+/*print_r($allFiles);
+echo "<br />";*/
+
+// 将复制的样式写入数组
+$copyFiles = array();
+
+// 将要复制的文件夹里面的重复的文件放入改数组
+$trimFile = array();
 
 // 复制文件夹里面的文件,
 function copyFile($arr,$dir,$tar){
+	global $copyFiles,$trimFile;
 	// 复制文件到 $tar 目标文件
 	if(is_dir($dir)){
     if($dh = opendir($dir)){
       while(($file = readdir($dh)) !== false){
-        if($file!="." && $file!=".."&&!is_dir($file)){
+        if($file!="." && $file!=".."&&!is_dir($dir."/".$file)){
+					// echo $file."<br />";
           list($filesname,$kzm)=explode(".",$file);//获取扩展名
           // 判断文件类型是否和传入的文件类型匹配
-          if(in_array($file,$arr)&&!file_exists($tar."/".$file)){
-						copy($dir."/".$file,$tar."/".$file);
+          if(in_array($file,$arr)){
+						// 判断文件是否存在，如果存在，则不复制，否则就复制
+						if(!file_exists($tar."/".$file)){
+							// 将要复制的文件路径写入到数组
+							array_push($copyFiles,$dir."/".$file);
+							// 复制文件
+							copy($dir."/".$file,$tar."/".$file);
+						}else{
+							// 将要重复文件名的文件路径写入到数组
+							array_push($trimFile,$dir."/".$file);
+						}
           }
-        }else if($file!="." && $file!=".."&&is_dir($file)){
-					copyFile($arr,$dir."/".$file);
+        }else if($file!="." && $file!=".."&&is_dir($dir."/".$file)&&$file!="wip"&&$file!="bak"){// 如果是文件夹，且不是wip或bak文件夹
+					copyFile($arr,$dir."/".$file,$tar);
         }
       }
       closedir($dh);
@@ -164,23 +187,39 @@ function copyFile($arr,$dir,$tar){
 // 判断是否复制文件
 if($gain){
 	copyFile($allFiles,$s,$t);
+	/*echo "复制的文件";
+	print_r($copyFiles);
+	echo "<br />重复的文件";
+	print_r($trimFile);*/
 }
 
 
 function showList($arr){
 	if($arr){
 		foreach($arr as $key=>$val){
-			echo '<li><span class="t">'.$val[0].'</span><div class="m">'.$val[2].'</div><div class="f"><span class="icon select"></span><span class="icon editor"></span></div></li>';
+			if($key==0){
+				$num = "current";
+			}
+			echo '<li class='.$num.'><span class="t">'.$val[0].'</span><div class="m">'.$val[2].'</div><div class="f"><span class="icon select"></span><span class="icon editor"></span></div></li>';
 		}
 	}
+}
+
+// 重定向页面
+if($n){
+	Header("HTTP/1.1 303 See Other"); 
+	Header("Location: http://prototype.local.sh.ctriptravel.com/code_beta/a_practice/folder_compare/compare.php");
+	exit; //from www.w3sky.com 
 }
 
 ?>
 <div id="address" class="address">
 	<div class="show-box">
 		<h3>记录</h3>
-		<ol class="show-list" id="showList">
+		<ol class="show-list">
 			<li class="no-number"><span class="t">标题</span><div class="m">目标文件路径</div><div class="f"><span class="icon add"></span></div></li>
+		</ol>
+		<ol class="show-list" id="showList">
 			<?php showList($data); ?>
 		</ol>
 	</div>
@@ -247,6 +286,16 @@ var $ = {
 		}
 		return result;
 	},
+	getClass : function(p,t,c){
+		var arr = p.getElementsByTagName(t);
+		var result = [];
+		for(var i in arr){
+			if(arr[i][classList].indexOf(c)!=-1){
+				result.push(arr[i]);
+			}
+		}
+		return result;
+	},
 	trim : function(str){
 		return str.replace(/^\s*|\s*$/gm,"");
 	},
@@ -282,7 +331,16 @@ var $ = {
 	}
 }
 
+var localName = "num";
+var num = 0;
+if(window.localStorage){
+	if(localStorage.getItem(localName)){
+		num = localStorage.getItem(localName);
+	}
+}
+
 var osource = document.querySelector("#source"),
+	oshowList = document.querySelector("#showList"),
 	oinfoList = document.querySelector("#infoList"),
 	omailine = document.querySelector("#mailine"),
 	otarget = document.querySelector("#target"),
@@ -291,7 +349,8 @@ var osource = document.querySelector("#source"),
 	osubmit = document.querySelector("#submit"),
 	oform = document.querySelector("#form");
 
-var aTxt = $.getAttr(oinfoList,"input","type","text");
+var aTxt = $.getAttr(oinfoList,"input","type","text"),
+	aSelect = $.getClass(oshowList,"span","select");
 
 // 给input添加focus和blur事件
 function addEvent(){
@@ -310,6 +369,24 @@ function addEvent(){
 }
 addEvent();
 
+// 选择
+function selectFn(){
+	for(var i=0;i<aSelect.length;i++){
+		aSelect[i].index = i;
+		aSelect[i].addEventListener("click",function(){
+			if(this.parentNode.parentNode.className=="current"){
+				return false;
+			}else{
+				for(var i=0;i<aSelect.length;i++){
+					aSelect[i].parentNode.parentNode.className = "";
+				}
+				this.parentNode.parentNode.className = "current";
+				localStorage.setItem(localName);
+			}
+		},false);
+	}
+}
+selectFn();
 
 osubmit.addEventListener("click",function(event){
 	var oevent = event || window.event;
