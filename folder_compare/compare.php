@@ -14,6 +14,7 @@ input.onlyread{background:#f9f9f9;}
 .hide{display:none !important;}
 .address{margin:20px auto;width:40%;display:table;*zoom:1;}
 .item{width:100%;float:left;border:3px solid #ccc;background:#fff;padding:15px;line-height:36px;position:relative;}
+.item-h{margin:-15px -15px 10px;padding:0 15px;background:#f0f0f0;color:#333;}
 .item li{padding-left:90px;margin-top:15px;position:relative;}
 .item .t{position:absolute;left:0;top:0;}
 .show-box{margin:30px 0;}
@@ -256,7 +257,7 @@ if($n||$delete){
 		</ol>
 	</div>
 	<div class="item" id="current">
-		<h3>复制样式表</h3>
+		<h3 id="title" class="item-h">复制样式表</h3>
 		<form action="" method="get" id="form">
 			<input type="text" name="gain" class="hide" />
 			<input type="text" name="write" class="hide" />
@@ -405,6 +406,7 @@ if(window.localStorage){
 }
 
 var osource = document.querySelector("#source"),
+	otitle = document.querySelector("#title"),
 	oaddInfo = document.querySelector("#addInfo"),
 	oshowList = document.querySelector("#showList"),
 	oinfoList = document.querySelector("#infoList"),
@@ -459,6 +461,7 @@ function selectFn(){
 				// 将内容填充到input
 				fillInfoFn(aTxt,json[this.index]);
 			}
+			otitle.innerHTML = "复制样式表";
 		},false);
 	}
 }
@@ -494,6 +497,7 @@ function editorFn(){
 			fillInfoFn(aTxt,json[this.index]);
 			$.addClass(ogetFile,"hide");
 			$.removeClass(osubmit,"hide");
+			otitle.innerHTML = "编辑";
 		},false);
 	}
 }
@@ -532,6 +536,7 @@ oaddInfo.addEventListener("click",function(event){
 	fillInfoFn(aTxt,false);
 	$.addClass(ogetFile,"hide");
 	$.removeClass(osubmit,"hide");
+	otitle.innerHTML = "添加";
 },false);
 
 // 确认添加或修改
