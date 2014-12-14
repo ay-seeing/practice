@@ -10,6 +10,7 @@ body{font:14px/1.5 tehomal,arial,"microsoft yahei";color:#666;background:#f9f9f9
 input[type=text]{width:100%;padding:10px;}
 input[type=button],input[type=submit]{padding:10px 30px;cursor:pointer;font-size:16px;font-family:"microsoft yahei";margin-right:10px;}
 input.error{border-color:red;}
+input.onlyread{background:#f9f9f9;}
 .hide{display:none !important;}
 .address{margin:20px auto;width:40%;display:table;*zoom:1;}
 .item{width:100%;float:left;border:3px solid #ccc;background:#fff;padding:15px;line-height:36px;position:relative;}
@@ -20,9 +21,9 @@ input.error{border-color:red;}
 .show-list .no-number{list-style:none;}
 .show-list .current{color:#4285F4;}
 .show-list .t{position:absolute;top:0;width:80px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
-.show-list .m{margin:0 60px 0 80px;}
-.show-list .f{position:absolute;right:0;top:0;width:60px;height:30px;}
-.icon{float:right;width:30px;height:30px;position:relative;cursor:pointer;}
+.show-list .m{margin:0 90px 0 80px;}
+.show-list .f{position:absolute;right:0;top:0;width:90px;height:30px;}
+.icon{float:right;width:30px;height:30px;position:relative;cursor:pointer;font-size:0;}
 .icon::before,.icon::after{content:"";position:absolute;left:50%;top:50%;background:#ccc;}
 
 .editor::before{width:16px;height:6px;transform:rotate(-45deg);margin-left:-8px;margin-top:-3px;}
@@ -32,7 +33,10 @@ input.error{border-color:red;}
 
 .select::before{width:8px;height:3px;transform:rotate(45deg);margin-left:-8px;}
 .select::after{width:15px;height:3px;transform:rotate(-45deg);margin-left:-5px;margin-top:-2px;}
-.select:hover::before,.select:hover::after{background:#4285F4;}
+.select:hover::before,.select:hover::after,.current .select::before,.current .select::after{background:#4285F4;}
+
+.delete::before{width:16px;height:4px;margin-left:-8px;}
+.delete:hover::before{background:#4285F4;}
 
 .add::before{width:16px;height:4px;margin-left:-8px;margin-top:-2px;}
 .add::after{width:4px;height:16px;margin-left:-2px;margin-top:-8px;}
@@ -56,6 +60,9 @@ $gain = isset($_GET["gain"]) ? $_GET["gain"] : false;
 // 是否写入数据
 $write = isset($_GET["write"]) ? $_GET["write"] : false;
 
+// 是否删除数据
+$delete = isset($_GET["deleteinfo"]) ? $_GET["deleteinfo"] : false;
+
 // 写入数据文件的数组
 $inArr = array();
 
@@ -67,12 +74,33 @@ $data_name = array();
 
 // 判断文件是否存在，且有内容不为空
 if(file_exists($path)&&filesize($path)!=0){
+	//echo 123;
 	// 获取json文件
 	$json = file_get_contents($path);
 	// 将获取到的json文件字符串转换为数组
 	$data = json_decode($json);
+
+	// 如果需要删除数据，则删除相关数据
+	if($delete){
+		foreach($data as $key => $val){
+			if($val[0]==$delete){
+				array_splice($data,$key,1);
+			}
+		}
+		// 将结果数组解析成字符串
+		$json = json_encode($data);
+
+		// 将字符串写入到文件
+		writeFn($path,$json);
+	}
+	//print_r($data);
+
+	// 将数据写入页面供js使用
+	echo "<script>var json = ".$json."</script>";
 }else{
 	$data = false;
+	$json = "\"\"";
+	echo "<script>var json = ".$json."</script>";
 }
 
 // 判断是否写入文件，如果$write 为true则写入，否则不写入
@@ -88,14 +116,21 @@ if($write){
 	if($data){
 		// 判断要存入的名字是否包含在数据里
 		foreach($data as $key => $val){
-			// 如果要存入的数据在原数据中存在，则删除原来的数据
+			$isThree = false;
+			// 如果要存入的数据在原数据中存在，则替换原来的数据
 			if($n==$val[0]){
+				$isThree = true;
 				// unset($data[$key]);
-				array_splice($data,$key,1);
+				$middleArr = array();
+				array_push($middleArr,$arr);
+				array_splice($data,$key,1,$middleArr);
 			}
 		}
-		// 将新数据添加到数据的前面
-		array_unshift($data,$arr);
+		if(!$isThree){
+			// 将新数据添加到数据的前面
+			// array_unshift($data,$arr);
+			array_push($data,$arr);
+		}
 		$inArr = $data;
 	}else{
 		array_push($inArr,$arr);
@@ -167,12 +202,12 @@ function copyFile($arr,$dir,$tar){
           if(in_array($file,$arr)){
 						// 判断文件是否存在，如果存在，则不复制，否则就复制
 						if(!file_exists($tar."/".$file)){
-							// 将要复制的文件路径写入到数组
+							// 将要复制的文件路径写入到数组末尾
 							array_push($copyFiles,$dir."/".$file);
 							// 复制文件
 							copy($dir."/".$file,$tar."/".$file);
 						}else{
-							// 将要重复文件名的文件路径写入到数组
+							// 将要重复文件名的文件路径写入到数组末尾
 							array_push($trimFile,$dir."/".$file);
 						}
           }
@@ -193,20 +228,17 @@ if($gain){
 	print_r($trimFile);*/
 }
 
-
+// 根据数据写入内容
 function showList($arr){
 	if($arr){
 		foreach($arr as $key=>$val){
-			if($key==0){
-				$num = "current";
-			}
-			echo '<li class='.$num.'><span class="t">'.$val[0].'</span><div class="m">'.$val[2].'</div><div class="f"><span class="icon select"></span><span class="icon editor"></span></div></li>';
+			echo '<li><span class="t">'.$val[0].'</span><div class="m">'.$val[2].'</div><div class="f"><span class="icon select" title="选择">选择</span><span class="icon editor" title="编辑">编辑</span><span class="icon delete" title="删除">删除</span></div></li>';
 		}
 	}
 }
 
-// 重定向页面
-if($n){
+// 如果有修改数据、填写数据或删除数据，则重定向页面
+if($n||$delete){
 	Header("HTTP/1.1 303 See Other"); 
 	Header("Location: http://prototype.local.sh.ctriptravel.com/code_beta/a_practice/folder_compare/compare.php");
 	exit; //from www.w3sky.com 
@@ -217,7 +249,7 @@ if($n){
 	<div class="show-box">
 		<h3>记录</h3>
 		<ol class="show-list">
-			<li class="no-number"><span class="t">标题</span><div class="m">目标文件路径</div><div class="f"><span class="icon add"></span></div></li>
+			<li class="no-number"><span class="t">标题</span><div class="m">目标文件路径</div><div class="f"><span class="icon add" id="addInfo"></span></div></li>
 		</ol>
 		<ol class="show-list" id="showList">
 			<?php showList($data); ?>
@@ -228,48 +260,33 @@ if($n){
 		<form action="" method="get" id="form">
 			<input type="text" name="gain" class="hide" />
 			<input type="text" name="write" class="hide" />
+			<input type="text" name="deleteinfo" class="hide" />
 		<ul id="infoList">
 			<li>
 				<span class="t">名字：</span>
 				<div class="m">
-					<?php if(!$n){ ?>
-					<input type="text" name="n" id="name">
-					<?php }else{ ?>
-					<input type="text" name="n" id="name" value="<?php echo $n; ?>">
-					<?php } ?>
+					<input type="text" name="n" id="name" <?php if($json&&$json!="[]"){echo "readonly";} ?> value="<?php if($n){ echo $n; } ?>">
 				</div>
 			</li>
 			<li>
 				<span class="t">发布主分支：</span>
 				<div class="m">
-					<?php if(!$m){ ?>
-					<input type="text" name="m" id="mailine">
-					<?php }else{ ?>
-					<input type="text" name="m" id="mailine" value="<?php echo $m; ?>">
-					<?php } ?>
+					<input type="text" name="m" id="mailine" <?php if($json&&$json!="[]"){echo "readonly";} ?> value="<?php if($m){ echo $m; } ?>">
 				</div>
 			</li>
 			<li>
 				<span class="t">源文件夹：</span>
 				<div class="m">
-					<?php if(!$s){ ?>
-					<input type="text" name="s" id="source">
-					<?php }else{ ?>
-					<input type="text" name="s" id="source" value="<?php echo $s; ?>">
-					<?php } ?>
+					<input type="text" name="s" id="source" <?php if($json&&$json!="[]"){echo "readonly";} ?> value="<?php if($s){ echo $s; } ?>">
 				</div>
 			</li>
 			<li>
 				<span class="t">目标文件夹：</span>
 				<div class="m">
-					<?php if(!$t){ ?>
-					<input type="text" name="t" id="target">
-					<?php }else{ ?>
-					<input type="text" name="t" id="target" value="<?php echo $t; ?>">
-					<?php } ?>
+					<input type="text" name="t" id="target" <?php if($json&&$json!="[]"){echo "readonly";} ?> value="<?php if($t){ echo $t; } ?>">
 				</div>
 			</li>
-			<li><input type="submit" value="获取文件" id="getFile"><input type="submit" value="确认" id="submit"></li>
+			<li><input type="submit" value="获取文件" id="getFile" class=<?php if(!($json&&$json!="[]")){echo "hide";} ?> ><input type="submit" value="确认" id="submit" class=<?php if($json&&$json!="[]"){echo "hide";} ?> /></li>
 		</ul>
 		</form>
 	</div>
@@ -279,7 +296,7 @@ var $ = {
 	getAttr : function(p,t,attr,v){
 		var arr = p.getElementsByTagName(t);
 		var result = [];
-		for(var i in arr){
+		for(var i=0;i<arr.length;i++){
 			if(arr[i][attr] == v){
 				result.push(arr[i]);
 			}
@@ -287,14 +304,37 @@ var $ = {
 		return result;
 	},
 	getClass : function(p,t,c){
-		var arr = p.getElementsByTagName(t);
+		var arr = p.getElementsByTagName(t),
+			len = arr.length;
 		var result = [];
-		for(var i in arr){
-			if(arr[i][classList].indexOf(c)!=-1){
+		for(var i=0;i<len;i++){
+			/*if(arr[i]["classList"].indexOf(c)!=-1){
+				result.push(arr[i]);
+			}*/
+			if(arr[i].className.split(" ").indexOf(c)!=-1){
 				result.push(arr[i]);
 			}
 		}
 		return result;
+	},
+	addClass : function(o,c){
+		if(!o.className){
+			o.className = c;
+		}else{
+			var arr = o.className.split(" ");
+			if(arr.indexOf(c)==-1){
+				arr.push(c);
+			}
+			o.className = arr.join(" ");
+		}
+	},
+	removeClass : function(o,c){
+		var arr = o.className.split(" ");
+		var num = arr.indexOf(c);
+		if(num!=-1){
+			arr.splice(num,1);
+		}
+		o.className = arr.join(" ");
 	},
 	trim : function(str){
 		return str.replace(/^\s*|\s*$/gm,"");
@@ -322,15 +362,40 @@ var $ = {
 		for(var i in arr){
 			var val = this.trim(arr[i].value);
 			if(!val){
-				arr[i].className = "error";
+				// arr[i].className = "error";
+				$.addClass(arr[i],"error");
 				is_submit = false;
 			}
 			arr[i].value = val;
 		}
 		return is_submit;
+	},
+	canedit : function(arr){
+		// console.log(arr);
+		for(var i=0;i<arr.length;i++){
+			//arr[i].setAttribute("disabled",false);
+			arr[i].readOnly = false;
+		}
+	},
+	cannoedit : function(arr){
+		for(var i=0;i<arr.length;i++){
+			arr[i].readOnly = true;
+		}
+	},
+	onlyone : function(arr,cur,classN){
+		for(var i=0;i<arr.length;i++){
+			$.removeClass(arr[i].parentNode.parentNode,classN);
+			// arr[i].parentNode.parentNode.className = "";
+		}
+		$.addClass(cur.parentNode.parentNode,classN);
+		// cur.parentNode.parentNode.className = classN;
 	}
 }
 
+// 当前是否是编辑状态
+var is_editor = false;
+
+// 将当前选择的是第几个写入localStorage
 var localName = "num";
 var num = 0;
 if(window.localStorage){
@@ -340,6 +405,7 @@ if(window.localStorage){
 }
 
 var osource = document.querySelector("#source"),
+	oaddInfo = document.querySelector("#addInfo"),
 	oshowList = document.querySelector("#showList"),
 	oinfoList = document.querySelector("#infoList"),
 	omailine = document.querySelector("#mailine"),
@@ -350,7 +416,11 @@ var osource = document.querySelector("#source"),
 	oform = document.querySelector("#form");
 
 var aTxt = $.getAttr(oinfoList,"input","type","text"),
-	aSelect = $.getClass(oshowList,"span","select");
+	aSelect = $.getClass(oshowList,"span","select"),
+	aEditor = $.getClass(oshowList,"span","editor"),
+	aDelete = $.getClass(oshowList,"span","delete");
+
+
 
 // 给input添加focus和blur事件
 function addEvent(){
@@ -361,7 +431,7 @@ function addEvent(){
 		},false);
 		// input 失焦没有内容提示
 		aTxt[i].addEventListener("blur",function(){
-			if(!$.trim(this.value)){
+			if(!$.trim(this.value)&&!this.readOnly){
 				this.className = "error";
 			}
 		},false);
@@ -369,25 +439,102 @@ function addEvent(){
 }
 addEvent();
 
-// 选择
+// 选择按钮事件
 function selectFn(){
-	for(var i=0;i<aSelect.length;i++){
+	var len = aSelect.length;
+	for(var i=0;i<len;i++){
 		aSelect[i].index = i;
 		aSelect[i].addEventListener("click",function(){
 			if(this.parentNode.parentNode.className=="current"){
 				return false;
 			}else{
-				for(var i=0;i<aSelect.length;i++){
+				$.onlyone(aSelect,this,"current");
+				/*for(var i=0;i<aSelect.length;i++){
 					aSelect[i].parentNode.parentNode.className = "";
 				}
-				this.parentNode.parentNode.className = "current";
-				localStorage.setItem(localName);
+				this.parentNode.parentNode.className = "current";*/
+				localStorage.setItem(localName,this.index);
+				$.removeClass(ogetFile,"hide");
+				$.addClass(osubmit,"hide");
+				// 将内容填充到input
+				fillInfoFn(aTxt,json[this.index]);
 			}
 		},false);
 	}
 }
 selectFn();
 
+// 数据填充
+function fillInfoFn(oarr,json){
+	if(json){
+		for(var i=0;i<oarr.length;i++){
+			oarr[i].value = json[i];
+		}
+	}else{
+		for(var i=0;i<oarr.length;i++){
+			oarr[i].value = "";
+		}
+	}
+}
+
+// 默认将第一个数据填入
+if(json){
+	fillInfoFn(aTxt,json[num]);
+}
+
+
+// 编辑按钮事件
+function editorFn(){
+	var len = aEditor.length;
+	for(var i=0;i<len;i++){
+		aEditor[i].index = i;
+		aEditor[i].addEventListener("click",function(){
+			$.canedit(aTxt);
+			// 将当前数据写入input
+			fillInfoFn(aTxt,json[this.index]);
+			$.addClass(ogetFile,"hide");
+			$.removeClass(osubmit,"hide");
+		},false);
+	}
+}
+editorFn();
+
+// 删除按钮事件
+function deleteFn(){
+	var len = aDelete.length;
+	for(var i=0;i<len;i++){
+		aDelete[i].index = i;
+		aDelete[i].addEventListener("click",function(){
+			// oform.deleteinfo.value = json[this.index][0];
+			// 判断删除的是选中的信息之前的，则将标注数字提前一个
+			if(this.index<num){
+				num -= 1;
+			}else if(this.index==num){ // 如果删除的是选择的当前行，则将标注改成第一个
+				num = 0;
+			}
+			localStorage.setItem(localName,num);
+
+			var str = json[this.index][0];
+			location.href = location.href+"?deleteinfo="+str;
+		},false);
+	}
+}
+deleteFn();
+
+if(json.length){
+	// 设置默认显示的信息
+	$.addClass(aSelect[num].parentNode.parentNode,"current");
+}
+
+// 添加一条信息
+oaddInfo.addEventListener("click",function(event){
+	$.canedit(aTxt);
+	fillInfoFn(aTxt,false);
+	$.addClass(ogetFile,"hide");
+	$.removeClass(osubmit,"hide");
+},false);
+
+// 确认添加或修改
 osubmit.addEventListener("click",function(event){
 	var oevent = event || window.event;
 	var is_submit = $.detection(aTxt);
@@ -401,7 +548,7 @@ osubmit.addEventListener("click",function(event){
 	oform.write.value = true;
 },false);
 
-// 获取文件
+// 复制文件
 ogetFile.addEventListener("click",function(event){
 	var oevent = event || window.event;
 	var is_submit = $.detection(aTxt);
