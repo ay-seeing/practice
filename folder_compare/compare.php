@@ -9,10 +9,13 @@ ul,li{list-style:none;}
 body{font:14px/1.5 tehomal,arial,"microsoft yahei";color:#666;background:#f9f9f9;}
 input[type=text]{width:100%;padding:10px;}
 input[type=button],input[type=submit]{padding:10px 30px;cursor:pointer;font-size:16px;font-family:"microsoft yahei";margin-right:10px;}
-input.error{border-color:red;}
+input.error{border-color:red;transform:;transition:all 0.3s line;}
 input.onlyread{background:#f9f9f9;}
+.tip{color:#4285F4;}
 .hide{display:none !important;}
-.address{margin:20px auto;width:40%;display:table;*zoom:1;}
+.box .box-h{background:#4285F4;color:white;padding:10px 0;font:22px/1.5 "microsoft yahei";}
+.warper{width:40%;display:table;*zoom:1;margin:0 auto;}
+.address{margin:20px auto;}
 .item{width:100%;float:left;border:3px solid #ccc;background:#fff;padding:15px;line-height:36px;position:relative;}
 .item-h{margin:-15px -15px 10px;padding:0 15px;background:#f0f0f0;color:#333;}
 .item li{padding-left:90px;margin-top:15px;position:relative;}
@@ -100,7 +103,7 @@ if(file_exists($path)&&filesize($path)!=0){
 	echo "<script>var json = ".$json."</script>";
 }else{
 	$data = false;
-	$json = "\"\"";
+	$json = "[]";
 	echo "<script>var json = ".$json."</script>";
 }
 
@@ -164,11 +167,11 @@ function readDirFn($dir,$type){
     if($dh = opendir($dir)){
       while(($file = readdir($dh)) !== false){
         if($file!="." && $file!=".."&&!is_dir($file)){
-          list($filesname,$kzm)=explode(".",$file);//获取扩展名
+          // list($filesname,$kzm)=explode(".",$file);//获取扩展名
           // 判断文件类型是否和传入的文件类型匹配
-          if($kzm==$type){
+          // if($kzm==$type){
 						array_push($allFiles,$file);
-          }
+          // }
         }else if($file!="." && $file!=".."&&is_dir($file)){
 					readDirFn($dir."/".$file,$type);
         }
@@ -189,16 +192,35 @@ $copyFiles = array();
 // 将要复制的文件夹里面的重复的文件放入改数组
 $trimFile = array();
 
+// 只第一次调用copyFile时，删除目标文件夹
+$oneagen = true;
+
+
 // 复制文件夹里面的文件,
 function copyFile($arr,$dir,$tar){
-	global $copyFiles,$trimFile;
+	global $copyFiles,$trimFile,$oneagen;
+
+	// 判断目标文件夹是否存在，如果不存在则创建一个
+	if(!file_exists($tar)){
+		mkdir($tar,0777);
+	}
+
+	// 判断目标文件夹是否存在，则先删除，再创建创建一个(该功能比较危险，先注释掉)
+	/*if($oneagen){
+		$oneagen = !$oneagen;
+		if(file_exists($tar)){
+		}	deldir($tar);
+
+		mkdir($tar,0777);
+	}*/
+
 	// 复制文件到 $tar 目标文件
 	if(is_dir($dir)){
     if($dh = opendir($dir)){
       while(($file = readdir($dh)) !== false){
         if($file!="." && $file!=".."&&!is_dir($dir."/".$file)){
 					// echo $file."<br />";
-          list($filesname,$kzm)=explode(".",$file);//获取扩展名
+          // list($filesname,$kzm)=explode(".",$file);//获取扩展名
           // 判断文件类型是否和传入的文件类型匹配
           if(in_array($file,$arr)){
 						// 判断文件是否存在，如果存在，则不复制，否则就复制
@@ -212,7 +234,7 @@ function copyFile($arr,$dir,$tar){
 							array_push($trimFile,$dir."/".$file);
 						}
           }
-        }else if($file!="." && $file!=".."&&is_dir($dir."/".$file)&&$file!="wip"&&$file!="bak"){// 如果是文件夹，且不是wip或bak文件夹
+        }else if($file!="." && $file!=".."&&is_dir($dir."/".$file)&&$file!="wip"&&$file!="bak"&&$file!="uer"&&$file!="flight_welfare"){// 如果是文件夹，且不是wip或bak文件夹
 					copyFile($arr,$dir."/".$file,$tar);
         }
       }
@@ -220,14 +242,50 @@ function copyFile($arr,$dir,$tar){
     }
   }
 }
+
 // 判断是否复制文件
 if($gain){
 	copyFile($allFiles,$s,$t);
-	/*echo "复制的文件";
-	print_r($copyFiles);
-	echo "<br />重复的文件";
-	print_r($trimFile);*/
+	// echo "复制的文件<br />";
+	// //print_r($copyFiles);
+	// foreach($copyFiles as $k=>$v){
+	// 	echo $v."<br />";
+	// }
+	// echo "<br />重复的文件<br />";
+	// print_r($trimFile);
 }
+
+// 创建目录，会逐层判断目录是否存在
+function mkdirs($dir, $mode = 0777){
+	if (is_dir($dir) || @mkdir($dir, $mode)) return TRUE;
+	if (!mkdirs(dirname($dir), $mode)) return FALSE;
+	return @mkdir($dir, $mode);
+}
+
+// 删除文件夹
+function deldir($dir){
+  //先删除目录下的文件：
+  $dh=opendir($dir);
+  while ($file=readdir($dh)){
+    if($file!="." && $file!=".."){
+      $fullpath=$dir."/".$file;
+      if(!is_dir($fullpath)){
+         unlink($fullpath);
+      }else{
+         deldir($fullpath);
+      }
+    }
+  }
+
+  closedir($dh);
+  //删除当前文件夹：
+  if(rmdir($dir)){
+    return true;
+  }else{
+    return false;
+  }
+}
+
 
 // 根据数据写入内容
 function showList($arr){
@@ -240,56 +298,73 @@ function showList($arr){
 
 // 如果有修改数据、填写数据或删除数据，则重定向页面
 if($n||$delete){
-	Header("HTTP/1.1 303 See Other"); 
-	Header("Location: http://prototype.local.sh.ctriptravel.com/code_beta/a_practice/folder_compare/compare.php");
-	exit; //from www.w3sky.com 
+	// 获取当前文件路径，不包含参数
+	$url = $_SERVER["HTTP_REFERER"];
+	Header("HTTP/1.1 303 See Other");
+	Header("Location: $url");
+	exit; //from www.w3sky.com
 }
 
 ?>
-<div id="address" class="address">
-	<div class="show-box">
-		<h3>记录</h3>
-		<ol class="show-list">
-			<li class="no-number"><span class="t">标题</span><div class="m">目标文件路径</div><div class="f"><span class="icon add" id="addInfo"></span></div></li>
-		</ol>
-		<ol class="show-list" id="showList">
-			<?php showList($data); ?>
-		</ol>
-	</div>
-	<div class="item" id="current">
-		<h3 id="title" class="item-h">复制样式表</h3>
-		<form action="" method="get" id="form">
-			<input type="text" name="gain" class="hide" />
-			<input type="text" name="write" class="hide" />
-			<input type="text" name="deleteinfo" class="hide" />
-		<ul id="infoList">
-			<li>
-				<span class="t">名字：</span>
-				<div class="m">
-					<input type="text" name="n" id="name" <?php if($json&&$json!="[]"){echo "readonly";} ?> value="<?php if($n){ echo $n; } ?>">
-				</div>
-			</li>
-			<li>
-				<span class="t">发布主分支：</span>
-				<div class="m">
-					<input type="text" name="m" id="mailine" <?php if($json&&$json!="[]"){echo "readonly";} ?> value="<?php if($m){ echo $m; } ?>">
-				</div>
-			</li>
-			<li>
-				<span class="t">源文件夹：</span>
-				<div class="m">
-					<input type="text" name="s" id="source" <?php if($json&&$json!="[]"){echo "readonly";} ?> value="<?php if($s){ echo $s; } ?>">
-				</div>
-			</li>
-			<li>
-				<span class="t">目标文件夹：</span>
-				<div class="m">
-					<input type="text" name="t" id="target" <?php if($json&&$json!="[]"){echo "readonly";} ?> value="<?php if($t){ echo $t; } ?>">
-				</div>
-			</li>
-			<li><input type="submit" value="获取文件" id="getFile" class=<?php if(!($json&&$json!="[]")){echo "hide";} ?> ><input type="submit" value="确认" id="submit" class=<?php if($json&&$json!="[]"){echo "hide";} ?> /></li>
-		</ul>
-		</form>
+<div class="box">
+	<div class="box-h"><div class="warper">对比文件复制工具</div></div>
+	<div id="address" class="warper address">
+		<div class="show-box">
+			<h3>记录</h3>
+			<ol class="show-list">
+				<li class="no-number"><span class="t">标题</span><div class="m">目标文件路径</div><div class="f"><span class="icon add" id="addInfo"></span></div></li>
+			</ol>
+			<ol class="show-list" id="showList">
+				<?php showList($data); ?>
+			</ol>
+		</div>
+		<div class="item" id="current">
+			<h3 id="title" class="item-h"><?php if($json&&$json!="[]"){echo "复制样式表";}else{echo "添加";} ?></h3>
+			<form action="" method="get" id="form">
+				<input type="text" name="gain" class="hide" />
+				<input type="text" name="write" class="hide" />
+				<input type="text" name="deleteinfo" class="hide" />
+			<ul id="infoList">
+				<li>
+					<span class="t">名字：</span>
+					<div class="m">
+						<input type="text" name="n" id="name" list="names" maxlength="10" autocomplete="on" <?php if($json&&$json!="[]"){echo "readonly";} ?> value="<?php if($n){ echo $n; } ?>">
+						<datalist id="names">
+							<option value="国内online">
+							<option value="国际online">
+						</datalist>
+					</div>
+				</li>
+				<li>
+					<span class="t">发布主分支：</span>
+					<div class="m">
+						<input type="text" name="m" id="mailine" list="mailines" <?php if($json&&$json!="[]"){echo "readonly";} ?> value="<?php if($m){ echo $m; } ?>">
+						<datalist id="mailines">
+							<option value="D:\gitProject\ResStatic\ResFlightOnline\Booking\css\fltdomestic111027">
+							<option value="D:\gitProject\ResFltIntlOnline\ResFltIntlOnline\Booking\css\fltinternational100913">
+						</datalist>
+					</div>
+				</li>
+				<li>
+					<span class="t">源文件夹：</span>
+					<div class="m">
+						<input type="text" name="s" id="source" list="sources" <?php if($json&&$json!="[]"){echo "readonly";} ?> value="<?php if($s){ echo $s; } ?>">
+						<datalist id="sources">
+							<option value="D:\working\_prototype_\code_pub\cn\flight">
+							<option value="D:\working\_prototype_\code_pub\cn\flight_intl">
+						</datalist>
+					</div>
+				</li>
+				<li>
+					<span class="t">目标文件夹：</span>
+					<div class="m">
+						<input type="text" name="t" id="target" <?php if($json&&$json!="[]"){echo "readonly";} ?> value="<?php if($t){ echo $t; } ?>">
+					</div>
+				</li>
+				<li><div class="tip">获取前需要先删除目标文件夹里面的所有文件</div><input type="submit" value="获取文件" id="getFile" class=<?php if(!($json&&$json!="[]")){echo "hide";} ?> ><input type="submit" value="确认" id="submit" class=<?php if($json&&$json!="[]"){echo "hide";} ?> /></li>
+			</ul>
+			</form>
+		</div>
 	</div>
 </div>
 <script>
@@ -511,6 +586,7 @@ function deleteFn(){
 		aDelete[i].addEventListener("click",function(){
 			// oform.deleteinfo.value = json[this.index][0];
 			// 判断删除的是选中的信息之前的，则将标注数字提前一个
+			// alert(this.index,num);
 			if(this.index<num){
 				num -= 1;
 			}else if(this.index==num){ // 如果删除的是选择的当前行，则将标注改成第一个
