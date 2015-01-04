@@ -11,10 +11,11 @@ gulp.task('browser',function(){
     // host: 172.16.157.1,
     port: 8082,
     open: true,
+    // 路径显示/d 开始
     startPath: "/d",
     //timestamps:false,
     server: {
-      //directory: true,
+      directory: true,
       routes: {
         '/d': "./dist/new.html"
       },
@@ -23,7 +24,13 @@ gulp.task('browser',function(){
         next();
       },
       baseDir: './'
-    }
+    },
+    // 指定浏览器
+    // browser: "google chrome" // 或  ["google chrome","firefox"]
+    // 延迟刷新，默认0
+    reloadDelay: 1000,
+    // 是否载入css修改，默认true
+    injectChanges: false
   });
 });
 gulp.task('bro',function(){

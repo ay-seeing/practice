@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded',function(){
     // oSet.style.display = "none";
     oSet.parentNode.removeChild(oSet);
     // oClear.style.display = "none";
-    // oClear.parentNode.removeChild(oClear);
+    oClear.parentNode.removeChild(oClear);
     $(".fill-page").hide();
   }
 });
