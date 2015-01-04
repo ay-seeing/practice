@@ -2,11 +2,7 @@
 var gulp = require("gulp");
 
 // 引入 gulpins
-var concat = require("gulp-concat"),
-	clean = require("gulp-clean"),
-	browserSync = require("browser-sync"),
-	reload = browserSync.reload;
-	uglify = require("gulp-uglify");
+var browserSync = require("browser-sync");
 
 
 // 自动刷新 browser-sync start
@@ -20,7 +16,7 @@ gulp.task('browser',function(){
     server: {
       //directory: true,
       routes: {
-        '/d': "./dist/index.html"
+        '/d': "./dist/new.html"
       },
       middleware: function(req,res,next){
         console.log("中间件");
