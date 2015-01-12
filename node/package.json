@@ -1,0 +1,15 @@
+{
+  "name": "test",
+  "version": "0.1.0",
+  "description": "node测试项目",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yiyangzhang",
+  "license": "ISC",
+  "devDependencies": {
+    "util": "^0.10.3",
+    "xml2js": "^0.4.4"
+  }
+}
