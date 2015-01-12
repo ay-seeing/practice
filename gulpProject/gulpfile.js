@@ -2,22 +2,11 @@
 var gulp = require("gulp");
 
 // 引入 gulpins
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 var concat = require("gulp-concat"),
 	clean = require("gulp-clean"),
 	browserSync = require("browser-sync"),
 	uglify = require("gulp-uglify");
-=======
 var browserSync = require("browser-sync");
->>>>>>> 3658e9cb3d3864c7be860380ff4c421aee3e9a37
-=======
-var browserSync = require("browser-sync");
->>>>>>> 3658e9cb3d3864c7be860380ff4c421aee3e9a37
-=======
-var browserSync = require("browser-sync");
->>>>>>> 3658e9cb3d3864c7be860380ff4c421aee3e9a37
 
 
 // 自动刷新 browser-sync start
