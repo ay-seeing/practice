@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试$watch第一个参数是表达式或有返回值的函数</title>
+  <script src="../js/angular.js"></script>
+</head>
+<body ng-app="myApp">
+  <div ng-controller="ctrl">
+    <input type="text" ng-model="input">
+    <input type="text" ng-model="input2">
+    <div ng-bind="input*input2"></div>
+    <input type="button" value="暂停监控" ng-click="stopWatch()">
+  </div>
+<script>
+//当$watch第一个参数是表达式或有返回值的函数的情况
+var app = angular.module("myApp",[]);
+app.controller("ctrl",function($scope){
+  $scope.input = 1;
+  $scope.input2 = 0;
+  // $watch 返回的函数（stopWatch）用于注销监控器
+  $scope.stopWatch = $scope.$watch("input*input2",callfn);
+  function callfn(newV,oldV,scope){
+    console.log(newV,oldV,scope);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>答案填写</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="js/jquery-1.10.2.min.js"></script>
+  <script src="js/popup.js"></script>
+</head>
+<body>
+  <!-- <div class="answer-json">
+    <textarea name="" id="" cols="30" rows="10" id="answerValue"></textarea>
+  </div> -->
+
+  <div class="pop-wraper">
+  	<div class="fill-page">错误的题目会<span class="red">标红</span></div>
+  	<div class="fill-page">无答案的题目会<span class="blue">标蓝</span></div>
+  	<div class="btn-bar"><input type="button" value="上传答案" id="getBtn">&nbsp;<input type="button" value="填写答案" id="setBtn">&nbsp;<input type="button" value="清除服务器数据" class="worry" id="clearBtn"></div>
+  </div>
+  <div class="mask" id="mask" style="display:none;"></div>
+  <div class="mask-pop" id="clearData" style="display:none;">
+    <div class="pop-bd">
+      <div class="center">确定要清除服务器数据吗？</div>
+      <div><input type="button" value="确定" id="determineClear" />&nbsp;<input type="button" value="取消" id="cancelClear"></div>
+    </div>
+  </div>
+</body>
+</html>

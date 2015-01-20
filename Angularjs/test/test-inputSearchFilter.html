@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="selfapp">
+<head>
+	<meta charset="UTF-8">
+	<title>angularJs节点控制</title>
+	<script src="../js/jquery-2.0.3.min.js"></script>
+	<script src="../js/angular.min1.2.x.js"></script>
+	<style>
+	*{box-sizing:border-box;}
+	body{font-size:14px;line-height:22px;}
+	input{
+		/* 移动端去除focus黄色边框失败 */
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-focus-ring-color:  rgba(0, 0, 0, 0);
+		outline: none; 
+		
+		/* 移动端去除focus黄色边框成功 */
+		-webkit-tap-highlight-color:transparent; 
+		-webkit-user-modify:read-write-plaintext-only;
+	}
+	.testbox{height:50px;background:#ccc;}
+	.w60{background:red;}
+	.box{position:relative;width:240px;}
+	.box input{width:100%;height:32px;border:1px solid #999;padding:0 20px 0 2px;}
+	.box:hover .close{visibility:visible;}
+	.box .close{position:absolute;right:5px;font:24px/32px arial;color:#999;cursor:pointer;visibility:hidden;}
+	.box .close:hover{color:#666;}
+	.box ul{position:absolute;left:0;top:31px;width:100%;border:1px solid #999;margin:0;padding:0;}
+	.box li{list-style:none;padding:0 2px;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+	.box li:hover{background:#06c;color:white;}
+	</style>
+</head>
+<body>
+	<div ng-controller="nodeControl" class="box">
+		<input type="text" ng-model="sea" id="inputsea" autofocus=""><span class="close" ng-show="sea" ng-click="clears();">&times;</span>
+		<ul ng-show="listShow">
+			<li ng-repeat="item in peoples | filter:{'name':sea} | orderBy:'-name'" ng-click="locate($event)">{{item.name}} {{item.address}}</li>
+		</ul>
+	</div>
+</body>
+<script>
+var myapp = angular.module("selfapp",[]);
+myapp.controller("nodeControl",["$scope",function($scope,$element){
+	var peoples = [
+		{name:"浦东国际机场",address:"机场镇启航路900号"},
+		{name:"上海野生动物园",address:"浦东新区南六公路178号"},
+		{name:"上海动物园",address:"长宁区虹桥路2381号"},
+		{name:"上海植物园",address:"徐汇区龙吴路1111号"},
+		{name:"长风海洋世界",address:"普陀区大渡河路451号"},
+		{name:"东方明珠",address:"浦东新区世纪大道1号"}
+	];
+	$scope.peoples = peoples;
+	$scope.sea = null;
+	var list_show = true;
+	$scope.locate = function(event){
+		$scope.sea = event.target.innerHTML;
+		$scope.listShow = "";
+		list_show = false;
+	}
+	$scope.clears = function(){
+		$scope.sea = "";
+		//document.querySelector("#inputsea").focus();
+		$("#inputsea").focus();
+	}
+	var num = 0;
+	$scope.$watch('sea',function(newValue,oldValue){
+		console.log(list_show);
+		if(list_show){
+			$scope.listShow = $scope.sea;
+			//console.log($scope.listShow+num++);
+		}else{
+			list_show = true;
+		}
+	});
+}]);
+</script>
+</html>

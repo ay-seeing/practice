@@ -1,0 +1,9 @@
+例子：http://yearofmoo-articles.github.io/angularjs-2nd-animation-article/app/#/?q=all
+
+plnkr.co 在线例子：http://plnkr.co/
+
+ngAnimate-page:http://phillippuleo.com/articles/scalable-approach-page-transitions-angularjs
+
+angular开发 控制器之间的通信:
+http://www.html-js.com/article/1560
+http://www.guoyinfeng.info/2014/03/29/angularjs-%E4%B8%8D%E5%90%8C%E7%9A%84controller%E4%B9%8B%E9%97%B4%E9%80%9A%E4%BF%A1/

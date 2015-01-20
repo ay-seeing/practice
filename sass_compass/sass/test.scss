@@ -1,0 +1,19 @@
+/* add base className */
+$icon-sprite-base-class: ".ii";
+
+$icon-sprite-dimensions: true;
+
+/* img-sprites arrangement */
+$icon-layout:vertical;
+
+/* icon is images folder */
+@import "icon/*.png";
+@include all-icon-sprites;
+
+
+.b{
+  color:red;
+  span{
+    color:green;
+  }
+}

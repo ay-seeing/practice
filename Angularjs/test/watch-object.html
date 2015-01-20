@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>测试$watch第一个参数是对象</title>
+  <script src="../js/angular.js"></script>
+</head>
+<body ng-app="myApp">
+  <div ng-controller="ctrl">
+    <input type="text" ng-model="input.one">
+    <input type="text" ng-model="input.two">
+    <div ng-bind="input.one*input.two"></div>
+    <input type="button" value="暂停监控" ng-click="fn();">
+  </div>
+<script>
+//当$watch第一个参数是表达式或有返回值的函数的情况
+var app = angular.module("myApp",[]);
+app.controller("ctrl",function($scope){
+  $scope.input = {one:1,two:0};
+  // $watch 返回的函数（stopWatch）用于注销监控器
+  var stopWatch = $scope.$watch("input",callfn,true);
+  function callfn(newV,oldV,scope){
+    console.log(newV,oldV,scope);
+  }
+  $scope.fn = function(){
+    stopWatch();
+  }
+});
+</script>
+</body>
+</html>

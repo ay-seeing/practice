@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>获取 UserAgent 信息</title>
+  <style>
+*{margin:0;padding:0;}
+body{font:16px/2em tahoma,arial,"microsoft yahei",simsun;color:#666;}
+.wraper{width:90%;margin:10px auto;}
+#ua{margin-bottom:20px;}
+#ua .m{line-height:1.2em;}
+.t{color:#333;font-weight:bold;margin-right:10px;}
+  </style>
+</head>
+<body>
+  <div class="wraper">
+    <div id="ua"></div>
+    <div id="view"></div>
+  </div>
+  <script>
+(function init(){
+  var oScript = document.createElement("script");
+  oScript.setAttribute("src","eq.json");
+  document.getElementsByTagName("head")[0].appendChild(oScript);
+})();
+var ua = navigator.userAgent;//.toLowerCase();
+document.getElementById("ua").innerHTML = "<span class='t'>浏览器UserAgent:</span><div class='m'>" + ua +"</div>";
+var system= ["Windows","Ubuntu","Android","BlackBerry","Linux","Mac OS X"];
+var equipment = ["iPad","ipod","touch","iphone","HTC","M040","M356","M351","GT-I9100","GT-I9300","GT-I9500","GT-I9515","SM-G900A","SM-G800F","SM-G906L","SM-G870A","MI-ONE","MI 1s","MI 2","MI 2S","MI 3"];
+var browser = ["Chrome","UCBrowser","MSIE","Firefox","Opera","MQQBrowser","Safari"];
+
+
+var my = {
+  mobile:Boolean(ua.search(/mobile/i)!=-1),
+  searchBool:function(arr,str){
+    var count = arr.length;
+    for(var i=0;i<count;i++){
+      var reg = new RegExp(arr[i],"i");
+      if(str.search(reg)!=-1){
+        return arr[i];
+      }
+    }
+  },
+  getSystem:function(){
+    // 判断是否为移动设备
+    if(my.mobile){
+      if(ua.search(/android/i)!=-1){// 判断是否为 Android 移动设备，并获取其系统和版本
+        var result = ["Android"];
+        var reg = new RegExp("android[\\s\\/]?([\\d._]+)[\\s;]?","i");
+        result.push(ua.match(reg)[1]);
+        return result;
+      }else if(ua.search(/Windows\sPhone/i)!=-1){// 判断是否为 Windows Phone 移动设备，并获取其系统和版本
+        var result = ["Windows Phone"];
+        var reg = new RegExp("Windows Phone[\\s\\/]?([\\d._]+)[\\s;]?","i");
+        result.push(ua.match(reg)[1]);
+        return result;
+      }else if(ua.search(/Mac\sOS\sX/i)!=-1){// 判断是否为苹果移动设备，并获取其系统和版本
+        var result = ["Mac OS X"];
+        var reg = new RegExp("[\\s\\/]?([_\\d]+)\\slike\\sMac\\sOS\\sX[\\s;]?","i");
+        result.push(ua.match(reg)[1]);
+        return result;
+      }
+    }else{// 获取非移动设备系统和版本
+      var result =[];
+      // 获取系统
+      var sSys = my.searchBool(system,ua);
+      result.push(sSys);
+      // 获取系统版本
+      var reg = new RegExp(sSys+"[\\s\\/]?([NT\\s\\d.]+)[\\s;]?","i");
+      var sys_v = ua.match(reg);
+      if(sys_v){
+        result.push(sys_v[1]);
+      }else{
+        result.push("undefined");
+      }
+      return result;
+    }
+  },
+  getEqs:function(){
+    if(!my.mobile){
+      return "PC";
+    }
+    // 获取非移动设备名称
+    var model = my.searchBool(equipment,ua).toLowerCase();
+    return eqs[model];
+  },
+  getBrowser:function(){
+    //if(my.mobile){
+      var result = [];
+      // 获取浏览器
+      var browserN = my.searchBool(browser,ua);
+      if(browserN){
+        result.push(browserN);
+      }
+      // 获取浏览器版本
+      if(browserN.toString().toLowerCase()!="safari"){
+        var reg = new RegExp(browserN+"[\\s\\/]?([\\s\\d._]+)[\\s;]?","i");
+      }else if(browserN.toString().toLowerCase()=="safari"){
+        var reg = new RegExp("Version[\\s\\/]?([\\s\\d.]+)\\s","i");
+      }
+      var browser_v = ua.match(reg);
+      if(browser_v){
+        result.push(browser_v[1]);
+      }else{
+        result.push("undefined");
+      }
+      return result;
+    //}
+  }
+}
+var systemResult = my.getSystem(),
+eqsResult = my.getEqs(),
+browserResult = my.getBrowser();
+
+
+document.getElementById("view").innerHTML = "<span class='t'>设备:</span>"+eqsResult+
+"<br /><span class='t'>系统:</span>"+systemResult[0]+
+"<br /><span class='t'>系统版本:</span>"+systemResult[1]+
+"<br /><span class='t'>浏览器:</span>"+browserResult[0]+
+"<br /><span class='t'>浏览器版本:</span>"+browserResult[1];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+function isGet(str,bool){
+  if(!bool&&ua.search(str)!=-1){
+    var resultStr = [];
+    resultStr.push(str);
+
+    //var regE = str+"\/(\\S+)[\\s]?";
+    // 判断是否为苹果移动设备
+    if(ua.search("like mac os x")!=-1){
+      var regE = "\\s([\\d\\._]+)\\slike\\smac\\sos\\sx";
+    }else{
+      var regE = str+"[\/\\s]([\\d\\._]+)[\\s]?";
+    }
+    var reg = new RegExp(regE,"i");
+    if(reg.test(ua)){
+      resultStr.push(ua.match(reg)[1]);
+    }
+    return resultStr;
+  }else{
+    //
+  }
+}
+
+function repeat(arr,fn){
+  var num = arr.length;
+  for(var i=0;i<num;i++){
+    var str = isGet(arr[i].toLowerCase());
+    if(str){
+      return str;
+    }
+  }
+  if(typeof fn == "function"){
+    fn();
+  }
+}
+
+// 设备系统查找
+var get_system = repeat(system);
+// 判断是否为移动设备
+if(ua.search("mobile")!=-1){
+  //alert(repeat(equipment).toString());
+  get_system.unshift(eqs[repeat(equipment).toString()]);
+}else{
+  get_system.unshift("PC");
+}
+
+var get_browser = repeat(browser);
+document.querySelector("#ua").innerHTML = "<span class='t'>设备UserAgent：</span><div class='m'>"+navigator.userAgent+"</div>";
+//document.querySelector("#view").innerText = "设备："+get_system.toString()+"\n浏览器："+browserName[get_browser[0][0]];
+if(get_system.length==3){
+  document.querySelector("#view").innerHTML = "<span class='t'>设备：</span>"+get_system[0]+"<br /><span class='t'>系统：</span>"+get_system[1]+"<br /><span class='t'>系统版本：</span>"+get_system[2]+"<br /><span class='t'>浏览器：</span>"+browserName[get_browser[0]]+"<br /><span class='t'>浏览器版本：</span>"+get_browser[1];
+}else{
+  document.querySelector("#view").innerHTML = "<span class='t'>设备：</span>"+get_system[0]+"<br /><span class='t'>系统：</span>"+get_system[1]+"<br /><span class='t'>浏览器：</span>"+browserName[get_browser[0]]+"<br /><span class='t'>浏览器版本：</span>"+get_browser[1];
+}*/
+  </script>
+</body>
+</html>

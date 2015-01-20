@@ -1,0 +1,29 @@
+*{margin:0;padding:0;}
+body{font:14px/1.5em arial,"microsoft yahei",simsun;color:#666;}
+ul,ol,li{list-style:none;}
+.toolbar{-webkit-app-region:drag;width:100%;height:30px;line-height:30px;background:#e3e3e3;border-bottom:1px solid #ccc;position:fixed;z-index:999;}
+.system_mutual{width:100%;position:fixed;z-index:1000;text-align:right;padding:3px;-webkit-user-select:none;font-size:0;letter-spacing:-0.5em;}
+.system_mutual li{display:inline-block;vertical-align:top;position:relative;margin-right:5px;width:24px;height:24px;font:20px/24px arial;background:#999;color:white;text-align:center;border-radius:30px;cursor:pointer;-webkit-app-region: no-drag;}
+.system_mutual li::before,.system_mutual li::after,.system_mutual li i::before,.system_mutual li i::after{content:"";position:absolute;left:50%;top:50%;overflow:hidden;}
+.system_mutual .minimum::before{margin:-2px 0 0 -5px;width:10px;height:3px;font:0/24px a;background:white;}
+.system_mutual .maximum::before{margin:-5px 0 0 -5px;width:7px;height:7px;font:0/24px a;border:2px solid #fff;}
+.system_mutual .refresh::before{margin:-8px 0 0 -8px;width:12px;height:12px;border:2px solid #fff;border-radius:10px;}
+.system_mutual .refresh::after{margin:-3px 0 0 3px;width:6px;height:6px;background:#999;}
+.system_mutual .refresh i::before{z-index:2;margin:-9px 0 0 0;width:0;height:0;border:4px solid transparent;border-right-color:white;border-bottom-color:white;}
+.system_mutual .refresh2::before{margin:-8px 0 0 -8px;width:12px;height:12px;border:2px solid #fff;border-radius:10px;}
+.system_mutual .refresh2::after{margin:-3px 0 0 -10px;width:20px;border-radius:5px;height:6px;background:#999;-webkit-transform:rotate(10deg);}
+.system_mutual .refresh2 i::before{z-index:2;margin:-8px 0 0 2px;width:0;height:0;border:4px solid transparent;border-right-color:white;border-bottom-color:white;-webkit-transform:rotate(45deg);}
+.system_mutual .refresh2 i::after{z-index:2;margin:-1px 0 0 -10px;width:0;height:0;border:4px solid transparent;border-left-color:white;border-top-color:white;-webkit-transform:rotate(45deg);}
+.system_mutual .close::before{margin:-12px 0 0 -6px;content:"\00d7";}
+.system_mutual li:hover,.system_mutual .refresh:hover::after,.system_mutual .refresh2:hover::after{background:#333;}
+.wraper{padding:10px;}
+.crumbsbar{background:#f0f0f0;position:fixed;left:0;z-index:3;top:31px;-webkit-box-sizing:border-box;width:100%;padding:10px;box-shadow:0 1px #ccc;border-bottom:1px solid #fff;}
+.crumbsbox{border:2px solid #666;padding:3px;background:white;position:relative;}
+#back{position:absolute;left:0;top:0;width:30px;height:30px;text-align:center;background:black;color:white;font:14px/30px arial;cursor:pointer;}
+#crumbs{height:24px;line-height:24px;border:none;width:100%;padding-left:35px;-webkit-box-sizing:border-box;}
+#directorys{padding:10px;margin-top:80px;}
+#directorys li{display:inline-block;vertical-align:top;width:90px;height:86px;margin:10px 0 0 10px;text-align:center;position:relative;}
+#directorys li img{vertical-align:top;}
+#directorys li .item{position:absolute;left:0;top:0;width:100%;height:100%;padding:5px;line-height:18px;background:white;overflow:hidden;word-wrap:break-word;-webkit-box-sizing:border-box;}
+#directorys li:hover{z-index:2;}
+#directorys li:hover .item{height:auto;box-shadow:0 0 3px 1px #ccc;}

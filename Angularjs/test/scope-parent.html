@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>$scope parent</title>
+	<script src="../js/angular.min1.2.x.js"></script>
+</head>
+<body ng-app="myapp" ng-controller="parent">
+	<div>
+		{{a}}<br />
+		{{b}}
+		<input type="button" value="add" ng-click="add()">
+		<div ng-controller="child">
+			{{a}}<br />
+			{{b}}
+			<input type="button" value="add" ng-click="adds()">
+		</div>
+	</div>
+<script>
+var app = angular.module("myapp",[]);
+app.controller("parent",["$scope","$rootScope",function($scope,$rootScope){
+	$rootScope.a = 3;
+	$scope.b = 5;
+	//console.log($rootScope)
+	$scope.add = function(){
+		$rootScope.a++;
+		$scope.b++;
+	}
+}]);
+app.controller("child",["$scope","$rootScope",function($scope,$rootScope){
+	$scope.adds = function(){
+		$rootScope.a++;
+		$scope.b++;
+	}
+}]);
+
+
+</script>
+</body>
+</html>

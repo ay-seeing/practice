@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../js/jquery-2.0.3.min.js"></script>
+</head>
+<body>
+	<ul id="demo">
+	</ul>
+	<script>
+/*	for(var i=100100;i<100110;i++){
+		$.get("http://proya.fuliplat.com/home/detail?productid="+i,function(data){
+			$("#demo").html($("#demo").html()+data);
+		},function(data){
+			console.log("error")
+		})
+	}*/
+$.get("http://proya.fuliplat.com/home/detail",function(data){
+			console.log(data);
+		});
+	</script>
+</body>
+</html>

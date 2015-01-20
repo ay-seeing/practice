@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>绝对居中之dialog</title>
+	<style>
+.box{width:500px;height:500px;position:relative;border:3px solid red;}
+button{padding:10px;}
+dialog {
+  background: #ccc;
+  border: 1px solid red;
+  border-radius: 5px;
+  box-shadow: 0 1px 10px blue;
+  max-height:80%;
+  overflow:scroll;
+}
+dialog::backdrop {
+  background: rgba(173, 216, 230, .7);
+}
+@media screen and (max-width: 1250px) {}
+	</style>
+</head>
+<body>
+	http://www.w3ctech.com/topic/444
+	<hr>
+	<button id="open">打开窗口</button>
+<button id="modal">打开模态窗口</button>
+<button id="close">关闭窗口</button>
+
+
+<div class="box">
+  <dialog>
+    <p>我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+      <br />我是一个dialog
+    </p>
+    <button class="">确定</button>
+    <button>关闭</button>
+  </dialog>
+</div>
+
+<script>
+
+document.querySelector('#open').onclick = function() {
+  document.querySelector('dialog').show()
+}
+
+document.querySelector('#modal').onclick = function() {
+  document.querySelector('dialog').showModal()
+}
+
+document.querySelector('#close').onclick = function() {
+  document.querySelector('dialog').close();
+}
+
+document.querySelector('dialog>button').onclick = function() {
+  document.querySelector('dialog').close()
+}
+</script>
+</body>
+</html>

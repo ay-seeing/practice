@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
+</head>
+<body>
+  <div id="map_canvas"></div>
+<script>
+// if(navigator.geolocation){
+//   navigator.geolocation.getCurrentPosition(succes,errfn);
+// }else{
+//   console.log("浏览器不支持 geolocation");
+// }
+
+function getElem(id) { 
+    return typeof id === 'string' ? document.getElementById(id) : id; 
+} 
+ 
+function success(position) { 
+    var mapcanvas = document.createElement('div'); 
+    mapcanvas.id = 'mapcanvas'; 
+    mapcanvas.style.height = '500px'; 
+    mapcanvas.style.width = '560px'; 
+ 
+    getElem("map_canvas").appendChild(mapcanvas); 
+ 
+    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);   
+    var myOptions = { 
+        zoom: 15, 
+        center: latlng, 
+        mapTypeControl: false, 
+        navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL}, 
+        mapTypeId: google.maps.MapTypeId.ROADMAP 
+    }; 
+    var map = new google.maps.Map(document.getElementById("mapcanvas"), myOptions); 
+    var marker = new google.maps.Marker({ 
+      position: latlng,   
+      map: map,   
+      title:"你在这里！" 
+    }); 
+} 
+   
+if (navigator.geolocation) { 
+   navigator.geolocation.getCurrentPosition(success);   
+} else { 
+  alert("您当前使用的浏览器不支持geolocation服务"); 
+} 
+</script>
+</body>
+</html>

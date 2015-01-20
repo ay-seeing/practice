@@ -1,0 +1,17 @@
+/* add base className */
+/* img-sprites arrangement */
+/* icon is images folder */
+.ii, .icon-check-16, .icon-check-24, .icon-check-32, .icon-check-48, .icon-check-64 { background: url('/images/icon-s2f79f21aec.png') no-repeat; }
+
+.icon-check-16 { background-position: 0 -168px; height: 16px; width: 16px; }
+
+.icon-check-24 { background-position: 0 -144px; height: 24px; width: 24px; }
+
+.icon-check-32 { background-position: 0 -112px; height: 32px; width: 32px; }
+
+.icon-check-48 { background-position: 0 -64px; height: 48px; width: 48px; }
+
+.icon-check-64 { background-position: 0 0; height: 64px; width: 64px; }
+
+.b { color: red; }
+.b span { color: green; }

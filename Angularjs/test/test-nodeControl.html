@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="selfapp">
+<head>
+	<meta charset="UTF-8">
+	<title>angularJs节点控制</title>
+	<script src="../js/angular.min1.3.0.js"></script>
+	<style>
+	.testbox{height:50px;background:#ccc;}
+	.w60{background:red;}
+	</style>
+</head>
+<body>
+	<div ng-controller="nodeControl">
+		<input type="text" ng-model="ele.w">
+		<div class="testbox" style="border:1px solid #999;" ng-style="{width:ele.w+'px',height:100+'px'}" ng-class="ele.w">{{ele.w}}</div>
+		<hr>
+		<div ng-switch on="ele.w">
+			<span ng-switch-when="60">60</span>
+			<span ng-switch-when="80">80</span>
+			<span ng-switch-default>other</span>
+		</div>
+		<hr>
+		<input type="checkbox" ng-init="inputshow='yes'" ng-model="inputshow" ng-true-value="'yes'" ng-false-value="'no'">
+		<input type="checkbox" checked="checked">
+		<div ng-show="inputshow =='yes'">{{inputshow||"显示"}}</div>
+		<div>{{inputshow}}</div>
+		<hr>
+	</div>
+</body>
+<script>
+var myapp = angular.module("selfapp",[]);
+myapp.controller("nodeControl",["$scope",function($scope){
+	var ele = {
+		w : "50"
+	}
+	$scope.ele = ele;
+}]);
+</script>
+</html>

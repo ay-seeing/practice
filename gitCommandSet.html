@@ -1,0 +1,329 @@
+git 
+http://gitbook.liuhui998.com/index.html
+http://git-scm.com/book/zh
+http://iissnan.com/progit/index.html
+
+git 配置
+/etc/gitconfig文件：系统中对所有用户都普遍适用的配置。若使用git config 时用--system 选项，读写的就是这个文件。
+~/.gitconfig文件：用户目录下的配置文件只适用于该用户。若使用git config 时用--global 选项，读写的就是这个文件。
+当前项目的git 目录中的配置文件（也就是工作目录中的.git/config 文件）：这里的配置仅仅针对当前项目有效。每一个级别的配置都会覆盖上层的相同配置，所以.git/config 里的配置会覆盖/etc/gitconfig 中的同名变量。
+
+配置用户名
+// 对3个等级的配置文件进行配置
+git condig --system user.name "author"
+git config --global user.name "author"
+git config user.name "author"
+
+配置邮箱
+// 配置邮箱和配置用户名类似，也有3个等级，如：
+git config --system user.email "you@you.com"
+git config --global user.email "you@you.com"
+git config user.email "you@you.com"
+
+
+配置文本编辑器
+// 配置邮箱和配置用户名类似，也有3个等级
+git config --global core.editer vim
+
+查看配置信息
+// 查看所有配置信息
+git config --list
+
+// 查看配置用户信息
+git config user.name
+
+// 查看配置email信息
+git config user.email
+
+
+获取帮助
+// 获取帮助有3种方式，如：
+git help config
+git config --help
+man git-config
+
+初始化仓库
+git init
+
+跟踪文件
+// 跟踪当前仓库所有更改的文件
+git add .
+// 跟踪当前仓库后缀名为 .txt 且修改的文件
+git add *.txt
+// 跟踪当前仓库以 _ 下划线结尾的且修改的文件
+git add *_
+// 跟踪当前仓库目录下的某个文件，但不跟踪其他文件夹里面的同名文件
+git add /test.txt
+// 跟踪某个文件夹，注意文件夹后面的斜杠是必须的
+git add forlderName/
+
+
+
+克隆现有仓库(克隆仓库无需初始化)
+git 支持许多数据传输协议，如 git:// 协议,http(s):// 协议或者user@server:/path.git
+git clone url
+
+
+查看仓库文件状态
+git status
+
+
+使用编辑器编辑文件
+vi readme.txt
+vim readme.txt
+
+
+
+忽略某些文件
+创建名为 .gitignore 的文件，列出要忽略的文件模式
+// 查看文件
+cat .gitignore
+
+.gitignore 文件的格式规范：
+   所有空行或者以注释符号 # 开头的都会被 git 忽略。
+   可以使用标准的 glob 模式匹配。
+   匹配模式最后反斜杠（/）说明要忽略的是目录。
+   要忽略指定模式以外的文件或目录，可以在模式前面添加惊叹号(!)取反。
+glob 模式是指 shell 所用的简化了的正则表达式
+*   匹配零个或多个任意字符
+[abc]  匹配任何一个列在方括号中的字符  *.[oa]  任何以.o或.a结尾的文件
+?  匹配一个任意字符
+[0-9]  这两个字符范围内的都可以匹配
+
+#git忽略举例
+*.a     #忽略所有 .a 结尾的文件
+!lib.a   #但 lib.a 除外
+/todo    #仅忽略项目更目录下的 todo 文件，不包括 subdir/todo
+build/    #忽略 build/ 目录下的所有文件
+doc/*.txt   #会忽略 doc/notes.txt 但不包括 doc/server/notes.txt 文件
+
+
+
+文件对比、文件差异
+// git diff 后，按q退出对比进入命令模式
+// 查看未缓存（没有 add ）的文件修改了哪些部分
+git diff
+// 查看已缓存文件和上次提交之间快照的差异
+git diff --staged
+
+
+
+文件提交
+// 如果没填写提交说明，则会启用默认编辑器，让你填写提交说明
+git commit
+// 带提交说明的提交
+git commit -m "提交说明"
+// 跳过暂存(git add )，直接提交
+git commit -a -m "提交说明"
+或者
+git commit -am "提交说明"
+// 修改最后一次提交，回车后可以重新编辑提交说明
+git commit --amend
+
+
+
+
+移除文件
+// 从暂存区删除文件
+git rm fileName
+// 只从工作目录下删除还是需要在暂存区删除该文件
+rm fileName
+git rm fileName
+// 文件删除之前修改过，且已经放到暂存区，需要用 -f（force） 强制删除
+git rm -f fileName
+// 将文件从暂存区移除，但保留文件在当前工作目录中(仅从跟踪清单中删除)
+git rm --cached fileName
+// 也可以删除目录或某类文件
+git  rm log/\*.log
+注意到星号* 之前的反斜杠\，因为Git 有它自己的文件模式扩展匹配方式，所以我们
+不用shell 来帮忙展开（译注：实际上不加反斜杠也可以运行，只不过按照shell 扩展的
+话，仅仅删除指定目录下的文件而不会递归匹配。上面的例子本来就指定了目录，所以效果
+等同，但下面的例子就会用递归方式匹配，所以必须加反斜杠。）。此命令删除所有log/
+目录下扩展名为.log 的文件。
+
+
+
+移动文件
+// 文件重命名或移动
+git mv oldFile newFile
+// 以上命令就相当于一下3条命令
+mv oldFile newFile
+git rm oldFile
+git add newFile
+
+
+
+查看提交历史
+git log
+// 展开每次提交内容的差异
+git log -p
+选项说明
+  -p 按补丁格式显示每个更新之间的差异。
+  --stat 显示每次更新的文件修改统计信息。
+  --shortstat 只显示--stat 中最后的行数修改添加移除统计。
+  --name-only 仅在提交信息后显示已修改的文件清单。
+  --name-status 显示新增、修改、删除的文件清单。
+  --abbrev-commit 仅显示SHA-1 的前几个字符，而非所有的40 个字符。
+  --relative-date 使用较短的相对时间显示（比如，“2 weeks ago”）。
+  --graph 显示ASCII 图形表示的分支合并历史。
+  --pretty 使用其他格式显示历史提交信息。可用的选项包括oneline，short，full，fuller 和format（后跟指定格式）。
+
+限制输出长度
+// 最后一次提交信息
+git log -1 HEAD
+// 仅显示最近两次更新
+git log -2
+// 按照提交时间限制选项 --since(之后) --until(之前)
+// 最近两周提交记录
+git log --since=2.weeks
+// 查看某天之后提交记录
+git log --since=2014-03-07
+选项说明
+  -(n) 仅显示最近的n 条提交
+  --since, --after 仅显示指定时间之后的提交。
+  --until, --before 仅显示指定时间之前的提交。
+  --author 仅显示指定作者相关的提交。
+  --committer 仅显示指定提交者相关的提交。
+// 查看Git 仓库中，2008 年10 月期间，Junio Hamano 提交的但未合并的测试脚本（位于项目的t/ 目录下的文件）
+git log --pretty="%h:%s" --author=gitster --since="2008-10-01" \
+--before="2008-11-01" --no-merges -- t/
+
+// 查看某次提交
+git show SHA-1（版本id至少4位）
+// 查看引用日志
+git reflog
+// 可以用引用日志里输出的 @n引用，查看某次提交
+git show HEAD@{n}
+// 查看某个分支的引用日志
+git log -g master
+
+
+
+
+
+撤销操作
+// 取消暂存的文件
+git reset HEAD fileName
+// 取消对文件的修改（该命令无法恢复）
+git checkout -- fileName
+// git add . 意外添加了一些文件，在历史中删除这个文件
+git filter-branch --tree-filter 'em -f password.txt' HEAD
+// 删除所有不小心提交上去的备份文件
+git filter-branch --tree-filter 'rm -f'
+// 撤销提交操作
+git reset --hard commitId
+
+
+
+
+
+远程仓库
+// 查看当前的远程仓库
+git remote
+// 显示简短名字和对应的克隆地址
+git remote -v
+// 添加远程仓库 pb 
+git remote add pb git://github.com/paul/ticgit.git
+// 获取远程仓库 pb 的数据
+git fetch pb
+  fetch 命令只是将远端的数据拉到本地仓库，并不自动合并到当前工作分支，只有当你确实准备好了，才能手工合并。git pull 命令自动抓取数据下来，然后将远端分支自动合并到本地仓库中当前分支。
+// 推送到远程仓库(clone会默认使用origin仓库和master分支)
+git push origin master
+// 查看远程仓库信息
+git remote show remoteName
+// 远程仓库重命名
+git remote rename oldRemoteName newRenoteName
+// 删除远程仓库
+git remote rm remoteName
+
+
+
+
+自动完成
+// 当输入相关命令的时候，突然忘记了怎么打，但是记得前几个字母，比如，我想输入git status
+git s 按两次tab就会提示你所有s开头的命令，如果只有一个s开头的命令，则按一次tab键后会自动完成命令
+
+
+
+命令别名
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status
+
+
+
+
+分支操作
+// 查看分支
+git branch
+// 创建分支
+git branch branchName
+// 切换分支（只有暂存区和工作目录里还有没有提交的修改，就会将检出的分支产生冲突从而阻止git为你转换分支）
+git checkout branchName
+// 创建并切换分支
+git checkout -b branchName
+// 将hot分支合并到master分支
+git checkout master
+git merge hot
+// 删除分支
+git branch -d branchName
+// 冲突的合并
+如果你修改了两个待合并分支里的同一个文件的同一个部分，git就会报出冲突。
+
+// 合并工具（可视化的合并工具会引导你解决所有冲突）
+git mergetool
+// 查看各分支最后一次commit信息
+git branch -v
+// 查看已合并的分支
+git branch --merged
+// 查看未合并的分支
+git branch --no-merged
+// 未合并的分支删除会失败
+git branch -d branchName
+// 强制删除未合并的分支
+git branch -D branchName
+
+// 衍合（类似于合并，只是提交历史比合并要清晰）
+git checkout master
+git rebase branchName
+
+
+
+跟踪分支
+// 跟踪分支是一种和远程分支有直接联系的本地分支。在跟踪分支里输入git push，Git 会自行推断应该向哪个服务器的哪个分支推送数据。反过来，在这些分支里运行git pull 会获取所有远程索引，并把它们的数据都合并到本地分支中来。
+git checkout --track origin/master
+// 删除远程分支
+git push origin :remoteBranchName
+
+
+
+SSH公钥
+// SSH公钥默认存储在账户的 ~/.ssh 目录
+cd ~/.ssh
+ls
+// 查看有没有 id_dsa  或者 id_rsa.pub   .pub 文件是公钥，另一个是密钥。如果没有 用 ssh-keygen 来生成他们
+ssh-keygen -t rsa -C "your_email@example.com"
+// 查看 SSH 是否已经添加
+ssh -T git@github.com
+
+
+
+
+
+
+
+
+
+
+Untracked files   未跟踪的文件
+unmodifled   未更改的
+
+
+conflict  冲突
+merge   合并
+branch  分支
+checkout  检出
+interactive   交互
+MaKe DIRectory  创建目录
+Change Directory   切换目录

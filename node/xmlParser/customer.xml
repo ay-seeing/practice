@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<customer>
+  <field id="firstName">
+    <value>David</value> 
+  </field>
+  <field id="lastName">
+    <value>Smith</value> 
+  </field>
+  <field id="country">
+    <value>China</value> 
+  </field>
+  <field id="email">
+    <value>mymail@myaddress.com</value> 
+  </field>
+</customer>

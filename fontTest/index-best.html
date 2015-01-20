@@ -1,0 +1,271 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Web Font-size & Font-family</title>
+	<style type="text/css" media="all">
+	*{margin:0;padding:0;}
+	.font_wrap{width:60%;margin:0 auto;font-size:12px;font-family:Simsun;}
+	.header{height:60px;padding:10px 0;}
+	.header .logo{float:left;margin-right:10px;}
+	.header h1{float:left;font:20px "microsoft yahei";padding-top:25px;}
+	.input_txt{height:34px;line-height:34px;border:none 0;padding:0 2px;}
+	.font_style{font:14px Simsun;padding:10px;background:#2577E3;}
+	.font_style li{list-style:none;padding:5px 0;}
+	.font_style input,.font_style select{vertical-align:top;margin:0;}
+	.font_style .input_row{display:block;background:transparent;}
+	.font_style .input_row span{background:#f0f0f0;}
+	.font_style label{display:inline-block;vertical-align:top;height:34px;line-height:34px;background:#f0f0f0;font:14px/34px "microsoft yahei";color:#999;}
+	.font_style label span{display:inline-block;vertical-align:top;padding:0 10px;}
+	.font_style .checkbox{background:white;-webkit-user-select:none;-moz-user-select:none;}
+	.font_style .checkbox input{margin:11px 0 0 6px;}
+	.font_style .checkbox span{padding:0 10px 0 3px;}
+	.font_show{padding:20px 30px;line-height:1.8;margin-bottom:20px;color:#666;background:#DCE9F7;min-height:400px;border-radius:5px;position:relative;}
+	/*.font_show:after{content:"";position:absolute;left:50px;top:-16px;width:0;height:0;border:8px solid transparent;border-bottom-color:#DCE9F7;}*/
+	.select{position:relative;}
+	.select select{-webkit-appearance:none;border:medium none;height:34px;line-height:20px;padding:7px 0;padding-top:8px \9;border:none 0;outline:none;}
+	.select:before{content:"";position:absolute;right:0;top:0;width:20px;height:34px;background:white;pointer-events:none;}
+	.select:after{content:"";position:absolute;right:10px;top:50%;margin-top:-2px;width:0;height:0;border:5px solid transparent;border-top-color:#ccc;pointer-events:none;}
+	.font_show span{ white-space: pre-wrap;  white-space: -moz-pre-wrap;  word-wrap: break-word; }
+	.font_tips{display:block;padding:10px;font:16px/2em "Microsoft YaHei";}
+	.font_tips span{color:#FF9A14;margin:0 5px;}
+	.font_tips .family{color:#999;margin-left:15px;font-size:12px;}
+	#fFamily label{margin-bottom:5px;}
+	@media screen and (max-width:768px){
+		.font_wrap{width:90%;}
+	}
+	/* firefox 
+	@-moz-document url-prefix(){#ie .ie{display:none;}}
+	/* Safari 
+	@media screen and (-webkit-min-device-pixel-ratio:0){
+		#ie .ie{display:none;}
+	}*/
+	</style>
+</head>
+<body id="ie">
+<div style="position:absolute;opacity:0;">
+<object id="fonts" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100" height="100">
+<param name="movie" value="get-fonts.swf" />
+<param name="quality" value="high" />
+<param name="swfversion" value="8.0.35.0" />
+<param name="allowScriptAccess" value="always" />
+<param name="wmode" value="transparent" />
+<embed src="get-fonts.swf" quality="high" wmode="transparent" width="100" height="100" name="fonts" align="middle" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"/>
+</object>
+</div>
+	<div class="font_wrap header" >
+		<img class="logo" src="http://pic.c-ctrip.com/common/c_logo2013_2x.png" height="50" alt="">
+		<h1>文字测试平台</h1>
+	</div>
+	<div style="position:absolute;">
+		<object id="dlgHelper" classid="clsid:3050f819-98b5-11cf-bb82-00aa00bdce0b" width="0px" height="0px"></object>
+	</div>
+	<div class="font_style">
+		<ul class="font_wrap" id="fStyle">
+			<li>
+				<label class="input_row"><span>测试文字:</span><input type="text" class="input_txt" id="inputTxt" style="width:70%;" placeholder="测试文字，默认12点、宋体、不加粗"></label>
+			</li>
+			<li>
+				<label><span>字体大小:</span><input type="text" class="input_txt" id="fSize" size="7" style="width:89px;" placeholder="12"></label>
+				<label class="checkbox"><input type="checkbox" value="bold" id="fWeight" /><span>加粗</span></label>
+			</li>
+			<li id="fFamily">
+				<label class="checkbox"><input type="checkbox" value="Arial Black" /><span>Arial Black</span></label>
+				<label class="checkbox"><input type="checkbox" value="Arial" /><span>Arial</span></label>
+				<label class="checkbox"><input type="checkbox" value="Tahoma" /><span>Tahoma</span></label>
+				<label class="checkbox"><input type="checkbox" value="Verdana" /><span>Verdana</span></label>
+				<label class="checkbox"><input type="checkbox" value="Microsoft Yahei" /><span>微软雅黑</span></label>
+				<label class="checkbox"><input type="checkbox" value="SimHei" /><span>黑体</span></label>
+				<label class="checkbox"><input type="checkbox" value="Simsun" /><span>宋体</span></label>
+				<label class="select ie"><span>系统字体:</span><select id="systemFont" style="width:120px;">
+					<option value="选择字体">选择字体</option>
+					</select>
+				</label>
+			</li>
+		</ul>
+	</div>
+	<div class="font_wrap">
+		<div class="font_tips" id="fontTips"></div>
+		<div class="font_show" id="fontShow"><span class="tips"></span></div>
+	</div>
+	<script>
+// 判断火狐
+var Ff = /firefox/i.test(navigator.userAgent);
+var Chrome = /chrome/i.test(navigator.userAgent);
+var IE = /MSIE/i.test(navigator.userAgent);
+
+// 获取 object 元素
+function getFlashMovieObject(movieName){
+  if (window.document[movieName]){
+    return window.document[movieName];
+  }else if (navigator.appName.indexOf("Microsoft")==-1){
+    if (document.embeds && document.embeds[movieName])
+    return document.embeds[movieName];
+  }else{
+    return document.getElementById(movieName);
+  }
+}
+
+// 将系统字体写入 select 元素
+var fontsArray = new Array();
+var fontsIsAdded = false;
+function fontFacesMenuEnter(fontFacesDropdownList, fontStr){
+ if((fontsIsAdded == false )||(fontsArray=='')){
+  fontsArray = fontStr.split(",");
+  
+  fontsIsAdded = true;
+  for (var s=1; s < fontsArray.length; s++){
+  	//判断字体是否已经列出来了，如果列出来了就不添加到 select 里
+  	var isAdd = true;
+  	for(var i=0;i<testFfShow.length;i++){
+  		if(testFfShow[i].innerHTML == fontsArray[s]){
+  			isAdd = false;
+  		}
+  	}
+  	if(isAdd){
+	   newOption = document.createElement("option");
+	   newOption.value = fontsArray[s];
+	   newOption.text = fontsArray[s];
+	   fontFacesDropdownList.add(newOption);
+	}
+  }
+ }
+}
+
+// 通过 flash 获取系统字体（parent.document.all(dlgHelperId).fonts.count方法只兼容ie）
+setTimeout(function(){  // 因为flash是异步加载所以，需要延长调用，否则可能获取不到flash文件
+  var font_list = getFlashMovieObject("fonts").getASFonts();
+  fontFacesMenuEnter(document.getElementById("systemFont"),font_list);
+},1000);
+
+// 将 nodeList 添加一个数组中
+function addNodeList(a,l){
+	for(var i=0; i<l.length; i++){
+		a.push(l[i]);
+	}
+	return a;
+}
+
+// 删除字体
+function removeFont(arr,str){
+	for(var i=0;i<arr.length;i++){
+		if(arr[i] == str || arr[i] == "\""+str+"\""){
+			arr.splice(i,1);
+		}
+	}
+}
+
+// 设置多个字体或某些字体添加引号
+var allFamily = [];
+function countF(ocur){
+	if(Ff){
+		testFf[0].disabled = true;
+	}
+	if(ocur && ocur.nodeName.toLowerCase() == "input"){
+		// 字体设置
+		if(ocur.checked && /\s/.test(ocur.value)){
+			allFamily.push("\""+ocur.value+"\"");
+		}else if(ocur.checked){
+			allFamily.push(ocur.value);
+		}else{
+			removeFont(allFamily,ocur.value);
+		}
+	}else if(ocur && ocur.nodeName.toLowerCase() == "select"){
+		// 添加系统字体
+		if(oSystemFont.value && oSystemFont.value != "选择字体" && /\s/.test(oSystemFont.value)){
+			allFamily.push("\""+oSystemFont.value+"\"");
+			removeFont(allFamily,ocur.oldVal);
+		}else if(oSystemFont.value && oSystemFont.value != "选择字体"){
+			allFamily.push(oSystemFont.value);
+			removeFont(allFamily,ocur.oldVal);
+		}else if(oSystemFont.value == "选择字体"){
+			removeFont(allFamily,ocur.oldVal);
+		}
+	}
+	var sFamily = allFamily.join(",");
+
+	// 是否加粗
+	var isBold = "normal";
+	if(testFw.checked){
+		isBold = "bold";
+	}
+
+	setFont(testTxt.value,testFs,sFamily,isBold,fontW,fontTips);
+}
+
+// 设置显示的字体大小等
+function setFont(txt,ofs,ff,fw,o,tip){
+	if(!o){
+		return false;
+	}
+	txt = txt || "测试文字，默认12点、宋体、不加粗";
+	fs = ofs.value || "12";
+	ff = ff || "simsun";
+	fw = fw || "normal";
+	o.innerHTML = txt;
+	setTimeout(function(){
+		tip.innerHTML = "共<span>"+txt.length+"</span>个字符，占宽<span>"+o.offsetWidth+"</span>像素。<span class='family'>字体设置顺序："+ff+"</span>";
+	},10);
+	if(fs>200){fs=200;ofs.value=200;alert("字体大小范围10-200");}else if(fs<10){fs=10;ofs.value=10;alert("字体大小范围10-200");}
+	if(Chrome && fs<12){
+		fs=12;ofs.value=12;alert("谷歌浏览器最小显示字号为12像素");
+	}
+	fs = fs + "px";
+	o.setAttribute("style","font-size:"+fs+";font-family:"+ff+";font-weight:"+fw+";");
+}
+var ofStyle = document.getElementById('fStyle'),
+	ofontShow = document.getElementById('fontShow'),
+	fontW = ofontShow.getElementsByTagName("span")[0],
+	fontTips = document.getElementById("fontTips"),
+	testTxt = document.getElementById('inputTxt'),
+	testFs = document.getElementById('fSize'),
+	testFfWrap = document.getElementById('fFamily'),
+	testFf = testFfWrap.getElementsByTagName("input"),
+	testFfShow = testFfWrap.getElementsByTagName("span"),
+	oSystemFont = document.getElementById("systemFont"),
+	testFw = document.getElementById("fWeight");
+var aInput = document.getElementsByTagName("input"),
+	aselect = document.getElementsByTagName("select");
+
+
+// 字体大小输入框禁止输入非数字字符
+testFs.onkeyup = function(){
+	var str = this.value;
+	if(/\D/.test(str)){
+		this.value = str.replace(/\D/g,"");
+	}
+	if(this.value.length>1){
+		countF();
+	}
+}
+
+// 改变某一个值自动显示结果
+// var atrigger = aInput.concat(aselect);  //nodelist 并不是 array，虽然 nodelist有 length属性
+var atrigger = [];
+atrigger = addNodeList(addNodeList(atrigger,aselect),aInput);
+oSystemFont.onclick = oSystemFont.onkeydown = function(){
+	this.oldVal = this.value;
+}
+for(var j=0;j<atrigger.length;j++){
+	atrigger[j].onchange = function(){
+		if(this.parentNode.parentNode == testFfWrap){
+			countF(this);
+		}else{
+			countF();
+		}
+	}
+}
+testTxt.onkeyup = function(){
+	countF();
+}
+document.getElementById('fFamily').getElementsByTagName("label")[0].onclick = function(){
+	if(Ff){
+		alert("火狐不支持该字体");
+	}
+}
+//加载完成自动执行一次计算
+countF();
+	</script>
+	
+</body>
+</html>

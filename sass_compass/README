@@ -1,0 +1,37 @@
+在需要创建compass项目的目录下运行 compass create myproject 可以创建一个 compass 项目。
+然后进入该目录，会发现已经创建了如下件：
+.sass-cache 文件夹
+images 文件夹
+sass 文件夹
+stylesheets 文件夹
+config.rb 件
+
+其中 config.rb 中配置 sass，css，images 的路径，如：
+#css路径
+css_dir = "stylesheets"
+#sass路径
+sass_dir = "/"
+#用于compass自动合图的icon文件夹
+images_dir = "images"
+#sass编译成css的方式设置
+output_style = :compact
+
+
+我们自己再添加一个设置合并后图片存放路径：
+generated_images_dir = "img"
+
+
+
+compass自动合成sprite图片
+在sass件里设置合并的样式，如：
+/* 注意icon需要和images里面文件夹的名字保持同步，否则或出错 */
+/* 添加基础样式名称 */
+$icon-sprite-base-class: ".ii";
+$icon-sprite-dimensions: true;
+/* 设置生成的scrite图片的排列方式 */
+$icon-layout:vertical;
+/* icon名字要和文件夹的名字一样 */
+@import "icon/*.png";
+@include all-icon-sprites;
+
+最后运行 compass watch sassfileName或者目录名称，需注意，如果增加 icon 或减少 icon 都会重新生成一张 sprite 图片。

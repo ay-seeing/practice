@@ -1,0 +1,38 @@
+打开html或php页面时，不要打开服务器端设置的localhost:8080等端口号，而是直接双击页面打开，就可以了。否则效果会不正确。因为地址加端口号只是用于侦听的。
+
+
+
+Socket.IO是一个封装了WebSocket的JavaScript模块。因为完全使用JavaScript编写，所以在每个浏览器和移动设备中都可以方便地通过Socket.IO使用WebSocket。
+
+socket.io设计的目标是支持任何的浏览器，任何Mobile设备。目前支持主流的PC浏览器(IE,Safari,Chrome,Firefox,Opera等)，Mobile浏览器(iphone Safari/ipad Safari/android WebKit/WebOS WebKit等)。
+
+socket.io基于node.js并简化了WebSocket API，统一了各种通信API。它支持：WebSocket, Flash Socket, AJAX long-polling, AJAX multipart streaming, Forever IFrame, JSONP polling。
+
+socket.io解决了实时的通信问题，并统一了服务端与客户端的编程方式。启动了socket以后，就像建立了一条客户端与服务端的管道，两边可以互通有无。
+
+socket = io.connect(null)。这里的null代表连接本地服务，可以换成"localhost"，效果也是一样的。 
+
+ socket.io可以直接通过send方法发送消息，使用message事件接收消息。
+
+ 两端可以互发事件，互发数据，相互通信。发送事件的代码为：socket.emit(action, data, function)，其中action为事件的名称，data为数据，function为回调函数;处理事件代码为：socket.on(action,function)，如果emit发送的时候有数据data，则function中参数包含了这个数据。socket.io除了发送和处理内置事件，如connect, disconnect, message。还允许发送和处理自定义事件。
+
+ 从上面可以看出来，发送数据的时候，send和emit是都可以使用的。只不过emit更是强化了自定义事件的处理。且send只能发送字符串，因此用send 发送对象或数组时需要用 JSON.stringify 将数组和对象等列化为JSON字符串。接收端然后用 JSON.parse() 将JSON数据解析为js原生值。
+socket.emit() ：向建立该连接的客户端广播
+socket.broadcast.emit() ：向除去建立该连接的客户端的所有客户端广播
+io.sockets.emit() ：向所有客户端广播，等同于上面两个的和
+
+ 可以在服务端使用socket的get/set方法存储客服端的相关数据。
+
+
+
+
+nodejs + WebSocket 资料：  
+https://github.com/nswbmw/N-chat/wiki/%E7%AC%AC%E4%B8%80%E7%AB%A0-socket.io-%E7%AE%80%E4%BB%8B%E5%8F%8A%E4%BD%BF%E7%94%A8
+http://www.cnblogs.com/dxy1982/archive/2012/01/30/2328020.html
+http://cnodejs.org/topic/5240891e101e5745217dd457
+http://raytaylorlin.com/Tech/web/Nodejs/socket-io-tutorial/
+http://www.ituring.com.cn/article/62357
+http://deadhorse.me/nodejs/2011/12/29/socket.io_induction.html
+http://blog.whattoc.com/2013/09/15/nodejs_http1/
+http://developer.51cto.com/art/201310/413755_all.htm
+http://www.oschina.net/question/12_54009

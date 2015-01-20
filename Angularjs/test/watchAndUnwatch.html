@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>watch</title>
+	<script src="../js/angular.min1.2.x.js"></script>
+</head>
+<body ng-app="myapp" ng-controller="control">
+	<h1>watch and unwatch</h1>
+	<input type="text" ng-model="aa"> <input type="button" value="openwatch" ng-click="openwatch()"> <input type="button" value="Unwatch" ng-click="unwatch()">
+	<script>
+	var app = angular.module("myapp",[]);
+	app.controller("control",["$scope",function($scope){
+		$scope.aa = "abc";
+		var unbindWatcher;
+
+		$scope.openwatch = function(){
+			unbindWatcher = $scope.$watch("aa",function(newValue,oldValue){
+				console.log($scope.aa);
+			});
+		}
+		$scope.unwatch = function(){
+			if(unbindWatcher){
+				unbindWatcher();
+			}
+		}
+	}]);
+	</script>
+	<hr>
+	在生成$watch() method的时候, angularJS会回复一个”deregistration” function，用于所谓的”un-watch  <br />
+	http://geekblog.zhaoyan.me/angularjs-watch-and-unbinding-watch/#.U-rQV_mSyxU
+</body>
+</html>

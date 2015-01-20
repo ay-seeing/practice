@@ -1,0 +1,30 @@
+{
+   // 插件名字
+  "name": "work time",
+  "manifest_version": 2,
+  // 插件版本
+  "version": "1.0",
+  // 插件说明
+  "description": "记录工作时间及平均工时",
+  // 在 chrome://extensions/ 插件设置页面，当前插件里有个 背景页的链接
+  "background":{
+   //"page":"background.html",
+   "scripts":["js/background.js"],
+   "persistent": false
+  },
+  "permissions":[
+    "tabs","http://*/*"
+  ],
+  "content_scripts":[
+    {
+      "matches":["http://*/*"],
+      // "css":["css.css","abc.css"],
+      "js":["js/contentScript.js"]
+    }
+  ],
+  "browser_action": {
+    "name":"",
+    "default_icon": "images/icon-19.png",
+    "default_popup": "popup.html"
+  }
+}

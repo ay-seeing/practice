@@ -1,0 +1,10 @@
+{
+  "name": "edm-workflow",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "assemble": "0.4.37",
+    "grunt-mailgun": "*",
+    "grunt-contrib-watch": "*"
+  }
+}

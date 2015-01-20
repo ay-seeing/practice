@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>svg标签种类</title>
+	<style>
+*{margin:0;padding:0;}
+body{font-size:14px;color:#666;}
+li{list-style:decimal inside;}
+.wraper{width:80%;margin:0 auto;}
+.wraper:after{content:"";display:block;height:0;overflow:hidden;clear:both;}
+.list li{float:left;width:25%;box-sizing:border-box;padding:15px;}
+.list .show{border:1px solid #ccc;margin-top:10px;}
+</style>
+</head>
+<body>
+<ul class="list wraper">
+	<li>
+		<h4>a标签</h4>
+		<div class="show">
+			<svg width="90" height="90" viewBox="0 0 90 90" >
+				<style>
+				.hover{fill:#999;}
+				.hover:hover{fill:black;}
+				</style>
+				<a class="hover" xlink:href="http://www.baidu.com">
+					<rect x="10" y="20" width="50" height="40" />
+					<text x="0" y="20" style="font-size:12px;">svg 添加文字</text>
+				</a>
+			</svg>
+		</div>
+	</li>
+</ul>
+</body>
+</html>

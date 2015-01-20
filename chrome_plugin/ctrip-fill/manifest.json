@@ -1,0 +1,30 @@
+{
+  "name": "答案快速填写插件",
+  "description": "答案快速填写插件",
+  "version": "1.0",
+  "permissions": [
+    "tabs", "http://*/*", "https://*/*"
+  ],
+  "background":{
+   //"page":"background.html",
+   "scripts":["js/jquery-1.10.2.min.js","js/bg.js"]
+  },
+  "icons":{
+    "19": "image/icon-19.png",
+    "38": "image/icon-38.png",
+    "128": "image/icon-128.png"
+  },
+  "browser_action": {
+      "default_title": "答案快速填写插件",
+      "default_icon": "image/icon-19.png",
+      "default_popup": "popup.html"
+  },
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["http://*/*"],
+      //"css": ["mystyles.css"],
+      "js": ["js/jquery-1.10.2.min.js","js/contentjs.js"]
+    }
+  ]
+}

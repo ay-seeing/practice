@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交谈</title>
+    <script type="text/javascript" src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script> 
+</head>
+<body>
+<div class="box">
+    <h4 class="talk_t">交流列表</h4>
+    <ul class="talk_m"></ul>
+    <input type="text" id="talkTxt" placehoddle="输入内容"><br />
+    <input type="button" id="sendTalk" value="发送">
+</div>
+<script>
+
+/*
+socket.io客户端事件：
+
+connect：连接成功
+connecting：正在连接
+disconnect：断开连接
+connect_failed：连接失败
+error：错误发生，并且无法被其他事件类型所处理
+message：同服务器端message事件
+anything：同服务器端anything事件
+reconnect_failed：重连失败
+reconnect：成功重连
+reconnecting：正在重连
+
+
+socket最关键的是emit和on两个函数，前者提交（发出）一个事件（事件名称用字符串表示），事件名称可以自定义，也有一些默认的事件名称，紧接着是一个对象，表示向该socket发送的内容；后者接收一个事件（事件名称用字符串表示），紧接着是收到事件调用的回调函数，其中data是收到的数据。
+http://raytaylorlin.com/Tech/web/Nodejs/socket-io-tutorial/
+*/
+
+
+
+var oList = document.querySelector(".talk_m"),
+    oTxt = document.querySelector("#talkTxt"),
+    oBtn = document.querySelector("#sendTalk");
+
+// 与服务器建立链接
+var connection = io.connect("http://localhost:4564");
+
+// 链接成功会触发 open 事件
+connection.on("connect",function(){
+    var o = createE("li","服务器链接成功");
+    oList.appendChild(o);
+});
+connection.on("message",function(message){
+    var o = createE("li",message);
+    oList.appendChild(o);
+});
+
+
+oBtn.onclick = function(){
+    var data = oTxt.value;
+    // 客户端像服务器发送数据用send方法
+    connection.send(data);
+    var o = createE("li",data);
+    oList.appendChild(o);
+    oTxt.value = "";
+    // 客户端接收到服务器返回的数据会触发 message 事件，函数的参数为事件对象event，该对象的data属性包含了服务器返回的数据
+    /*connection.onmessage = function(event){
+        oList.innerHTML += event.data;
+    }*/
+}
+
+function createE(tagN,data){
+    var oTag = document.createElement(tagN);
+    oTag.innerHTML = data;
+    return oTag;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../js/angular.min1.2.x.js"></script>
+</head>
+<body ng-app="Demo">
+	<div ng-controller="TestCtrl"></div>
+<script>
+angular.module('MyModule', [], function($provide){
+  $provide.factory('S1', function(){
+    return 'I am S1';
+  });
+  $provide.factory('S2', function(){
+    return {see: function(){return 'I am S2'}}
+  });
+});
+
+var app = angular.module('Demo', ['MyModule']);
+app.controller('TestCtrl', function($scope, S1, S2){
+  console.log(S1)
+  console.log(S2.see())
+});
+</script>
+</body>
+</html>

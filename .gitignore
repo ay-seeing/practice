@@ -1,0 +1,11 @@
+node_modules/
+qrcode.png
+sass_compass/img/icon-*.png
+node/readfile.txt
+AutoRoute/
+flight_logo/img/
+*.DS_Store
+Angularjs/yunnan-trip/
+Angularjs/vingo/
+folder_compare/
+!compare.php

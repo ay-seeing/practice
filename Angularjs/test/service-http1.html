@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn" >
+<head>
+    <meta charset="UTF-8">
+    <title>CSSClasses</title>
+    <script src="../js/angular.min1.2.x.js"></script>
+<script type="text/javascript">
+    function ctrl($http,$scope){
+        $scope.user={
+            name:"yiyang",
+            pwd:"123"
+        }
+        var myparams = {a:3};
+        $scope.login = function(user){
+            $http.get("service-http2.html",user,{cache:true}).success(function(data, status, headers, config){
+                // alert("success");
+                // console.log(data);
+                // console.log(status);
+                // console.log(headers);
+                console.log(config);
+            }).error(function(data, status, headers, config){
+                alert("error");
+            })
+        }
+        $scope.login1 = function(user){
+            $http({url:"login.do",method:"get",data:user,cache:true}).success(function(data, status, headers, config){
+                alert("success");
+            }).error(function(data, status, headers, config){
+                alert("error");
+            })
+        }
+    }
+</script>
+</head>
+<body ng-app>
+    <div ng-controller="ctrl">
+        <form name="loginFm">
+            Name:<input ng-model="user.name" />
+            pwd: <input ng-model="user.pwd" />
+            <input type="button" value="login" ng-click="login(user)" />
+            <input type="button" value="login1" ng-click="login1(user)" />
+        </form>
+    </div>
+
+</body>
+</html>

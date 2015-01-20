@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hello world</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="js/host.json"></script>
+</head>
+<body onload="/*process.mainModule.exports.callback();*/">
+  <div class="toolbar" id="toolbar"></div>
+  <ul class="system_mutual">
+    <li class="refresh3" title="调试" id="ts"><i></i></li>
+    <li class="refresh2" title="强制刷新"><i></i></li>
+    <li class="refresh" title="刷新"><i></i></li>
+    <li class="minimum" id="minimum" title="最小化"></li>
+    <li class="maximum" id='maximum' title="最大化"></li>
+    <li id="close" class="close" title="关闭"></li>
+  </ul>
+  <div class="wraper" id="devtools">
+    <div style="display:none;">
+      <!-- 在app外打开连接 -->
+      <h1 onclick="gui.Shell.openExternal('http://www.baidu.com');">Hello World!0</h1>
+      <!-- 在app内打开连接 -->
+      <a href="http://www.baidu.com">baidu.com</a>
+      <input type="button" value="截图" onclick = "oMenu.takeSnapshot('images/','aa','png')">
+
+      <hr>
+      <!-- 以操作系统默认方式打开指定路径 -->
+      <div onclick="gui.Shell.openItem('D:\\working\\_prototype_\\code_beta\\a_practice\\test-node-webkit');">打开指定路径</div>
+      <!-- 在文件管理器中显示“file_path”指定的文件 -->
+      <div onclick="gui.Shell.showItemInFolder('D:\\working\\_prototype_\\code_beta\\a_practice\\test-node-webkit');">在文件管理器中显示“file_path”指定的文件</div>
+    </div>
+    <div class="crumbsbar"><div class="crumbsbox"><span id="back">&#x2934;</span><input type="text" id="crumbs"></div></div>
+    <ul id="directorys"></ul>
+  </div>
+  <script>
+var oMenu = {
+  "isMaxScreen":false,
+  "getOne":function(p,str){
+    return p.querySelector(str);
+  },
+  "getAll":function(p,str){
+    return p.querySelectorAll(str);
+  },
+  "minFn":function(){
+    win.hide();
+  },
+  "maxFn":function(){
+    if(!oMenu.isMaxScreen){
+      win.maximize();
+    }else{
+      win.unmaximize();
+    }
+    oMenu.isMaxScreen = !oMenu.isMaxScreen;
+  },
+  // 截图函数
+  takeSnapshot:function(path,name,type){
+    win.capturePage(function (img) {
+      var base64Data = img.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+      require("fs").writeFile(path+name+"."+type, base64Data, 'base64', function (err) {
+       console.log(err);
+      });
+    }, type);
+  },
+  // 清除非当前项
+  removeNotCurent:function(items,current){
+    var len = items.length;
+    for(var i=0;i<len;i++){
+      items[i].checked = false;
+    }
+    current.checked = true;
+    current_environment = current.label;
+  }
+}
+
+//引入nw.gui模块
+var gui = require("nw.gui");
+
+// 引入文件系统模块
+var fs = require("fs");
+
+// 引入路径目录
+var Path = require("path");
+
+//获取当前窗口
+var win = gui.Window.get();
+
+
+var oMinimum = oMenu.getOne(document,".minimum"),
+  oMaximum = oMenu.getOne(document,".maximum"),
+  oClose = oMenu.getOne(document,".close"),
+  oRefreah = oMenu.getOne(document,".refresh"),
+  oRefreah2 = oMenu.getOne(document,".refresh2"),
+  h1 = oMenu.getOne(document,"h1"),
+  oDirectorys = oMenu.getOne(document,"#directorys"),
+  oBack = oMenu.getOne(document,"#back"),
+  oCrumbs = oMenu.getOne(document,"#crumbs");
+
+// 刷新窗口
+oRefreah.addEventListener("click",function(){
+  win.reload();
+});
+
+// 强刷
+oRefreah2.addEventListener("click",function(){
+  win.reloadIgnoringCache();
+});
+
+//窗口最小化
+oMinimum.addEventListener("click",function(){
+  win.minimize();
+});
+// 侦听窗口最小化
+win.on("minimize",oMenu.minFn);
+
+//窗口最大化
+oMaximum.addEventListener("click",oMenu.maxFn);
+
+// 关闭窗口
+oClose.addEventListener("click",function(){
+  win.close();
+});
+
+
+//创建菜单
+// 创建window菜单
+var topMenubar = new gui.Menu({ type: 'menubar' });
+var rightHand = new gui.Menu();
+rightHand.append(new gui.MenuItem({
+  label:"复制",
+  type:"checkbox"/*,
+  click:function(){
+    alert("逗你呢");
+  }*/
+}));
+// 菜单添加分割线
+rightHand.append(new gui.MenuItem({
+  type:"separator"
+}));
+rightHand.append(new gui.MenuItem({
+  label:"图标",
+  icon:"logo.png"
+}));
+rightHand.append(new gui.MenuItem({
+  type:"separator"
+}));
+topMenubar.append(new gui.MenuItem({label:"菜单哈",submenu:rightHand}));
+win.menu = topMenubar;
+
+  
+
+// 创建content菜单
+document.addEventListener("contextmenu",function(ev){
+  // 阻止默认事件
+  ev.preventDefault();
+  // 设置右键菜单位置
+  rightHand.popup(ev.x,ev.y);
+  // 或者ev.clientX
+  // rightHand.popup(ev.x,ev.y);
+  return false;
+});
+var current_environment = "local";
+var environment_path = {"local":"http://prototype.local.sh.ctriptravel.com/","ui":"http://prototype.ui.sh.ctriptravel.com/","test":"http://prototype.test.sh.ctriptravel.com/","pro":"请选择其他环境再打开"}
+var host = "C:\\Windows\\System32\\drivers\\etc\\hosts";
+var trayMenu = new gui.Menu();
+var aTrayMenu = ["local","ui","test","pro"];
+trayLength = aTrayMenu.length;
+for(var i=0;i<trayLength;i++){
+  trayMenu.append(new gui.MenuItem({
+    label:aTrayMenu[i],
+    type:"checkbox",
+    click:function(ev){
+      oMenu.removeNotCurent(trayMenu.items,this);
+      var str = oHost[this.label];
+      str = str.replace(/\s*\n\s*/g,"\n");
+      // nodejs读取文件
+      fs.readFile(host,'utf8',function(err, data){
+        if(err){
+          return console.log(err);
+        }
+        // nodejs写入文件
+        fs.writeFile(host,str,function(err){
+          if(err){
+            return console.log(err);
+          }
+        });
+      });
+    }
+  }));
+}
+
+// 托盘图标设置
+var tray = new gui.Tray({title:"tray",icon:"logo.png"});
+//var tray = new gui.Tray({title:"tray",icon:"logo.png"});
+tray.tooltip = "打开软件";
+// 设置右键菜单
+tray.menu = trayMenu;
+//点击打开软件
+tray.on("click",function(){
+  //this.remove();
+  //tray = null;
+  win.show();
+  win.focus();
+});
+// 遍历目录
+/*function walk(fileList,path){  
+  var dirList = fs.readdirSync(path),fileList = [];
+  dirList.forEach(function(item){
+    if(fs.statSync(path + '/' + item).isDirectory()){
+      //walk(path + '/' + item);
+      fileList.push(path + '/' + item + "文件夹");
+    }else{
+      fileList.push(path + '/' + item);
+    }
+  });
+  return fileList;
+}*/
+// 打开文件菜单
+var fileMenu = new gui.Menu();
+fileMenu.append(new gui.MenuItem({
+  label:"用默认方式打开"
+}));
+
+function walk(path){
+  //path = path.search(/^[cdef][\/\\]/i)!=-1?path+"/":path;
+  
+  //path = Path.normalize(path);   目录路径格式化
+  // 异步判断目录是否存在
+  /*fs.exists("d:\\working\\_prototype_\\code_beta\\a_practice",function(exists){
+    alert(exists);
+    if(exists){
+      iscz = true;
+    }
+  });*/
+  // 同步判断目录是否存在
+  if(!fs.existsSync(path)){
+    alert("目录不存在");
+    return false;
+  }
+  //清除显示结果里面的内容，以便重新填充
+  oDirectorys.innerHTML = "";
+  var dirList = fs.readdirSync(path),fileList = [];
+  dirList.forEach(function(item){
+    if(fs.lstatSync(path + '/' + item).isDirectory()){
+      //walk(path + '/' + item);
+      fileList.push({name:item,path:path + '/' + item,type:"folder"});
+    }else{
+      fileList.push({name:item,path:path + '/' + item,type:"file"});
+    }
+  });
+  return fileList;
+}
+function showFolder(path){
+  
+  oCrumbs.value = path+"/";
+  var fils = walk(path);
+  for(var i=0;i<fils.length;i++){
+    var li = document.createElement("li");
+    li.path = fils[i].path;
+    li.name = fils[i].name;
+    li.type = fils[i].type;
+    li.setAttribute("path",fils[i].path);
+    li.innerHTML = "<div class='item'><img src=img/"+fils[i].type+".png /><p>"+fils[i].name+"</p><div>";
+    li.addEventListener("click",function(ev){
+      ev.preventDefault();
+      ev.stopPropagation();
+    });
+    if(fils[i].type=="folder"){
+      li.addEventListener("dblclick",function(ev){
+        showFolder(this.getAttribute("path"));
+      });
+    }
+    // 单个文件右键菜单
+    if(fils[i].type=="file"){
+      li.addEventListener("contextmenu",function(ev){
+        var _this = this;
+        // 阻止默认事件
+        ev.preventDefault();
+        ev.stopPropagation();
+        // 设置右键菜单位置
+        fileMenu.popup(ev.x,ev.y);
+        // 点击菜单某个选项
+        fileMenu.items[0].click = function(){
+          var path = _this.path;
+          if(path.match("/_prototype_/")){
+            path = path.substring(path.indexOf("/_prototype_/")+"/_prototype_/".length);
+          }
+          gui.Shell.openExternal(environment_path[current_environment]+path);
+        };
+        // 或者ev.clientX
+        // rightHand.popup(ev.x,ev.y);
+        return false;
+      });
+    }
+    oDirectorys.appendChild(li);
+  }
+}
+// 获取当前文件路径的上一级，如果是当前路径则用 “.”  
+var currentPath = fs.realpathSync("..");
+currentPath = currentPath.replace(/\\/g,"/");
+oDirectorys.addEventListener("click",function(){showFolder(currentPath)});
+
+// 返回上一级
+oBack.addEventListener("click",function(){
+  var path = oCrumbs.value;
+  var last = path.lastIndexOf("/",path.length-2);
+  var str = path.substring(0,last);
+  showFolder(str);
+});
+
+oCrumbs.addEventListener("keypress",function(ev){
+  if(ev.keyCode==13){
+    showFolder(this.value);
+  }
+})
+
+
+// 使用 manifest 获取 package.json 文件中 json 对象
+var app = gui.App;
+var manifest = app.manifest;
+var defaultPath = manifest["default-Path"];
+alert(defaultPath);
+
+// 开启开发者工具
+var oTs = oMenu.getOne(document,"#ts");
+oTs.addEventListener("click",function(){
+  win.showDevTools('', false); // false才是打开，如果是true则会没反应
+})
+
+  </script>
+</body>
+</html>
