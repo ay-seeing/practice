@@ -6,8 +6,9 @@
 	<style>
 *{margin:0;padding:0;}
 ul,li{list-style:none;}
+.wrap-outer{margin-left: calc(100vw - 100%);}
 .head{background:#4285F4;font:22px/1.5em "microsoft yahei";padding:20px 0;color:white;}
-.wraper{width:80%;margin:0 auto;}
+.wraper{width:800px;margin:0 auto;}
 .ResolveCss{margin:15px auto;font:14px/2em "microsoft yahei";color:#666;}
 .url-box .input_txt{width:60%;height:24px;line-height:24px;padding:5px;border:1px solid #999;color:#666;vertical-align:middle;}
 .url-box .btn{padding:0 20px;font-size:1.2em;font-family:"microsoft yahei";height:36px;border:1px solid #999;background:#999;color:white;vertical-align:middle;cursor:pointer;}
@@ -19,14 +20,16 @@ ul,li{list-style:none;}
 	</style>
 </head>
 <body>
-<div class="head">
-	<div class="wraper">CSS样式表查找重复样式工具</div>
-</div>
-<div class="wraper ResolveCss">
-	<div class="url-box"><input type="text" class="input_txt" id="urlpath"><input type="button" class="btn" value="查找重复样式"></div>
-	<div class="introduction">1、js解析css样式表需要开发环境，否则获取到的则是null。<br />2、无法实现跨域css解析。</div>
-	<ul class="show-result">
-	</ul>
+<div class="wrap-outer">
+	<div class="head">
+		<div class="wraper">CSS样式表查找重复样式工具</div>
+	</div>
+	<div class="wraper ResolveCss">
+		<div class="url-box"><input type="text" class="input_txt" id="urlpath"><input type="button" class="btn" value="查找重复样式"></div>
+		<div class="introduction">1、js解析css样式表需要开发环境，否则获取到的则是null。<br />2、无法实现跨域css解析。</div>
+		<ul class="show-result">
+		</ul>
+	</div>
 </div>
 <script>
 var oResult = document.querySelector(".show-result"),
