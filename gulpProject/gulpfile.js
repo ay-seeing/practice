@@ -5,8 +5,8 @@ var gulp = require("gulp");
 var concat = require("gulp-concat"),
 	clean = require("gulp-clean"),
 	browserSync = require("browser-sync"),
-	uglify = require("gulp-uglify");
-var browserSync = require("browser-sync");
+	uglify = require("gulp-uglify"),
+  sendmail = require("gulp-mailgun");
 
 
 // 自动刷新 browser-sync start
@@ -45,3 +45,17 @@ gulp.task('default',['bro','browser'],function(){
   gulp.watch('./dist/**',['bro']);
 });
 // 自动刷新 browser-sync end
+
+
+
+// 发送邮件 mailgun start
+gulp.task('sendmail', function () {
+  gulp.src( '*/*.html') // 发送的emd邮件的path
+  .pipe(sendmail({
+    key: 'key-076ab9815f2ce6118165a7c6943eba3b', // Mailgun API key
+    sender: 'postmaster@sandboxe70e9a862d2f43f6bb50cb35a50b04b7.mailgun.org', // mailgun提供的邮件发送账号
+    recipient: '630999015@qq.com',
+    subject: 'This is a 测试 email' // 邮件标题
+  }));
+});
+// 发送邮件 mailgun end
