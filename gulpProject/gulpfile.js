@@ -6,7 +6,11 @@ var concat = require("gulp-concat"),
 	clean = require("gulp-clean"),
 	browserSync = require("browser-sync"),
 	uglify = require("gulp-uglify"),
-  sendmail = require("gulp-mailgun");
+  sendmail = require("gulp-mailgun"),
+  sass = require("gulp-sass"),
+  sourcemap = require("gulp-sourcemaps"),
+  postcss = require("gulp-postcss"),
+  autoprefixer = require("gulp-autoprefixer");
 
 
 // 自动刷新 browser-sync start
@@ -37,12 +41,12 @@ gulp.task('browser',function(){
     injectChanges: false
   });
 });
-gulp.task('bro',function(){
+gulp.task('bro',['sass'],function(){
   gulp.src('./dist/**')
   .pipe(browserSync.reload({stream:true}));
 });
-gulp.task('default',['bro','browser'],function(){
-  gulp.watch('./dist/**',['bro']);
+gulp.task('default',['bro','browser','sass'],function(){
+  gulp.watch(['./dist/**','./scss/**'],['bro']);
 });
 // 自动刷新 browser-sync end
 
@@ -59,3 +63,40 @@ gulp.task('sendmail', function () {
   }));
 });
 // 发送邮件 mailgun end
+
+
+// css预处理器sass
+gulp.task("sass",function(){
+  gulp.src("scss/style.scss")
+    .pipe(sass(/*{onSuccess:function(){}}*/))
+    .pipe(gulp.dest("dist"));
+});
+// gulp.task("autosass",function(){
+//   gulp.watch("scss/style.scss",["sass"]);
+// });
+
+// css预处理器sass+source map
+gulp.task("sassSourcemap",function(){
+  return gulp.src("scss/style.scss")
+    .pipe(sourcemap.init())
+    .pipe(sass())
+    .pipe(sourcemap.write("./maps"))
+    .pipe(gulp.dest("dist"));
+});
+// gulp.task("autosassSourcemap",function(){
+//   gulp.watch("scss/style.scss",["sassSourcemap"]);
+// });
+
+
+// css后期处理器Autoprefixer 
+gulp.task("prefixer",function(){
+  return gulp.src("css/style.css")
+    .pipe(autoprefixer({
+      browsers: ['last 2 version', 'safari 5', 'ie 6', 'ie 7', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'],
+      cascade: false
+    }))
+    .pipe(gulp.dest("dist"));
+});
+gulp.task("autocss",function(){
+  gulp.watch("css/style.css",["prefixer"]);
+});
