@@ -10,8 +10,4 @@ vim±à¼­Æ÷±£´æfileÃüÁî£ºÏÈ°´ esc ÇÐ»»µ½ÃüÁîÊäÈëÄ£Ê½£¬È»ºóÊäÈë :w ±£´æfile£¬»òÕß Ê
 vim±à¼­Æ÷£¬°´ i ½øÈëÊäÈëÄ£Ê½
 
 
-QRcode  ÊÇÔËÓÃphpQRcode»òGoogle QRcode Éú³É¶þÎ¬ÂëµÄÐ¡¹¤¾ß¡£ 
-
-jsResolveCss   js½âÎöcssÑùÊ½±í
-
-folder_compare    ctrip¸´ÖÆ¶Ô±ÈÑùÊ½Ð¡¹¤¾ß
+QRcode  ÊÇÔËÓÃphpQRcode»òGoogle QRcode Éú³É¶þÎ¬ÂëµÄÐ¡¹¤¾ß¡£

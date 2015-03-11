@@ -5,12 +5,8 @@ var gulp = require("gulp");
 var concat = require("gulp-concat"),
 	clean = require("gulp-clean"),
 	browserSync = require("browser-sync"),
-	uglify = require("gulp-uglify"),
-  sendmail = require("gulp-mailgun"),
-  sass = require("gulp-sass"),
-  sourcemap = require("gulp-sourcemaps"),
-  postcss = require("gulp-postcss"),
-  autoprefixer = require("gulp-autoprefixer");
+	uglify = require("gulp-uglify");
+var browserSync = require("browser-sync");
 
 
 // 自动刷新 browser-sync start
@@ -41,62 +37,11 @@ gulp.task('browser',function(){
     injectChanges: false
   });
 });
-gulp.task('bro',['sass'],function(){
+gulp.task('bro',function(){
   gulp.src('./dist/**')
   .pipe(browserSync.reload({stream:true}));
 });
-gulp.task('default',['bro','browser','sass'],function(){
-  gulp.watch(['./dist/**','./scss/**'],['bro']);
+gulp.task('default',['bro','browser'],function(){
+  gulp.watch('./dist/**',['bro']);
 });
 // 自动刷新 browser-sync end
-
-
-
-// 发送邮件 mailgun start
-gulp.task('sendmail', function () {
-  gulp.src( '*/*.html') // 发送的emd邮件的path
-  .pipe(sendmail({
-    key: 'key-076ab9815f2ce6118165a7c6943eba3b', // Mailgun API key
-    sender: 'postmaster@sandboxe70e9a862d2f43f6bb50cb35a50b04b7.mailgun.org', // mailgun提供的邮件发送账号
-    recipient: '630999015@qq.com',
-    subject: 'This is a 测试 email' // 邮件标题
-  }));
-});
-// 发送邮件 mailgun end
-
-
-// css预处理器sass
-gulp.task("sass",function(){
-  gulp.src("scss/style.scss")
-    .pipe(sass(/*{onSuccess:function(){}}*/))
-    .pipe(gulp.dest("dist"));
-});
-// gulp.task("autosass",function(){
-//   gulp.watch("scss/style.scss",["sass"]);
-// });
-
-// css预处理器sass+source map
-gulp.task("sassSourcemap",function(){
-  return gulp.src("scss/style.scss")
-    .pipe(sourcemap.init())
-    .pipe(sass())
-    .pipe(sourcemap.write("./maps"))
-    .pipe(gulp.dest("dist"));
-});
-// gulp.task("autosassSourcemap",function(){
-//   gulp.watch("scss/style.scss",["sassSourcemap"]);
-// });
-
-
-// css后期处理器Autoprefixer 
-gulp.task("prefixer",function(){
-  return gulp.src("css/style.css")
-    .pipe(autoprefixer({
-      browsers: ['last 2 version', 'safari 5', 'ie 6', 'ie 7', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'],
-      cascade: false
-    }))
-    .pipe(gulp.dest("dist"));
-});
-gulp.task("autocss",function(){
-  gulp.watch("css/style.css",["prefixer"]);
-});
