@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>css优化chrome浏览器滚动条</title>
+</head>
+<body>
+<style>
+/* 滚动条宽度和高度 */
+::-webkit-scrollbar{width:10px;height:10px;}
+/* 滚动条的背景样式 */
+::-webkit-scrollbar-track-piece{
+  background:#f0f0f0;
+}
+/* 垂直滚动条的样式 */
+::-webkit-scrollbar-thumb:vertical{
+  background:#f00;
+  border-radius:3px;
+}
+/* 水平滚动条的样式 */
+::-webkit-scrollbar-thumb:horizontal{
+  background:#f06;
+}
+/* 滚动条hover的样式 */
+::-webkit-scrollbar-thumb:hover{
+  background:#f00;
+}
+/* 水平滚动条hover的样式 */
+::-webkit-scrollbar-thumb:horizontal:hover{
+  background:#000;
+}
+</style>
+<div style="height:2000px;width:2000px;"></div>
+</body>
+</html>

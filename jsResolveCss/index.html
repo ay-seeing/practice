@@ -3,25 +3,49 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Js 解析 CSS 样式表</title>
-	<link rel="stylesheet" href="css/style.css">
+	<style>
+*{margin:0;padding:0;}
+ul,li{list-style:none;}
+.wrap-outer{margin-left: calc(100vw - 100%);}
+.head{background:#4285F4;font:22px/1.5em "microsoft yahei";padding:20px 0;color:white;}
+.wraper{width:800px;margin:0 auto;}
+.ResolveCss{margin:15px auto;font:14px/2em "microsoft yahei";color:#666;}
+.url-box .input_txt{width:60%;height:24px;line-height:24px;padding:5px;border:1px solid #999;color:#666;vertical-align:middle;}
+.url-box .btn{padding:0 20px;font-size:1.2em;font-family:"microsoft yahei";height:36px;border:1px solid #999;background:#999;color:white;vertical-align:middle;cursor:pointer;}
+.introduction{line-height:1.5em;padding:5px 0;}
+.show-result li{background:#f0f0f0;margin-top:70px;border-radius:10px;padding:20px 15px;}
+.show-result h3{margin-top:-2.8em;font:1.5em/2em arial,"microsoft yahei";color:#333;}
+.show-result h3 .span{font:1.75em/2em arial,"microsoft yahei";color:#999;}
+.show-result .result{display:none;}
+	</style>
 </head>
 <body>
-	<div class="box">js解析css样式表需要开发环境，否则获取到的则是null。</div>
-	<div class="show-result"></div>
-	<div class="show-some"></div>
+<div class="wrap-outer">
+	<div class="head">
+		<div class="wraper">CSS样式表查找重复样式工具</div>
+	</div>
+	<div class="wraper ResolveCss">
+		<div class="url-box"><input type="text" class="input_txt" id="urlpath"><input type="button" class="btn" value="查找重复样式"></div>
+		<div class="introduction">1、js解析css样式表需要开发环境，否则获取到的则是null。<br />2、无法实现跨域css解析。</div>
+		<ul class="show-result">
+		</ul>
+	</div>
+</div>
 <script>
 var oResult = document.querySelector(".show-result"),
-	oSome = document.querySelector(".show-some");
-// 获取所有样式表
-var oStyles = document.styleSheets;
-// 获取第一个样式表里面的样式
-var oStyleList = oStyles[0].cssRules;
+	oUrlpath = document.querySelector("#urlpath"),
+	oBtn = document.querySelector(".btn");
+// // 获取所有样式表
+// var oStyles = document.styleSheets;
+// // 获取第一个样式表里面的样式
+// var oStyleList = oStyles[0].cssRules;
 
-console.log(oStyleList);
 /*
 for(var i in oStyleList){
 	oResult.innerHTML += oStyleList[i].cssText + "<br />";
 }*/
+/* 创建 XMLHttpRequest 对象 */
+var csslength,currentCss=1;
 
 var fn = {
 	trims : function(str){
@@ -29,13 +53,77 @@ var fn = {
 		str.replace(/\s{2,}/g," ");
 		str.replace(/\;\s+/g,"");
 	},
-	deduplication : function(arr){
+	loadXMLDoc : function(url,cfunc){
+		if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}else{// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=cfunc;
+		xmlhttp.open("GET",url,true);
+		xmlhttp.send();
+	},
+	insertCss : function(url,id){
+		var _this = this;
+		var olink = document.createElement("link");
+		olink.setAttribute("rel","stylesheet");
+		if(id){
+			olink.setAttribute("id",id);
+		}
+		olink.setAttribute("href",url);
+		document.head.appendChild(olink);
+		olink.onload = function(){
+			var oStyles = this.sheet.cssRules;
+			
+			csslength--;
+			if(!csslength){
+				console.log(oStyles);
+				_this.deduplication(oStyles,this.href);
+			}
+		}
+	},
+	createTag : function(tag,cla){
+		var oTag = document.createElement(tag);
+		if(cla){
+			if(cla.indexOf("#")==0){
+				oTag.id = cla;
+			}else{
+				oTag.className = cla;
+			}
+		}
+		return oTag;
+	},
+	parsingPath : function(url){
+		if(url.indexOf(",")!=-1){
+			var arr = url.split(",");
+			csslength = arr.length;
+			for(var i=arr.length;i;i--){
+				fn.insertCss(url);
+			}
+		}else{
+			fn.insertCss(url);
+			csslength = 1;
+		}
+		// loadXMLDoc(sUrlpath,function(){
+		// 	if(xmlhttp.readyState==4 && xmlhttp.status==200){
+		// 		document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+		// 	}
+	 //  });
+		
+	},
+	deduplication : function(data,href){
+		var oli = fn.createTag("li"),
+			oTitle = fn.createTag("h3"),
+			oSubResult = fn.createTag("div","result"),
+			oSubSome = fn.createTag("div","som");
+		// 将标题内容写入标题元素
+		oTitle.innerHTML = href;
+
 		var o = {};
 		var sResult = "",
 			someResult = "";
-		for(var i in arr){
-			var attr = arr[i].cssText;
-			console.log(attr);
+		for(var i in data){
+			var attr = data[i].cssText;
 			if(!attr){
 				continue;
 			}
@@ -47,8 +135,8 @@ var fn = {
 			}
 		}
 		/*var excessive = [];
-		for(var i in arr){
-			var str = arr[i].cssText;
+		for(var i in data){
+			var str = data[i].cssText;
 			var isset = false;
 			for(var n in excessive){
 				if(str == excessive[n]){
@@ -62,22 +150,43 @@ var fn = {
 				sResult += str + "<br />";
 			}
 		}*/
-		this.writeResult(sResult);
-		this.writeSomeResult(someResult);
+		this.writeResult(oSubResult,sResult);
+		if(someResult){
+			this.writeSomeResult(oSubSome,someResult);
+		}else{
+			this.writeSomeResult(oSubSome,"无重复样式");
+		}
+		oli.appendChild(oTitle);
+		oli.appendChild(oSubResult);
+		oli.appendChild(oSubSome);
+		oResult.appendChild(oli);
 	},
-	writeResult : function(str){
+	writeResult : function(o,str){
 		if(str.length){
-			oResult.innerHTML = str;
+			o.innerHTML = str;
 		}
 	},
-	writeSomeResult : function(str){
+	writeSomeResult : function(o,str){
 		if(str.length){
-			oSome.innerHTML = str;
+			o.innerHTML = str;
 		}
 	}
 }
 
-fn.deduplication(oStyleList);
+
+function a(){
+	oBtn.onclick = function(){
+		// 点击按钮，清空原来查询的结果
+		oResult.innerHTML = "";
+
+		var sUrlpath = oUrlpath.value;
+		if(sUrlpath){
+			fn.parsingPath(sUrlpath);
+		}
+	}
+	
+}
+a();
 </script>
 
 </body>
