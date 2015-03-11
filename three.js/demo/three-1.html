@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>three.js</title>
+
+<style>
+canvas { width: 100%; height: 100% }
+</style>
+<script src="js/three.js"></script>
+</head>
+<body>
+  <script>
+// 创建场景
+var scene = new THREE.Scene();
+// 创建透视相机
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+// 创建渲染器
+var renderer = new THREE.WebGLRenderer({
+  // 设置抗锯齿
+  antialias:true
+});
+// 设置渲染器大小和浏览器一样大
+renderer.setSize(window.innerWidth, window.innerHeight);
+// 将渲染器插入body
+document.body.appendChild(renderer.domElement);
+
+// 创建一个立方体
+var geometry = new THREE.CubeGeometry(2,2,4);
+// 设置颜色
+var material = new THREE.MeshBasicMaterial({color: 0x006600});
+var cube = new THREE.Mesh(geometry, material); 
+// 将创建的立方体添加到场景
+scene.add(cube);
+// 设置相机的深度
+camera.position.z = 5;
+
+function render() {
+    // 让浏览器去执行一次参数中的函数
+    requestAnimationFrame(render);
+    cube.rotation.x += 0.1;
+    cube.rotation.y += 0.1;
+    // 开始渲染
+    renderer.render(scene, camera);
+}
+render();
+  </script>
+</body>
+</html>
