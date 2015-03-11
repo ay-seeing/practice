@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>offsetTop</title>
+</head>
+<body>
+	<style>
+*{margin:0;padding:0;}
+div{margin:20px;border:1px solid #ccc;position:relative;}
+	</style>
+	<div>
+		<div>
+			<div>
+				<div id="p">offsetTop</div>
+			</div>
+		</div>
+	</div>
+	<script>
+var o = document.querySelector("#p");
+function getTop(o,t){
+	t = t || 0;
+	var currentT = o.offsetTop + t;
+	// console.log(currentT);
+	if(o.offsetParent){
+		currentT = getTop(o.offsetParent,currentT);
+	}else{
+		console.log(currentT);
+		return currentT;
+	}
+}
+var aa = getTop(o);
+console.log(aa);
+	</script>
+</body>
+</html>
