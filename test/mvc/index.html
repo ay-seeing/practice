@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>js模板引擎</title>
+  <script src="../../js/jquery-1.8.0.js"></script>
+  <script src="../../js/handlebars.js"></script>
+</head>
+<body>
+  <script id="tmp" type="text/x-handlebars-template">
+  <div class="box">
+    <div class="hd">{{title}}</div>
+    <div class="bd">{{body}}</div>
+    <div class="ft"></div>
+  </div>
+  </script>
+  <script id="each-tmp" type="text/x-handlebars-template">
+  {{#student}}
+  <tr>
+    <td>{{name}}</td>
+    <td>{{sex}}</td>
+    <td>{{age}}</td>
+  </tr>
+  {{/student}}
+  </script>
+
+  <table>
+    <tbody id="tableName">
+      
+    </tbody>
+  </table>
+
+  <script>
+/*var source   = $("#tmp").html();
+var template = Handlebars.compile(source);
+var context = {"title": "My New Post", "body": "This is my first post!"};
+var html    = template(context);
+console.log(html);*/
+
+
+var data = {
+  "student": [
+    {
+      "name": "张三",
+      "sex": "0",
+      "age": 18
+    },
+    {
+      "name": "李四",
+      "sex": "0",
+      "age": 22
+    },
+    {
+      "name": "妞妞",
+      "sex": "1",
+      "age": 18
+    }
+  ]
+};
+var myTemplate = Handlebars.compile($("#each-tmp").html());
+$("#tableName").html(myTemplate(data));
+  </script>
+</body>
+</html>
