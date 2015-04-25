@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>range selector</title>
+	<link rel="stylesheet" href="jquery.range.css">
+	<script src="../js/jquery-1.8.0.js"></script>
+	<script src="jquery.range.js"></script>
+	<style>
+ul,li{list-style:none;}
+li{margin:50px 0;}
+	</style>
+</head>
+<body>
+	<small>http://nitinhayaran.github.io/jRange/demo/</small>
+	<ul>
+		<li><input type="hidden" class="single-slider" value="25" /></li>
+		<li><input type="hidden" class="single-slider-noshowScale" value="25" /></li>
+		<li><input type="hidden" class="single-slider-disable" value="25" /></li>
+		<li><input type="hidden" class="single-slider-isRange" value="25,75" /></li>
+		<li><input type="hidden" class="single-slider-isRange2" value="25,75" /></li>
+		<li><input type="range"></li>
+		<li><input type="range" value="25" min="0" max="150"></li>
+	</ul>
+	
+	<script>
+$('.single-slider').jRange({
+    from: 0,
+    to: 100,
+    step: 25,
+    scale: [0,25,50,75,100],
+    format: '%s',
+    width: 300,
+    showLabels: true
+});
+
+$('.single-slider-noshowScale').jRange({
+    from: 0,
+    to: 100,
+    step: 25,
+    scale: [0,25,50,75,100],
+    format: '%s',
+    width: 300,
+    showLabels: true,
+    showScale: false
+});
+
+$('.single-slider-disable').jRange({
+    from: 0,
+    to: 100,
+    step: 1,
+    scale: [0,25,50,75,100],
+    format: '%s元',
+    width: 300,
+    showLabels: true,
+    disable: true
+});
+
+$('.single-slider-isRange').jRange({
+    from: 0,
+    to: 100,
+    step: 1,
+    scale: [0,25,50,75,100],
+    format: '%s',
+    width: 300,
+    showLabels: true,
+    isRange: true
+});
+$('.single-slider-isRange2').jRange({
+    from: 25,
+    to: 100,
+    step: 1,
+    scale: [25,50,75,100],
+    format: '%s',
+    width: 300,
+    showLabels: true,
+    isRange: true
+});
+	</script>
+css range selector: http://codepen.io/kazekagegaara/pen/embXMW
+
+    另外一种：
+    http://ionden.com/a/plugins/ion.rangeSlider/en.html
+
+
+    图表工具：
+    http://www.highcharts.com/docs/chart-concepts/range-selector
+
+
+    markdown图表工具：
+    http://rstudio.github.io/dygraphs/r-markdown.html
+</body>
+</html>
