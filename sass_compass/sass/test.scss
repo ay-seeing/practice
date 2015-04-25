@@ -1,10 +1,14 @@
 /* add base className */
 $icon-sprite-base-class: ".ii";
 
+/* section item autoprefixer add width and height */
 $icon-sprite-dimensions: true;
 
 /* img-sprites arrangement */
 $icon-layout:vertical;
+
+/* set icon space */
+$icon-spacing:10px;
 
 /* icon is images folder */
 @import "icon/*.png";
