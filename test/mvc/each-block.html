@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>js模板引擎</title>
+  <script src="../../js/jquery-1.8.0.js"></script>
+  <script src="../../js/handlebars.js"></script>
+</head>
+<body>
+  <script id="block-tmp" type="text/x-handlebars-template">
+  {{#each student}}
+  <tr>
+    <td>{{this.name}}</td>
+    <td>{{this.sex}}</td>
+    <td>{{this.age}}</td>
+  </tr>
+  {{/each}}
+  </script>
+
+  <table>
+    <tbody id="tableName">
+      
+    </tbody>
+  </table>
+
+  <script>
+
+var data = {
+  "student": [
+    {
+      "name": "张三",
+      "sex": "0",
+      "age": 18
+    },
+    {
+      "name": "李四",
+      "sex": "0",
+      "age": 22
+    },
+    {
+      "name": "妞妞",
+      "sex": "1",
+      "age": 18
+    }
+  ]
+};
+var myTemplate = Handlebars.compile($("#block-tmp").html());
+$("#tableName").html(myTemplate(data));
+  </script>
+</body>
+</html>
