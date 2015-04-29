@@ -21,12 +21,12 @@ module.exports = function(grunt) {
           mailer: {
             options: {
               key: 'key-076ab9815f2ce6118165a7c6943eba3b', // Mailgun API key
-              sender: 'postmaster@sandboxe70e9a862d2f43f6bb50cb35a50b04b7.mailgun.org', // mailgun提供的邮件发送账号
-              recipient: '630999015@qq.com', 
+              sender: 'aysee@sandboxe70e9a862d2f43f6bb50cb35a50b04b7.mailgun.org', // mailgun提供的邮件发送账号
+              recipient: '630999015@qq.com,yiyangzhang@ctrip.com,zhangyiyang_love@sina.cn', 
               // recipient: 'bigpet1991@163.com, 286030975@qq.com, hpzeng@Ctrip.com, bigpet1991@gmail.com', // 邮件接收人的地址
-              subject: 'This is a 测试 email' // 邮件标题
+              subject: '重庆那啥' // 邮件标题
             },
-            src: ['dist/edm_rwy.html']   // 发送的emd邮件的path
+            src: ['dist/ad_chongqing.html']   // 发送的emd邮件的path
           }
         },
 
