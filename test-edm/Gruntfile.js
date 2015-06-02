@@ -22,7 +22,7 @@ module.exports = function(grunt) {
             options: {
               key: 'key-076ab9815f2ce6118165a7c6943eba3b', // Mailgun API key
               sender: 'aysee@sandboxe70e9a862d2f43f6bb50cb35a50b04b7.mailgun.org', // mailgun提供的邮件发送账号
-              recipient: '630999015@qq.com,yiyangzhang@ctrip.com,zhangyiyang_love@sina.cn', 
+              recipient: 'zhangyiyang_love@sina.cn,360999015@qq.com,yiyangzhang@ctrip.com', 
               // recipient: 'bigpet1991@163.com, 286030975@qq.com, hpzeng@Ctrip.com, bigpet1991@gmail.com', // 邮件接收人的地址
               subject: '重庆那啥' // 邮件标题
             },
