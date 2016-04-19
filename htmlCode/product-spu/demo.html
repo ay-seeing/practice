@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>product spu选择</title>
+  <script src="zepto.js"></script>
+  <script src="juicer.js"></script>
+  <style>
+*{margin:0;padding:0;}
+.type-box{width:80%;margin:30px auto;border:1px solid #ccc;padding:10px;}
+.type-bar .type-hd{margin-top:10px;line-height:26px;border-bottom:1px solid #ccc;}
+.type-list{margin-left:-10px;}
+.type-list .item{display:inline-block;height:26px;line-height:26px;padding:0 10px;border:1px solid #ccc;border-radius:3px;margin:10px 0 0 10px;}
+.type-list .active{background:#c00000;color:#fff;}
+.type-list .disable{background:#ccc;color:#fff;}
+.a{}
+  </style>
+</head>
+<body>
+  <div class="type-box" id="box">
+  
+  <div class="result"></div>
+</div>
+<script id="tpl" type="text/template">
+  <div class="img"><img src=${images[0]} /></div>
+  <div>价格： <span id="price">${price}</span></div>
+  <div>选择：</div>
+  {@each options.attribute_content as item,key}
+  <div class="type-bar" data-attribute_id=${key}>
+    <div class="type-hd">${item.attribute_label}</div>
+    <div class="type-bd">
+      <div class="type-list">
+        {@each item.attribute_option as val}
+        <span class="item" data-attribute_id=${item.attribute_id} data-value_id=${val.value_id}>${val.value_label}</span>
+        {@/each}
+      </div>
+    </div>
+  </div>
+  {@/each}
+</script>
+
+<script>
+/*$.ajax({
+  url: 'product.json',
+  type: 'get',
+  // data: {},
+  success: function(res){
+    var data = res.content.product_detail;
+
+    var tpl = $('#tpl').html();
+    $('#box').html(juicer(tpl, data));
+  },
+  error: function(res){},
+  beforeSend:function(){},
+  complete:function(){}
+});*/
+
+
+var data = {
+    "product_id": "6",
+    "product_name": "女式风衣",
+    "product_url": "http://test.yit.com/--32.html",
+    "product_type": "configurable",
+    "price": "2200.00",
+    "sku": "02020202",
+    "stock": "0",
+    "images": [
+        "http://test.yit.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/images/catalog/product/placeholder/image.jpg",
+        "http://test.yit.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/images/catalog/product/placeholder/image.jpg"
+    ],
+    "is_saleable": "",
+    "is_presale": "0",
+    "presale_stock": "",
+    "presale_description": "",
+    "description": "嗯……好复杂的样子",
+    "short_description": "女式风衣",
+    "properties": [
+        {
+            "attribute_label": "产地",
+            "attribute_code": "yit_origin",
+            "value": null
+        }
+    ],
+    "options": {
+        "attribute_content": {
+            "92": {
+                "attribute_id": "92",
+                "attribute_label": "Color",
+                "attribute_code": "color",
+                "attribute_option": [
+                    {
+                        "value_id": "13",
+                        "value_label": "咖啡色"
+                    },
+                    {
+                        "value_id": "11",
+                        "value_label": "白色"
+                    }
+                ]
+            },
+            "139": {
+                "attribute_id": "139",
+                "attribute_label": "尺码",
+                "attribute_code": "size_clothing",
+                "attribute_option": [
+                    {
+                        "value_id": "5",
+                        "value_label": "L"
+                    },
+                    {
+                        "value_id": "6",
+                        "value_label": "M"
+                    },
+                    {
+                        "value_id": "4",
+                        "value_label": "XL"
+                    }
+                ]
+            },
+            "132": {
+                "attribute_id": "132",
+                "attribute_label": "性别",
+                "attribute_code": "sex",
+                "attribute_option": [
+                    {
+                        "value_id": "0",
+                        "value_label": "男"
+                    },
+                    {
+                        "value_id": "1",
+                        "value_label": "女"
+                    }
+                ]
+            }
+        },
+        "product_content": [
+            {
+                "product_id": "6",
+                "product_price": "2000.00",
+                "sku": "02020202-咖啡色-M",
+                "stock_qty": "3",
+                "is_in_stock": "1",
+                "is_saleable": "1",
+                "attribute_ids": [
+                    {
+                        "attribute_id": "92",
+                        "option_id": "13"
+                    },
+                    {
+                        "attribute_id": "139",
+                        "option_id": "4"
+                    },
+                    {
+                        "attribute_id": "132",
+                        "option_id": "0"
+                    }
+                ]
+            },
+            {
+                "product_id": "7",
+                "product_price": "2000.00",
+                "sku": "02020202-咖啡色-L",
+                "stock_qty": "0",
+                "is_in_stock": "1",
+                "is_saleable": "1",
+                "attribute_ids": [
+                    {
+                        "attribute_id": "92",
+                        "option_id": "13"
+                    },
+                    {
+                        "attribute_id": "139",
+                        "option_id": "5"
+                    },
+                    {
+                        "attribute_id": "132",
+                        "option_id": "0"
+                    }
+                ]
+            },
+            {
+                "product_id": "8",
+                "product_price": "1800.00",
+                "sku": "02020202-白色-M",
+                "stock_qty": "100",
+                "is_in_stock": "1",
+                "is_saleable": "1",
+                "attribute_ids": [
+                    {
+                        "attribute_id": "92",
+                        "option_id": "11"
+                    },
+                    {
+                        "attribute_id": "139",
+                        "option_id": "6"
+                    },
+                    {
+                        "attribute_id": "132",
+                        "option_id": "0"
+                    }
+                ]
+            },
+            {
+                "product_id": "9",
+                "product_price": "2200.00",
+                "sku": "02020202-白色-XL",
+                "stock_qty": "10",
+                "is_in_stock": "1",
+                "is_saleable": "1",
+                "attribute_ids": [
+                    {
+                        "attribute_id": "92",
+                        "option_id": "11"
+                    },
+                    {
+                        "attribute_id": "139",
+                        "option_id": "4"
+                    },
+                    {
+                        "attribute_id": "132",
+                        "option_id": "0"
+                    }
+                ]
+            }
+        ]
+    }
+};
+
+var tpl = $('#tpl').html();
+$('#box').html(juicer(tpl, data));
+
+// 所有筛选条件的id
+// [12, 6, 13, 5, ...]
+var allFilterList = [];
+
+// 筛选条件中选中的id
+// [12, 6]
+var filterList = [];
+
+// 不可点击元素列表
+// [{product}]
+var disableds = [];
+
+// 初始化函数
+;(function init(){
+  // 获取所有筛选的条件（不管选中的还是非选中的）
+  $.each(data.options.attribute_content, function(index, item){
+    $.each(item.attribute_option, function(i, it){
+      allFilterList.push(it.value_id);
+    });
+  });
+  // 所有筛序条件数组排序
+  allFilterList = allFilterList.sort();
+  console.log('所有筛选条件的id', 'allFilterList', allFilterList);
+})();
+
+
+$('.item').on('click', function(){
+  // 重置筛选id
+  filterList = [];
+  // 如果按钮不可点击，则退出函数
+  if($(this).hasClass('disable')){
+    return false;
+  }
+
+  // 如果按你没有选中则选中，否则取消选中
+  if($(this).hasClass('active')){
+    $(this).removeClass('active');
+  }else{
+    $(this).addClass('active').siblings().removeClass('active');
+  }
+
+  // 获取筛选的id
+  $.each($('#box .item'), function(index, item){
+    if($(this).hasClass('active')){
+      filterList.push($(this).data('value_id'));
+    }
+  });
+  console.log('筛选id ', 'filterList', filterList);
+
+  // 重置不可点击元素列表
+  disableds = [];
+
+  // 获取不可选列表
+  $.each(filterList, function(index, item){
+    var dis = finds(item);
+  });
+
+
+});
+
+function finds(id){
+  //已经找到的商品
+  var findResult = filter(id);
+
+  // 复制一个所有筛选条件的数组
+  var copyallFilter = allFilterList.slice();
+
+  // 循环找到的商品
+  $.each(findResult, function(index, item){
+    // 循环某一个商品里面的所有value_id
+    $.each(item.attribute_ids, function(i, it){
+      var value_id = String(it.option_id);
+
+      // 判断当前商品的 value_id 是否在所有筛序的条件中，如果在，则将该 value_id 从所有筛序的条件数组中删除
+      var Index = copyallFilter.indexOf(value_id);
+      if(Index != -1){
+        // console.log(value_id);
+        copyallFilter.splice(Index, 1);
+      }
+
+    });
+  });
+
+  console.log('copyallFilter', copyallFilter);
+
+}
+
+function filter(id){
+  // id值前后添加逗号，用于匹配，防止类似 ['12','15'] 数组匹配 1,2,5 等数字
+  id = ',' + id + ',';
+
+  // 定义一个返回的数组
+  var arr = [];
+
+  // 所有产品列表
+  var products = data.options.product_content;
+
+  // 循环所有产品列表，找出包含id的产品，并添加到arr中
+  $.each(products, function(index, item){
+    // 定义一个数组，用于获取某一个商品里面的所有value_id
+    var optionId = [];
+
+    $.each(item.attribute_ids, function(i, it){
+      optionId.push(it.option_id);
+    });
+
+    // 如果某个产品包含id，则将该产品添加到arr数组
+    var strOptionId = ',' + optionId.sort().join(',') + ',';
+    if(strOptionId.indexOf(id) > -1){
+      arr.push(item);
+    }
+
+
+  });
+
+  console.log("符合条件 " + id + ' 的产品', arr);
+  // 返回筛选出来的产品列表
+  return arr;
+}
+</script>
+</body>
+</html>
