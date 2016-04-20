@@ -10,4 +10,6 @@ vim±à¼­Æ÷±£´æfileÃüÁî£ºÏÈ°´ esc ÇÐ»»µ½ÃüÁîÊäÈëÄ£Ê½£¬È»ºóÊäÈë :w ±£´æfile£¬»òÕß Ê
 vim±à¼­Æ÷£¬°´ i ½øÈëÊäÈëÄ£Ê½
 
 
-QRcode  ÊÇÔËÓÃphpQRcode»òGoogle QRcode Éú³É¶þÎ¬ÂëµÄÐ¡¹¤¾ß¡£
+1¡¢QRcode  ÊÇÔËÓÃphpQRcode»òGoogle QRcode Éú³É¶þÎ¬ÂëµÄÐ¡¹¤¾ß¡£
+
+2¡¢htmlCode/product-spu Ñ¡Ôñ¾ßÌåspuÉÌÆ·Ð§¹û
