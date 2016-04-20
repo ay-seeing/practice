@@ -13,7 +13,7 @@
 .type-list .item{display:inline-block;height:26px;line-height:26px;padding:0 10px;border:1px solid #ccc;border-radius:3px;margin:10px 0 0 10px;}
 .type-list .active{background:#c00000;color:#fff;}
 .type-list .disable{background:#ccc;color:#fff;}
-.a{}
+
   </style>
 </head>
 <body>
@@ -158,7 +158,7 @@ var data = {
             },
             {
                 "product_id": "7",
-                "product_price": "2000.00",
+                "product_price": "2200.00",
                 "sku": "02020202-咖啡色-L",
                 "stock_qty": "0",
                 "is_in_stock": "1",
@@ -202,7 +202,7 @@ var data = {
             },
             {
                 "product_id": "9",
-                "product_price": "2200.00",
+                "product_price": "2400.00",
                 "sku": "02020202-白色-XL",
                 "stock_qty": "10",
                 "is_in_stock": "1",
@@ -241,17 +241,29 @@ var filterList = [];
 // [{product}]
 var disableds = [];
 
+// 用于判断是否为某一个条件的当前行
+var attrMap = {};// {4: "139", 5: "139", 6: "139", 11: "92", 13: "92"}
+
+// 将所有类别的id放入该数组，用于判断是否去匹配具体商品
+var attr = [];
+
+
 // 初始化函数
 ;(function init(){
   // 获取所有筛选的条件（不管选中的还是非选中的）
   $.each(data.options.attribute_content, function(index, item){
     $.each(item.attribute_option, function(i, it){
       allFilterList.push(it.value_id);
+
+      attrMap[it.value_id] = index;
     });
+
+    attr.push(index);
   });
   // 所有筛序条件数组排序
   allFilterList = allFilterList.sort();
-  console.log('所有筛选条件的id', 'allFilterList', allFilterList);
+  // console.log('所有筛选条件的id', 'allFilterList', allFilterList);
+  // console.log('attrMap', attrMap);
 })();
 
 
@@ -276,16 +288,40 @@ $('.item').on('click', function(){
       filterList.push($(this).data('value_id'));
     }
   });
+
+  // 将数组 filterList 内的每个元素转化为 string
+  $.each(filterList, function(index, item){
+    filterList[index] = String(item);
+  });
+
   console.log('筛选id ', 'filterList', filterList);
 
   // 重置不可点击元素列表
   disableds = [];
-
-  // 获取不可选列表
   $.each(filterList, function(index, item){
     var dis = finds(item);
+    if(dis.length){
+      $.each(dis, function(i, it){
+        disableds.push(it);
+      });
+    }
+  });
+  console.log('灰掉选项', 'disableds', disableds);
+
+  // 根据不可选数组列表 disableds 标注颜色
+  $.each($('#box .item'), function(index, item){
+    var itemValue = String($(this).data('value_id'));
+    if(disableds.indexOf(itemValue) != -1){
+      $(this).addClass('disable');
+    }else{
+      $(this).removeClass('disable');
+    }
   });
 
+  // 匹配具体产品
+  if(attr.length == filterList.length){
+    matchPro();
+  }
 
 });
 
@@ -313,6 +349,18 @@ function finds(id){
   });
 
   console.log('copyallFilter', copyallFilter);
+
+  // 返回某个条件应该置灰的value_id
+  var arr = [];
+  $.each(copyallFilter, function(index, item){
+    var par = attrMap[id];
+    var unable = attrMap[item];
+    // 将每个条件的当前行不进行置灰匹配
+    if(par != unable){
+      arr.push(item); 
+    }
+  });
+  return arr;
 
 }
 
@@ -348,6 +396,32 @@ function filter(id){
   // 返回筛选出来的产品列表
   return arr;
 }
+
+
+// 根据选取条件匹配具体商品
+function matchPro(){console.log(filterList);
+  // 将参数转换为一个数组
+  // var arg = Array.prototype.slice.call(arguments);
+  var products = data.options.product_content;
+
+  $.each(products, function(index, item){
+    // 定义一个数组，用户返回匹配的数量
+    var ischoose = [];
+    $.each(item.attribute_ids, function(i, it){
+      if(filterList.indexOf(String(it.option_id)) != -1){
+        ischoose.push(true);
+      }
+    });
+
+    // 如果 ischoose 长度和筛选条件长度一样，则匹配到具体产品
+    if(ischoose.length == filterList.length){
+      // 匹配到元素 
+      $('#price').html(item.product_price);
+    }
+  });
+}
+
+
 </script>
 </body>
 </html>
