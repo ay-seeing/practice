@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>css3 毛玻璃效果</title>
+  <script src="../../js/vconsole.min.js"></script>
+  <style>
+.blur {  
+  filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
+
+  -webkit-filter: blur(5px); /* Chrome, Opera */
+     -moz-filter: blur(5px);
+      -ms-filter: blur(5px);
+          filter: blur(5px);
+
+  filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); /* IE6~IE9 */
+}
+
+  </style>
+</head>
+<body>
+  <img src="../../imgs/1.jpg" alt="" class="blur" width="300">
+</body>
+</html>
