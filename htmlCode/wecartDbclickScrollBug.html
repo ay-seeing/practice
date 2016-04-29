@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>ios 微信双击页面滚动导致点击错位bug</title>
+  <script src="../js/zepto.js"></script>
+  <script src="../js/vconsole.min.js"></script>
+  <style>
+*{margin:0;padding:0;box-sizing:border-box;}
+input{  -webkit-appearance: none;}
+html,
+body{
+  height:100%;
+}
+body{font-size:14px;line-height:1.5;overflow:hidden;
+-webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+}
+.wrapper{max-width:640px;min-width:320px;margin:0 auto;background:#f0f0f0;color:#000;}
+#list{padding:0 10px;}
+.dailog{position:fixed;top:40%;height:40px;padding:10px;background:#ccc;right:0;}
+.mask{position:fixed;z-index:9;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.7);display:none;}
+.fixed-ft{position:fixed;z-index:10;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #ddd;display:none;}
+.fixed-ft .txt{width:50px;height:30px;text-align:center;vertical-align:middle;}
+.fixed-ft .bar{border-bottom:1px solid #ddd;padding:10px;}
+.fixed-ft .add{display:inline-block;height:30px;line-height:30px;width:30px;border:1px solid #ddd;vertical-align:middle;margin-left:5px;text-align:center;}
+.fixed-ft .btn{display:block;height:36px;line-height:36px;text-align:center;background:#f50000;color:#fff;}
+.show{display:block;}
+
+
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <input type="button" class="dailog" value="浮层">
+  <ul id="list"></ul>
+  <div class="mask"></div>
+  <div class="fixed-ft">
+    <div class="bar"><input type="tel" class="txt" value="1"><span class="add">+</span></div>
+    <div class="ft"><span class="btn">确定</span></div>
+  </div>
+</div>
+<script>
+var odailog = document.querySelector('.dailog');
+var olist = document.querySelector('#list');
+var oadd = document.querySelector('.add');
+var obtn = document.querySelector('.btn');
+var omask = document.querySelector('.mask');
+var n = 0;
+for(var i=100; i; i--){
+  var oli = document.createElement('li');
+  oli.innerHTML = ++n;
+  olist.appendChild(oli);
+}
+
+odailog.addEventListener('click', function(){
+  $('.fixed-ft, .mask').addClass('show');
+}, false);
+
+obtn.addEventListener('click', function(){
+  alert('点到确定按钮了');
+  console.log('点到确定按钮了');
+}, false);
+
+oadd.addEventListener('click', function(){
+  var num = $('.txt').val();
+  $('.txt').val(++num);
+}, false);
+
+omask.addEventListener('click', function(){
+  $('.fixed-ft, .mask').removeClass('show');
+}, false);
+
+
+vConsole.ready(function() {
+  console.log('foo'); // 白底黑字
+  console.info('bar'); // 白底紫字
+  console.debug('oh'); // 白底黄字
+  console.warn('foo'); // 黄底黄字
+  console.error('bar'); // 红底红字
+});
+</script>
+</body>
+</html>
