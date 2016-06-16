@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>获取 UserAgent 信息</title>
+  <title>获取 UserAgent 信息 </title>
     <style>
 *{margin:0;padding:0;}
 body{font:16px/2em tahoma,arial,"microsoft yahei",simsun;color:#666;}
