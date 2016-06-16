@@ -1,0 +1,1 @@
+var url = window.location.herf;
