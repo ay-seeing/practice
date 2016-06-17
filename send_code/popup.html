@@ -9,7 +9,12 @@
   <script src="js/popup.js"></script>
 </head>
 <body>
-  <div class="inputBar"><input type="text" id="inputTxt"><input type="button" id="inputBtn" value="生成"></div>
+  <div class="inputBar"><input type="text" id="inputTxt" placeholder="电话"><input type="button" id="inputBtn" value="发送"></div>
+  <div class="inputBar"><input type="text" id="inputTime" placeholder="时间间隔" style="width:70px;margin-right:5px;"><input type="button" id="stopBtn" value="暂停"><input type="button" id="roundBtn" value="一直发送" style="width:70px;margin-left:5px;"></div>
   <div id="qrcodeTable"></div>
+  <div class="log">
+    <div class="log_title">日志</div>
+    <ul class="log_list"></ul>
+  </div>
 </body>
 </html>

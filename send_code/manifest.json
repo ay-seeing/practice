@@ -1,6 +1,6 @@
 {
-  "name": "二维码生成",
-  "description": "说明：二维码生成插件，默认生成当前页面路径二维码，弹层中输入任何字符串都可以重新生成二维码",
+  "name": "发送短信",
+  "description": "短信轰炸",
   "version": "1.0",
   "permissions": [
     "tabs", "http://*/*", "https://*/*"
@@ -15,7 +15,7 @@
     "128": "image/icon-128.png"
   },
   "browser_action": {
-      "default_title": "获取当前路径二维码",
+      "default_title": "发送短信",
       "default_icon": "image/icon-19.png",
       "default_popup": "popup.html"
   },

@@ -1,5 +1,13 @@
 *{margin:0;padding:0;}
 body{padding:10px;font-size:14px;font-family:tahoma,arial,"microsoft yahei",simsun;}
-.inputBar{margin-bottom:10px;overflow:hidden;}
+.inputBar{width:210px;margin-bottom:10px;overflow:hidden;}
 input[type="text"]{height:22px;line-height:22px;padding:3px;border:1px solid #999;width:150px;}
-input[type="button"]{height:30px;width:42px;text-align:center;padding:0;border:1px solid #999;background:#999;color:white;padding:0 5px;cursor:pointer;}
+input[type="button"]{height:30px;width:42px;margin-left:5px;text-align:center;padding:0;border:1px solid #999;background:#999;color:white;padding:0 5px;cursor:pointer;}
+
+.log{margin:10px 0;background:#f9f9f9;}
+.log_title{line-height:25px;height:25px;background:#ccc;color:#fff;padding:0 5px;}
+.log_list{line-height:25px;max-height:500px;display:none;}
+.log_list.show{display:block;}
+.log_list li{line-height:25px;height:50px;max-width:500px;overflow-x:scroll;padding:0 5px;}
+.log_list li:nth-child(2n){background:#f6f6f6;}
+.log_list li.error{background:#e65c5c;}
