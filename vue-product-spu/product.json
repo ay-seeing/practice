@@ -1,0 +1,177 @@
+{
+    "error_num": "0",
+    "error_info": "",
+    "content": {
+        "product_detail": [
+            {
+                "product_id": "6",
+                "product_name": "女式风衣",
+                "product_url": "http://test.yit.com/--32.html",
+                "product_type": "configurable",
+                "price": "2200.00",
+                "sku": "02020202",
+                "stock": "0",
+                "images": [
+                    "http://test.yit.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/images/catalog/product/placeholder/image.jpg",
+                    "http://test.yit.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/images/catalog/product/placeholder/image.jpg"
+                ],
+                "is_saleable": "",
+                "is_presale": "0",
+                "presale_stock": "",
+                "presale_description": "",
+                "description": "嗯……好复杂的样子",
+                "short_description": "女式风衣",
+                "properties": [
+                    {
+                        "attribute_label": "产地",
+                        "attribute_code": "yit_origin",
+                        "value": null
+                    }
+                ],
+                "options": {
+                    "attribute_content": {
+                        "92": {
+                            "attribute_id": "92",
+                            "attribute_label": "Color",
+                            "attribute_code": "color",
+                            "attribute_option": [
+                                {
+                                    "value_id": "13",
+                                    "value_label": "咖啡色"
+                                },
+                                {
+                                    "value_id": "11",
+                                    "value_label": "白色"
+                                }
+                            ]
+                        },
+                        "139": {
+                            "attribute_id": "139",
+                            "attribute_label": "尺码",
+                            "attribute_code": "size_clothing",
+                            "attribute_option": [
+                                {
+                                    "value_id": "5",
+                                    "value_label": "L"
+                                },
+                                {
+                                    "value_id": "6",
+                                    "value_label": "M"
+                                },
+                                {
+                                    "value_id": "4",
+                                    "value_label": "XL"
+                                }
+                            ]
+                        },
+                        "132": {
+                            "attribute_id": "132",
+                            "attribute_label": "性别",
+                            "attribute_code": "sex",
+                            "attribute_option": [
+                                {
+                                    "value_id": "0",
+                                    "value_label": "男"
+                                },
+                                {
+                                    "value_id": "1",
+                                    "value_label": "女"
+                                }
+                            ]
+                        }
+                    },
+                    "product_content": [
+                        {
+                            "product_id": "6",
+                            "product_price": "2000.00",
+                            "sku": "02020202-咖啡色-M",
+                            "stock_qty": "3",
+                            "is_in_stock": "1",
+                            "is_saleable": "1",
+                            "attribute_ids": [
+                                {
+                                    "attribute_id": "92",
+                                    "option_id": "13"
+                                },
+                                {
+                                    "attribute_id": "139",
+                                    "option_id": "4"
+                                },
+                                {
+                                    "attribute_id": "132",
+                                    "option_id": "0"
+                                }
+                            ]
+                        },
+                        {
+                            "product_id": "7",
+                            "product_price": "2000.00",
+                            "sku": "02020202-咖啡色-L",
+                            "stock_qty": "0",
+                            "is_in_stock": "1",
+                            "is_saleable": "1",
+                            "attribute_ids": [
+                                {
+                                    "attribute_id": "92",
+                                    "option_id": "13"
+                                },
+                                {
+                                    "attribute_id": "139",
+                                    "option_id": "5"
+                                },
+                                {
+                                    "attribute_id": "132",
+                                    "option_id": "0"
+                                }
+                            ]
+                        },
+                        {
+                            "product_id": "8",
+                            "product_price": "1800.00",
+                            "sku": "02020202-白色-M",
+                            "stock_qty": "100",
+                            "is_in_stock": "1",
+                            "is_saleable": "1",
+                            "attribute_ids": [
+                                {
+                                    "attribute_id": "92",
+                                    "option_id": "11"
+                                },
+                                {
+                                    "attribute_id": "139",
+                                    "option_id": "6"
+                                },
+                                {
+                                    "attribute_id": "132",
+                                    "option_id": "0"
+                                }
+                            ]
+                        },
+                        {
+                            "product_id": "9",
+                            "product_price": "2200.00",
+                            "sku": "02020202-白色-XL",
+                            "stock_qty": "10",
+                            "is_in_stock": "1",
+                            "is_saleable": "1",
+                            "attribute_ids": [
+                                {
+                                    "attribute_id": "92",
+                                    "option_id": "11"
+                                },
+                                {
+                                    "attribute_id": "139",
+                                    "option_id": "4"
+                                },
+                                {
+                                    "attribute_id": "132",
+                                    "option_id": "0"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

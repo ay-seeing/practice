@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+  <title>vue select sku</title>
+  <script src="vue.min.js"></script>
+  <script src="zepto.js"></script>
+  <style>
+*{margin:0;padding:0;}
+.type-box{width:80%;margin:30px auto;border:1px solid #ccc;padding:10px;}
+.type-box img{width:120px;height:120px;}
+.type-bar .type-hd{margin-top:10px;line-height:26px;border-bottom:1px solid #ccc;}
+.type-list{margin-left:-10px;}
+.type-list .item{display:inline-block;height:26px;line-height:26px;padding:0 10px;border:1px solid #ccc;border-radius:3px;margin:10px 0 0 10px;}
+.type-list .active{background:#c00000;color:#fff;}
+.type-list .noChoose,
+.type-list .disable{background:#ccc;color:#fff;}
+
+  </style>
+</head>
+<body>
+<div class="type-box" id="sky-box">
+  <div class="img" v-for="img in images" v-if="$index == 0"><img src={{img}} /></div>
+  <div>价格： <span id="price">{{showPrice}}</span></div>
+  <div class="choosed">选择：</div>
+  <div class="type-bar" v-for="(key, val) in options.attribute_content">
+    <div class="type-hd">{{val.attribute_label}}</div>
+    <div class="type-bd">
+      <div class="type-list">
+        <span class="item" v-bind:class="{'disable': item.disable, 'noChoose': item.noChoose, 'active': item.active}" v-for="(index, item) in val.attribute_option" @click="selectCtor(val.attribute_option, index, item.value_id, val.attribute_id)" data-id="{{item.value_id}}" v-if="item">{{item.value_label}}</span>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="result"></div> -->
+</div>
+<script>
+
+
+
+var data = {
+    "product_id": "6",
+    "product_name": "女式风衣",
+    "product_url": "http://test.yit.com/--32.html",
+    "product_type": "configurable",
+    "price": "2200.00",
+    "sku": "02020202",
+    "stock": "0",
+    "images": [
+        "http://test.yit.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/images/catalog/product/placeholder/image.jpg",
+        "http://test.yit.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/images/catalog/product/placeholder/image.jpg"
+    ],
+    "is_saleable": "",
+    "is_presale": "0",
+    "presale_stock": "",
+    "presale_description": "",
+    "description": "嗯……好复杂的样子",
+    "short_description": "女式风衣",
+    "properties": [
+        {
+            "attribute_label": "产地",
+            "attribute_code": "yit_origin",
+            "value": null
+        }
+    ],
+    "options": {
+        "attribute_content": {
+            "92": {
+                "attribute_id": "92",
+                "attribute_label": "Color",
+                "attribute_code": "color",
+                "attribute_option": [
+                    {
+                        "value_id": "13",
+                        "value_label": "咖啡色"
+                    },
+                    {
+                        "value_id": "11",
+                        "value_label": "白色"
+                    }
+                ]
+            },
+            "139": {
+                "attribute_id": "139",
+                "attribute_label": "尺码",
+                "attribute_code": "size_clothing",
+                "attribute_option": [
+                    {
+                        "value_id": "5",
+                        "value_label": "L"
+                    },
+                    {
+                        "value_id": "6",
+                        "value_label": "M"
+                    },
+                    {
+                        "value_id": "4",
+                        "value_label": "XL"
+                    }
+                ]
+            },
+            "132": {
+                "attribute_id": "132",
+                "attribute_label": "性别",
+                "attribute_code": "sex",
+                "attribute_option": [
+                    {
+                        "value_id": "0",
+                        "value_label": "男"
+                    },
+                    {
+                        "value_id": "1",
+                        "value_label": "女"
+                    }
+                ]
+            }
+        },
+        "product_content": [
+            {
+                "product_id": "6",
+                "product_price": "2000.00",
+                "sku": "02020202-咖啡色-M",
+                "stock_qty": "3",
+                "is_in_stock": "1",
+                "is_saleable": "1",
+                "attribute_ids": [
+                    {
+                        "attribute_id": "92",
+                        "option_id": "13"
+                    },
+                    {
+                        "attribute_id": "139",
+                        "option_id": "4"
+                    },
+                    {
+                        "attribute_id": "132",
+                        "option_id": "0"
+                    }
+                ]
+            },
+            {
+                "product_id": "7",
+                "product_price": "2200.00",
+                "sku": "02020202-咖啡色-L",
+                "stock_qty": "0",
+                "is_in_stock": "1",
+                "is_saleable": "1",
+                "attribute_ids": [
+                    {
+                        "attribute_id": "92",
+                        "option_id": "13"
+                    },
+                    {
+                        "attribute_id": "139",
+                        "option_id": "5"
+                    },
+                    {
+                        "attribute_id": "132",
+                        "option_id": "0"
+                    }
+                ]
+            },
+            {
+                "product_id": "8",
+                "product_price": "1800.00",
+                "sku": "02020202-白色-M",
+                "stock_qty": "100",
+                "is_in_stock": "1",
+                "is_saleable": "1",
+                "attribute_ids": [
+                    {
+                        "attribute_id": "92",
+                        "option_id": "11"
+                    },
+                    {
+                        "attribute_id": "139",
+                        "option_id": "6"
+                    },
+                    {
+                        "attribute_id": "132",
+                        "option_id": "0"
+                    }
+                ]
+            },
+            {
+                "product_id": "9",
+                "product_price": "2400.00",
+                "sku": "02020202-白色-XL",
+                "stock_qty": "10",
+                "is_in_stock": "1",
+                "is_saleable": "1",
+                "attribute_ids": [
+                    {
+                        "attribute_id": "92",
+                        "option_id": "11"
+                    },
+                    {
+                        "attribute_id": "139",
+                        "option_id": "4"
+                    },
+                    {
+                        "attribute_id": "132",
+                        "option_id": "0"
+                    }
+                ]
+            }
+        ]
+    }
+};
+
+// 获取数据后初始化处理
+;(function init(){
+
+  // 添加 showPrice 用于展示价格
+  data.showPrice = data.price;
+
+  // 添加 showImg 用于展示图片
+  data.showImg = data.images[0];
+
+  // 已选择的 id
+  // {93: 23, 130: 12}
+  data.options.select = {};
+
+  // 所有选项 id
+  // [[23, 12], [23, 14]]
+  data.options.allIds = [];
+
+  // 提示
+  // {93: '尺寸', 130: '规格'}
+  data.options.tips = {};
+
+  // 获取所有选选项 id， 给每个选项添加三个属性
+  $.each(data.options.attribute_content, function(key, val){
+    data.options.select[val.attribute_id] = undefined;
+    data.options.tips[val.attribute_id] = val.attribute_label;
+    // data.options.allIds[val.attribute_id] = [];
+    $.each(val.attribute_option, function(index, item){
+      item.disable = false;
+      if(item.noChoose === undefined){
+        item.noChoose = false;
+      }
+      item.active = false;
+    });
+  });
+  window.debug && console.log(data.options.select);
+
+
+  // 当有子产品的时候才进行处理
+  // 删除没有产品的选项
+  if(data.options && data.options.product_content && data.options.product_content.length){
+    removeAttrId();
+  }
+
+  // 如果某个规格只有一个选项，则默认选中
+  defaultSelect(data.options.attribute_content);
+
+  // 匹配具体产品
+  var pro = matchPro(data.options.product_content, data.options.select);
+
+  // 提示
+  matchTip(data.options.tips, data.options.select, pro);
+
+})();
+
+
+
+// 产品数据处理，删除没有库存的 sku
+function removeAttrId(){
+  // 获取所有选项的 id 值，放入 allAttrId 数组
+  // ["908", "860", "861", "354", "897", "909"]
+  var allAttrId = [];
+  $.each(data.options.attribute_content, function(key, val){
+    $.each(val.attribute_option, function(index, item){
+      // console.log(index, item);
+      allAttrId.push(item.value_id);
+    });
+  });
+  // console.log('allAttrId', allAttrId);
+
+  // 如果子产品中存在某个 id，则将它重 allAttrId 中去除
+  $.each(data.options.product_content, function(index, item){
+    $.each(item.attribute_ids, function(subkey, subval){
+      var id = subval.option_id;
+      var n = allAttrId.indexOf(id);
+      // console.log(id)
+      if(n != -1){
+        allAttrId.splice(n,1);
+      }
+    });
+  });
+  window.debug && console.log('allAttrId', allAttrId);
+
+  // 使用处理过的 allAttrId 数组去所有选项中进行匹配，如果匹配则将其设置为不可选
+  $.each(data.options.attribute_content, function(key, val){
+    $.each(val.attribute_option, function(index, item){
+      // console.log('idid', item.value_id);
+      // console.log('0-',index,'--', val.attribute_option, '--' ,item.value_id);
+      if(allAttrId.indexOf(item.value_id) != -1){
+        // var aa = val.attribute_option.splice(index, 1);
+        // 不显示当前选项
+        // val.attribute_option[index] = false;
+        item.noChoose = true;
+        window.debug && console.log('删除选项 ', item.value_id , item.value_label);
+      }
+    });
+  });
+
+}
+
+
+// 如果某个规格只有一个选项，则默认选中
+function defaultSelect(attrs){
+  $.each(attrs, function(key, val){
+    var arr = [];
+    $.each(val.attribute_option, function(index, item){
+      if(!item.disable && !item.noChoose){
+        arr.push(item);
+      }
+    });
+    if(arr.length==1){
+      arr[0].active = true;
+      data.options.select[val.attribute_id] = arr[0].value_id;
+    }
+  });
+}
+
+
+
+// console.log(data.options.attribute_content);
+
+// var tpl = $('#tpl').html();
+// $('#box').html(juicer(tpl, data));
+var myvue = new Vue({
+  el: '#sky-box',
+  data: data,
+  methods: {
+    selectCtor: function(items, index, id, barId){ 
+      // items 是 attribute_content.attribute_option 对象
+      // index 是当前点击的选项在当前行的下标
+      // id    是当前点击的选项的 id 号
+      // barId 是当前行的 id 号
+
+      // console.log(index, id);
+      // Vue.set(item, 'active', true);
+      // console.log(item.active);
+
+      // 当前选项对应的数据对象
+      var curItem = items[index];
+
+      // 如果当前元素是不可点击状态，则不进行任何操作
+      if(curItem.noChoose || curItem.disable){
+        return;
+      }
+
+      // 重置置灰选项
+      $.each(data.options.attribute_content, function(key, val){
+        $.each(val.attribute_option, function(index, item){
+          item.disable = false;
+        });
+      });
+
+      if(!curItem.active){
+        // 商品选中后，则将该 barId 的值设置为该选项的 id
+        // 将选择的选项存入 data.options.select
+        data.options.select[barId] = id;
+
+        // 点击非选中状态，重置当前行其他选项
+        $.each(items, function(index, item){
+          item.active = false;
+        });
+
+        // 标注当前点击的选项
+        curItem.active = true;
+
+      }else{
+        // 如果当前选项取消选择，则将该 barId 设置为 undefined，并且取消选中
+        data.options.select[barId] = undefined;
+        curItem.active = false;
+
+      }
+      // console.log('data.options.select', data.options.select);
+
+
+      // 标注其他行的不可选选项
+      // 获取所有子产品的数组 id 
+      $.each(data.options.product_content, function(key ,val){
+        var ids = [];
+        $.each(val.attribute_ids, function(index, item){
+          // if(!itemIds[item.attribute_id]){
+          //   itemIds[item.attribute_id] = [];
+          // }
+          // itemIds[item.attribute_id].push(item.option_id);
+          ids.push(item.option_id);
+        });
+        data.options.allIds.push(ids);
+      });
+      // console.log('data.options.allIds', data.options.allIds);
+
+      // 不能选的 id
+      var noIds = {};
+      // 可选的 id
+      var oIds = {};
+      $.each(data.options.select, function(skey, sval){
+        if(sval){
+          noIds[skey] = [];
+          oIds[skey] = [];
+          $.each(data.options.allIds, function(key ,val){
+            if(val.indexOf(sval) == -1){
+              noIds[skey] = noIds[skey].concat(val);
+            }else{
+              oIds[skey] = oIds[skey].concat(val);
+            }
+          });
+        }
+      });
+      
+      // 数组去重
+      noIds = arrayUniq(noIds);
+      oIds = arrayUniq(oIds);
+      // console.log('noIds', noIds);
+      // console.log('oIds', oIds);
+
+      // 如果不能选的数组 noIds 里面存在 ，可选的 id，则将该 id 从 noIds 里面去除
+      $.each(oIds, function(key, val){
+        $.each(noIds, function(nokey, noval){
+          if(key == nokey){
+            $.each(val, function(index, item){
+              var num = noval.indexOf(item);
+              if(num != -1){
+                noval.splice(num, 1);
+              }
+            });
+          }
+        });
+      });
+      // console.log('noIds', noIds);
+
+      // 用 noIds 去 attribute_content 循环，将不可选的禁选
+      $.each(data.options.attribute_content, function(key, val){
+        $.each(val.attribute_option, function(index, item){
+          $.each(noIds, function(nokey, noval){
+            if(nokey != val.attribute_id && noval.indexOf(item.value_id) != -1){
+              window.debug && console.log('置灰', item.value_id);
+              item.disable = true;
+              // console.log(data.options.attribute_content);
+            }
+          });
+        });
+      });
+
+
+      // 匹配具体产品
+      var pro = matchPro(data.options.product_content, data.options.select);
+
+      // 提示
+      matchTip(data.options.tips, data.options.select, pro);
+    }
+  }
+});
+
+
+// 数组去重
+function arrayUniq(arr){
+  if(Object.prototype.toString.call(arr) === '[object Object]'){
+    var result = {};
+    for(var it in arr){
+      if(Object.prototype.toString.call(arr[it]) === '[object Array]'){
+        result[it] = [];
+        var subarr = arr[it];
+        for(var i=0;i<subarr.length;i++){
+          if(result[it].indexOf(subarr[i]) == -1){
+            result[it].push(subarr[i]);
+          }
+        }
+      }
+    }
+  }
+  // arr = result;
+  // console.log('result', result);
+  return result;
+}
+
+
+// 匹配具体产品
+function matchPro(sublist, select){
+  // console.log(sublist, select);
+  var pro = null;
+  $.each(sublist, function(index, item){
+    var isMatch = true;
+    $.each(item.attribute_ids, function(subindex, subitem){
+      $.each(select, function(key, val){
+        if(key == subitem.attribute_id && val != subitem.option_id){
+          isMatch = false;
+        }
+      });
+    });
+    if(isMatch){
+      pro = item;
+    }
+  });
+
+  if(pro){
+    window.debug && console.log('匹配的产品', pro, pro.product_id);
+  }else{
+    window.debug && console.log('未匹配产品');
+  }
+
+  // 页面显示操作
+  if(pro){
+    data.showPrice = pro.product_price;
+    if(pro.image){
+      data.showImg = pro.image;
+    }
+  }else{
+    data.showPrice = data.price;
+    data.showImg = data.images[0];
+  }
+  return pro;
+}
+
+
+// 选择提示
+function matchTip(tips, select, pro){
+  // 最后输出字符串
+  var str = '';
+  // 已选类别
+  var selected = [];
+  // 未选类别
+  var unselected = []; 
+  if(pro){
+    str += '已选:';
+    $.each(tips, function(key, val){
+      selected.push('"'+val+'"');
+    });
+    str += selected.join(',');
+  }else{
+    var arr = [];
+    $.each(select, function(key, val){
+      if(val){
+        arr.push(key);
+      }
+    });
+
+    if(arr.length){
+      str += '已选:';
+      var str2 = ',还未选:';
+      $.each(tips, function(key, val){
+        if(select[key]){
+          selected.push('"'+val+'"');
+        }else{
+          unselected.push('"'+val+'"');
+        }
+      });
+      str += selected.join(',') + ', 还未选:' + unselected.join(',');
+    }else{
+      str += '请选择:';
+      $.each(tips, function(key, val){
+        unselected.push('"'+val+'"');
+      });
+      str += unselected.join(',');
+    }
+  }
+  window.debug && console.log(str);
+
+  // 页面显示操作
+  $('.choosed').html(str);
+
+  return str;
+}
+
+
+</script>
+</body>
+</html>
