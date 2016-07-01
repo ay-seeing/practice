@@ -4,37 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
   <title>vue demo</title>
-  <script src="vue2.js"></script>
+  <script src="js/jquery.min.1.11.3.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/vue2.js"></script>
 </head>
 <body>
   <div id="app">
-    
+    hello {{who}}
   </div>
 
   <script>
-// new Vue({
-//   el: '#app',
-//   data: {
-//     who: 'Vue'
-//   }
-// });
-
-
 new Vue({
   el: '#app',
-  render: function () {
-    with (this) {
-      __h__('div',
-        {staticAttrs:{"id":"app"}},
-        [("\n  Hello "+__toString__(who)+"\n")],
-        ''
-      )
-    }
+  data: {
+    who: 'Vue'
   }
-  data: {who: 'Vue'}
 });
-
-
 
   </script>
 
